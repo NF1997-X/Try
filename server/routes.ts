@@ -456,6 +456,68 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Upload image to ImgBB
+  app.post("/api/upload-image", async (req, res) => {
+    try {
+      const { image, name } = req.body;
+      
+      if (!image || typeof image !== 'string') {
+        return res.status(400).json({ error: "Image data required" });
+      }
+
+      const imgbbApiKey = process.env.IMGBB_API_KEY;
+      if (!imgbbApiKey) {
+        return res.status(500).json({ error: "ImgBB API key not configured" });
+      }
+
+      // Remove data URL prefix if present
+      const base64Image = image.replace(/^data:image\/[a-z]+;base64,/, '');
+
+      // Create form data
+      const formData = new URLSearchParams();
+      formData.append('key', imgbbApiKey);
+      formData.append('image', base64Image);
+      if (name) {
+        formData.append('name', name);
+      }
+
+      // Upload to ImgBB
+      const response = await fetch('https://api.imgbb.com/1/upload', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        console.error('ImgBB upload error:', result);
+        return res.status(500).json({ 
+          error: "Failed to upload image",
+          details: result.error?.message || 'Unknown error'
+        });
+      }
+
+      // Return the uploaded image URL
+      res.json({
+        success: true,
+        url: result.data.url,
+        display_url: result.data.display_url,
+        thumb: result.data.thumb?.url,
+        delete_url: result.data.delete_url,
+      });
+
+    } catch (error: any) {
+      console.error("Upload image error:", error);
+      res.status(500).json({ 
+        error: "Internal server error",
+        details: error.message 
+      });
+    }
+  });
+
   // Calculate toll prices endpoint
   app.post("/api/calculate-tolls", async (req, res) => {
     try {
