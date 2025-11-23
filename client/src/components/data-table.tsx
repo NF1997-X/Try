@@ -1278,7 +1278,7 @@ export function DataTable({
                                     if (row.active === false) {
                                       return "bg-gray-300 dark:bg-gray-800 opacity-40";
                                     } else {
-                                      return "bg-gradient-to-r from-gray-100 to-slate-100 dark:from-gray-900 dark:to-gray-950";
+                                      return "bg-gradient-to-r from-gray-100 to-slate-100 dark:from-slate-950 dark:to-slate-950";
                                     }
                                   }
                                   
@@ -1287,9 +1287,9 @@ export function DataTable({
                                   if (status === 'inactive') {
                                     return "bg-gray-300 dark:bg-gray-800 opacity-40";
                                   } else if (status === 'off-schedule') {
-                                    return "bg-gradient-to-r from-gray-100 to-slate-100 dark:from-gray-900 dark:to-gray-950 opacity-60";
+                                    return "bg-gradient-to-r from-gray-100 to-slate-100 dark:from-slate-950 dark:to-slate-950 opacity-60";
                                   } else {
-                                    return "bg-gradient-to-r from-gray-100 to-slate-100 dark:from-gray-900 dark:to-gray-950";
+                                    return "bg-gradient-to-r from-gray-100 to-slate-100 dark:from-slate-950 dark:to-slate-950";
                                   }
                                 })()
                               } hover:bg-blue-100/60 dark:hover:bg-blue-800/30 table-cell-unique-transition ${
