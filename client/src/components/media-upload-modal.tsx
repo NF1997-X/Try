@@ -53,6 +53,30 @@ export function MediaUploadModal({ open, onOpenChange, onSave, onSaveMultiple }:
     });
   };
 
+  const uploadToImgBB = async (file: File): Promise<string> => {
+    const dataURL = await fileToDataURL(file);
+    
+    // Upload to ImgBB
+    const response = await fetch('/api/upload-image', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        image: dataURL,
+        name: file.name,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Upload failed');
+    }
+
+    const result = await response.json();
+    return result.url;
+  };
+
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files || files.length === 0) return;
@@ -62,57 +86,74 @@ export function MediaUploadModal({ open, onOpenChange, onSave, onSaveMultiple }:
     try {
       if (mode === "single") {
         const file = files[0];
-        const dataURL = await fileToDataURL(file);
-        
-        // Store the actual MIME type with the data URL
-        const urlWithType = dataURL.includes('data:') 
-          ? dataURL.replace(/^data:([^;]+)/, `data:${file.type}`) 
-          : dataURL;
-        
-        setUrl(urlWithType);
         
         if (file.type.startsWith('video/')) {
+          // For videos, still use data URL (ImgBB is for images only)
+          const dataURL = await fileToDataURL(file);
+          const urlWithType = dataURL.includes('data:') 
+            ? dataURL.replace(/^data:([^;]+)/, `data:${file.type}`) 
+            : dataURL;
+          setUrl(urlWithType);
           setMediaType('video');
         } else {
+          // For images, upload to ImgBB
           setMediaType('image');
+          toast({
+            title: "Uploading...",
+            description: `Uploading ${file.name} to ImgBB...`,
+          });
+          
+          const uploadedUrl = await uploadToImgBB(file);
+          setUrl(uploadedUrl);
+          
+          toast({
+            title: "Upload Success",
+            description: `${file.name} uploaded successfully!`,
+          });
         }
-        
-        toast({
-          title: "File Loaded",
-          description: `${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`,
-        });
       } else {
         // Album mode - process multiple files
         const newItems: MediaWithCaption[] = [];
         
+        toast({
+          title: "Uploading Album",
+          description: `Uploading ${files.length} files to ImgBB...`,
+        });
+        
         for (const file of Array.from(files)) {
-          const dataURL = await fileToDataURL(file);
           const type = file.type.startsWith('video/') ? 'video' : 'image';
           
-          // Store the actual MIME type with the data URL
-          const urlWithType = dataURL.includes('data:') 
-            ? dataURL.replace(/^data:([^;]+)/, `data:${file.type}`) 
-            : dataURL;
+          let finalUrl: string;
+          if (type === 'video') {
+            // For videos, use data URL
+            const dataURL = await fileToDataURL(file);
+            finalUrl = dataURL.includes('data:') 
+              ? dataURL.replace(/^data:([^;]+)/, `data:${file.type}`) 
+              : dataURL;
+          } else {
+            // For images, upload to ImgBB
+            finalUrl = await uploadToImgBB(file);
+          }
           
           newItems.push({
-            url: urlWithType,
+            url: finalUrl,
             caption: file.name,
             type: type,
-            mimeType: file.type // Store MIME type for later use
           });
         }
         
         setAlbumItems([...albumItems, ...newItems]);
         
         toast({
-          title: "Files Loaded",
-          description: `${files.length} file(s) added to album`,
+          title: "Upload Success",
+          description: `${files.length} file(s) uploaded to ImgBB and added to album`,
         });
       }
     } catch (error) {
+      console.error('Upload error:', error);
       toast({
-        title: "Error",
-        description: "Failed to load file(s)",
+        title: "Upload Error",
+        description: error instanceof Error ? error.message : "Failed to upload file(s)",
         variant: "destructive"
       });
     } finally {
