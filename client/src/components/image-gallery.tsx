@@ -182,7 +182,7 @@ export function ImageGallery({
             data-sub-html={media.caption}
             data-video={videoData}
             data-poster={isVideo && media.thumbnail ? media.thumbnail : undefined}
-            className="inline-block rounded overflow-hidden hover:scale-105 transition-transform"
+            className="inline-block rounded overflow-hidden hover:scale-105 transition-transform cursor-pointer"
             data-testid={`media-${rowId}-${index}`}
           >
             {isVideo ? (
@@ -205,7 +205,7 @@ export function ImageGallery({
               <img
                 src={media.url.startsWith('data:') ? media.url : `${media.url}?w=60&h=40&fit=crop`}
                 alt={media.caption || `Image ${index + 1}`}
-                className="w-10 h-8 object-cover border border-border"
+                className="w-10 h-8 object-cover border border-border rounded"
               />
             )}
           </a>
