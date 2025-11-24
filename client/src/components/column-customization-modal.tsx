@@ -41,8 +41,8 @@ export function ColumnCustomizationModal({
   useEffect(() => {
     if (columns.length > 0) {
       const columnsToHide = editMode 
-        ? ['longitude', 'latitude', 'tollPrice', 'images'] // In edit mode, hide longitude, latitude, tollPrice, and images
-        : ['longitude', 'latitude', 'info', 'tollPrice', 'images']; // In view mode, also hide info column, tollPrice, and images
+        ? ['longitude', 'latitude', 'tollPrice', 'delivery'] // In edit mode, hide longitude, latitude, tollPrice, delivery
+        : ['longitude', 'latitude', 'info', 'tollPrice', 'delivery']; // In view mode, also hide info column, tollPrice, delivery
       
       const columnItems: ColumnItem[] = columns
         .filter(column => !columnsToHide.includes(column.dataKey))
@@ -86,8 +86,8 @@ export function ColumnCustomizationModal({
 
   const handleReset = () => {
     const columnsToHide = editMode 
-      ? ['longitude', 'latitude', 'tollPrice', 'images'] // In edit mode, hide longitude, latitude, tollPrice, and images
-      : ['longitude', 'latitude', 'info', 'tollPrice', 'images']; // In view mode, also hide info column, tollPrice, and images
+      ? ['longitude', 'latitude', 'tollPrice', 'delivery'] // In edit mode, hide longitude, latitude, tollPrice, delivery
+      : ['longitude', 'latitude', 'info', 'tollPrice', 'delivery']; // In view mode, also hide info column, tollPrice, delivery
     
     const resetColumns = columns
       .filter(column => !columnsToHide.includes(column.dataKey))
