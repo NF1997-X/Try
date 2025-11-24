@@ -1293,23 +1293,23 @@ export function DataTable({
                                   // Main page (NOT shared view): only dim if power off (inactive)
                                   if (!isSharedView) {
                                     if (row.active === false) {
-                                      return "bg-gray-300 dark:bg-gray-800 opacity-40";
+                                      return "bg-gray-300/50 dark:bg-gray-800/50 opacity-40";
                                     } else {
-                                      return "bg-gradient-to-r from-blue-500/5 via-transparent to-blue-500/5 dark:from-blue-500/5 dark:via-transparent dark:to-blue-500/5 backdrop-blur-sm";
+                                      return "bg-white/30 dark:bg-black/20 backdrop-blur-sm";
                                     }
                                   }
                                   
                                   // Shared view & custom table: apply schedule-based styling
                                   const status = getScheduleStatus(row);
                                   if (status === 'inactive') {
-                                    return "bg-gray-300 dark:bg-gray-800 opacity-40";
+                                    return "bg-gray-300/50 dark:bg-gray-800/50 opacity-40";
                                   } else if (status === 'off-schedule') {
-                                    return "bg-gradient-to-r from-blue-500/5 via-transparent to-blue-500/5 dark:from-blue-500/5 dark:via-transparent dark:to-blue-500/5 backdrop-blur-sm opacity-60";
+                                    return "bg-white/30 dark:bg-black/20 backdrop-blur-sm opacity-60";
                                   } else {
-                                    return "bg-gradient-to-r from-blue-500/5 via-transparent to-blue-500/5 dark:from-blue-500/5 dark:via-transparent dark:to-blue-500/5 backdrop-blur-sm";
+                                    return "bg-white/30 dark:bg-black/20 backdrop-blur-sm";
                                   }
                                 })()
-                              } hover:bg-blue-100/60 dark:hover:bg-blue-800/30 table-cell-unique-transition ${
+                              } hover:bg-gray-50/70 dark:hover:bg-black/40 table-cell-unique-transition ${
                                 snapshot.isDragging ? "drag-elevate" : ""
                               }`}
                               data-testid={`table-row-${row.id}`}
