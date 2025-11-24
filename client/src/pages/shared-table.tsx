@@ -407,7 +407,18 @@ export default function SharedTablePage() {
               <div className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg overflow-hidden">
                   <img 
-                    src="/assets/Logofm.png" 
+                    src={(() => {
+                      // Check if route filters contain KL or SL
+                      const hasKL = routeFilters.some(route => route.toUpperCase().includes('KL'));
+                      const hasSL = routeFilters.some(route => route.toUpperCase().includes('SL'));
+                      
+                      if (hasKL && !hasSL) {
+                        return "/assets/kl-flag.png";
+                      } else if (hasSL && !hasKL) {
+                        return "/assets/selangor-flag.png";
+                      }
+                      return "/assets/Logofm.png";
+                    })()} 
                     alt="Logo" 
                     className="h-full w-full object-cover"
                   />
@@ -429,10 +440,27 @@ export default function SharedTablePage() {
           {/* Route Filter Info Banner */}
           {routeFilters.length > 0 && (
             <div className="mb-4 p-3 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-lg border-2 border-transparent">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs font-semibold text-blue-900 dark:text-blue-100">
-                  📍 Showing Routes: {routeFilters.join(', ')}
+                  📍 Showing Routes:
                 </span>
+                {routeFilters.map(route => {
+                  const routeUpper = route.toUpperCase();
+                  const isKL = routeUpper.includes('KL');
+                  const isSL = routeUpper.includes('SL');
+                  
+                  return (
+                    <div key={route} className="flex items-center gap-1 px-2 py-1 bg-white/50 dark:bg-black/30 rounded-md">
+                      {isKL && (
+                        <img src="/assets/kl-flag.png" alt="KL" className="w-4 h-4 object-cover rounded" />
+                      )}
+                      {isSL && (
+                        <img src="/assets/selangor-flag.png" alt="Selangor" className="w-4 h-4 object-cover rounded" />
+                      )}
+                      <span className="text-xs font-medium text-blue-900 dark:text-blue-100">{route}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

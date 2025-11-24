@@ -1151,7 +1151,7 @@ export function DataTable({
                           <TableHead
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className="px-4 py-3 text-center table-header-footer-12px font-medium text-blue-700 dark:text-blue-300 tracking-wide border-b border-border sticky top-0 bg-transparent backdrop-blur-sm shadow-sm whitespace-nowrap"
+                            className="px-4 py-3 text-center table-header-footer-12px font-medium text-blue-700 dark:text-blue-300 tracking-wide sticky top-0 bg-transparent backdrop-blur-sm shadow-sm whitespace-nowrap"
                             style={{
                               textAlign: "center",
                               textDecoration: "normal",
@@ -1175,7 +1175,7 @@ export function DataTable({
                       </Draggable>
                     ))}
                     <TableHead
-                      className="px-4 py-3 text-center table-header-footer-12px font-semibold tracking-wide border-b border-border sticky top-0 bg-transparent backdrop-blur-sm shadow-sm whitespace-nowrap"
+                      className="px-4 py-3 text-center table-header-footer-12px font-semibold tracking-wide sticky top-0 bg-transparent backdrop-blur-sm shadow-sm whitespace-nowrap"
                       style={{
                         textAlign: "center",
                         textDecoration: "normal",
