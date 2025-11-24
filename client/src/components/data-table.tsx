@@ -1103,15 +1103,27 @@ export function DataTable({
                 </button>
               </div>
             )}
-            {filterValue.map(route => (
-              <div key={route} className="flex items-center gap-0.5 px-2 py-0.5 bg-transparent border border-transparent rounded-full text-gray-400 text-xs">
-                <Filter className="w-2.5 h-2.5" />
-                <span>{route}</span>
-                <button onClick={() => toggleRouteFilter(route)} className="ml-0.5 p-0.5 hover:text-red-600 flex items-center justify-center rounded-full hover:bg-red-500/10" aria-label={`Remove route filter: ${route}`}>
-                  <X className="w-2.5 h-2.5 text-red-500" />
-                </button>
-              </div>
-            ))}
+            {filterValue.map(route => {
+              const routeUpper = route.toUpperCase();
+              const isKL = routeUpper.includes('KL');
+              const isSL = routeUpper.includes('SL');
+              
+              return (
+                <div key={route} className="flex items-center gap-0.5 px-2 py-0.5 bg-transparent border border-transparent rounded-full text-gray-400 text-xs">
+                  {isKL ? (
+                    <img src="/assets/kl-flag.png" alt="KL" className="w-4 h-4 rounded" />
+                  ) : isSL ? (
+                    <img src="/assets/selangor-flag.png" alt="Selangor" className="w-4 h-4 rounded" />
+                  ) : (
+                    <Filter className="w-2.5 h-2.5" />
+                  )}
+                  <span>{route}</span>
+                  <button onClick={() => toggleRouteFilter(route)} className="ml-0.5 p-0.5 hover:text-red-600 flex items-center justify-center rounded-full hover:bg-red-500/10" aria-label={`Remove route filter: ${route}`}>
+                    <X className="w-2.5 h-2.5 text-red-500" />
+                  </button>
+                </div>
+              );
+            })}
             {deliveryFilterValue.map(delivery => (
               <div key={delivery} className="flex items-center gap-0.5 px-2 py-0.5 bg-transparent border border-transparent rounded-full text-gray-400 text-xs">
                 <Filter className="w-2.5 h-2.5" />
@@ -1130,7 +1142,7 @@ export function DataTable({
       <div className="overflow-x-auto w-full">
         <DragDropContext onDragEnd={handleDragEnd}>
           <Table className="min-w-full overflow-hidden">
-            <TableHeader className="table-header-glass sticky top-0 z-20 bg-transparent backdrop-blur-sm border-b-2 border-yellow-400/30">
+            <TableHeader className="table-header-glass sticky top-0 z-20 bg-gradient-to-r from-blue-50/50 via-slate-50/30 to-blue-50/50 dark:from-slate-800/50 dark:via-slate-900/30 dark:to-slate-800/50 backdrop-blur-md border-b-2 border-yellow-400/30">
               <Droppable
                 droppableId="columns"
                 direction="horizontal"
@@ -1151,7 +1163,7 @@ export function DataTable({
                           <TableHead
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className="px-4 py-3 text-center table-header-footer-12px font-medium text-blue-700 dark:text-blue-300 tracking-wide sticky top-0 bg-transparent backdrop-blur-sm shadow-sm whitespace-nowrap"
+                            className="px-4 py-4 text-center table-header-footer-12px font-semibold text-slate-700 dark:text-slate-200 tracking-wider sticky top-0 bg-gradient-to-b from-slate-100/80 to-transparent dark:from-slate-800/80 dark:to-transparent backdrop-blur-md shadow-sm whitespace-nowrap"
                             style={{
                               textAlign: "center",
                               textDecoration: "normal",
@@ -1175,7 +1187,7 @@ export function DataTable({
                       </Draggable>
                     ))}
                     <TableHead
-                      className="px-4 py-3 text-center table-header-footer-12px font-semibold tracking-wide sticky top-0 bg-transparent backdrop-blur-sm shadow-sm whitespace-nowrap"
+                      className="px-4 py-4 text-center table-header-footer-12px font-bold tracking-wider sticky top-0 bg-gradient-to-b from-slate-100/80 to-transparent dark:from-slate-800/80 dark:to-transparent backdrop-blur-md shadow-sm whitespace-nowrap"
                       style={{
                         textAlign: "center",
                         textDecoration: "normal",
