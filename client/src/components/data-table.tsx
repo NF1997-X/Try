@@ -1351,6 +1351,7 @@ export function DataTable({
                                     <ImageIconButton
                                       images={row.images}
                                       rowId={row.id}
+                                      onClick={() => onSelectRowForImage(row.id)}
                                     />
                                   ) : column.dataKey === "info" ? (
                                     row.info && row.info.trim() ? (
