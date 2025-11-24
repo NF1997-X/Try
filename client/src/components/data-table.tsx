@@ -1732,8 +1732,8 @@ export function DataTable({
 
           {/* Pagination Controls */}
           {!disablePagination && (
-            <div className="flex flex-col items-center gap-2 px-4 py-2 border-t border-blue-200 dark:border-blue-500/20 transition-smooth-fast">
-              <div className="flex items-center gap-1.5">
+            <div className="flex flex-col items-center justify-center gap-2 px-4 py-2 border-t border-blue-200 dark:border-blue-500/20 transition-smooth-fast">
+              <div className="flex items-center justify-center gap-1.5 w-full">
                 {/* Show First button only when currentPage > 3 (has 3+ pages before) */}
                 {currentPage > 3 && (
                   <Button
