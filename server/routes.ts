@@ -272,7 +272,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Invalid row ID format" });
       }
       
-      const { imageUrl, caption } = req.body;
+      const { imageUrl, caption, thumbnail } = req.body;
       if (!imageUrl || typeof imageUrl !== 'string') {
         return res.status(400).json({ message: "imageUrl is required" });
       }
@@ -292,6 +292,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         url: imageUrl,
         caption: caption && typeof caption === 'string' ? caption : "",
         type: "image" as const,
+        thumbnail: thumbnail && typeof thumbnail === 'string' ? thumbnail : undefined,
       };
       const updatedImages = [...row.images, newImage];
       const updatedRow = await storage.updateTableRow(req.params.id, { images: updatedImages });
@@ -310,7 +311,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Invalid row ID format" });
       }
       
-      const { imageUrl, caption } = req.body;
+      const { imageUrl, caption, thumbnail } = req.body;
       const imageIndex = parseInt(req.params.imageIndex);
       
       // Validate imageIndex is a valid integer
@@ -340,7 +341,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         url: imageUrl !== undefined ? imageUrl : updatedImages[imageIndex].url,
         caption: caption !== undefined ? caption : updatedImages[imageIndex].caption,
         type: updatedImages[imageIndex].type || "image",
-        thumbnail: updatedImages[imageIndex].thumbnail
+        thumbnail: thumbnail !== undefined ? thumbnail : updatedImages[imageIndex].thumbnail
       };
       
       const updatedRow = await storage.updateTableRow(req.params.id, { images: updatedImages });

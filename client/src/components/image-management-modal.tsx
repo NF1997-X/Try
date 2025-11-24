@@ -22,6 +22,8 @@ import {
 interface ImageData {
   url: string;
   caption?: string;
+  thumbnail?: string;
+  type?: "image" | "video";
 }
 
 interface ImageManagementModalProps {
@@ -30,13 +32,13 @@ interface ImageManagementModalProps {
   rowId: string;
   location?: string;
   images: ImageData[];
-  onAddImage: UseMutationResult<any, Error, { rowId: string; imageUrl: string; caption?: string }, unknown>;
-  onUpdateImage: UseMutationResult<any, Error, { rowId: string; imageIndex: number; imageUrl?: string; caption?: string }, unknown>;
+  onAddImage: UseMutationResult<any, Error, { rowId: string; imageUrl: string; caption?: string; thumbnail?: string }, unknown>;
+  onUpdateImage: UseMutationResult<any, Error, { rowId: string; imageIndex: number; imageUrl?: string; caption?: string; thumbnail?: string }, unknown>;
   onDeleteImage: UseMutationResult<any, Error, { rowId: string; imageIndex?: number }, unknown>;
 }
 
 type ModalMode = 'add' | 'edit' | 'delete';
-type EditAction = 'replace' | 'caption' | 'url';
+type EditAction = 'replace' | 'caption' | 'url' | 'thumbnail';
 type DeleteAction = 'caption' | 'image' | 'all';
 
 export function ImageManagementModal({
@@ -57,6 +59,7 @@ export function ImageManagementModal({
   const [uploadMethod, setUploadMethod] = useState<'url' | 'media'>('url');
   const [newImageUrl, setNewImageUrl] = useState("");
   const [newImageCaption, setNewImageCaption] = useState("");
+  const [newImageThumbnail, setNewImageThumbnail] = useState("");
   const [bulkUrls, setBulkUrls] = useState("");
   
   // Edit States
@@ -65,6 +68,7 @@ export function ImageManagementModal({
   const [editImageUrl, setEditImageUrl] = useState("");
   const [editCaption, setEditCaption] = useState("");
   const [editUrlValue, setEditUrlValue] = useState("");
+  const [editThumbnail, setEditThumbnail] = useState("");
   
   // Delete States
   const [deleteAction, setDeleteAction] = useState<DeleteAction>('caption');
@@ -82,12 +86,14 @@ export function ImageManagementModal({
       setUploadMethod('url');
       setNewImageUrl("");
       setNewImageCaption("");
+      setNewImageThumbnail("");
       setBulkUrls("");
       setEditAction('replace');
       setSelectedImageIndex(0);
       setEditImageUrl("");
       setEditCaption(images[0]?.caption || "");
       setEditUrlValue(images[0]?.url || "");
+      setEditThumbnail(images[0]?.thumbnail || "");
       setDeleteAction('caption');
       setDeleteImageIndex(0);
     }
@@ -98,6 +104,7 @@ export function ImageManagementModal({
     if (images[selectedImageIndex]) {
       setEditCaption(images[selectedImageIndex].caption || "");
       setEditUrlValue(images[selectedImageIndex].url || "");
+      setEditThumbnail(images[selectedImageIndex].thumbnail || "");
     }
   }, [selectedImageIndex, images]);
 
@@ -119,6 +126,7 @@ export function ImageManagementModal({
         rowId,
         imageUrl,
         caption: newImageCaption || undefined,
+        thumbnail: newImageThumbnail || undefined,
       });
 
       toast({
@@ -222,6 +230,7 @@ export function ImageManagementModal({
           imageIndex: selectedImageIndex,
           imageUrl: editImageUrl,
           caption: currentImage.caption,
+          thumbnail: currentImage.thumbnail,
         });
 
         toast({
@@ -256,11 +265,24 @@ export function ImageManagementModal({
           imageIndex: selectedImageIndex,
           imageUrl: editUrlValue,
           caption: currentImage.caption,
+          thumbnail: currentImage.thumbnail,
         });
 
         toast({
           title: "URL Updated",
           description: "Image URL has been updated.",
+        });
+      } else if (editAction === 'thumbnail') {
+        // Update thumbnail only
+        await onUpdateImage.mutateAsync({
+          rowId,
+          imageIndex: selectedImageIndex,
+          thumbnail: editThumbnail || undefined,
+        });
+
+        toast({
+          title: "Thumbnail Updated",
+          description: "Image thumbnail has been updated.",
         });
       }
 
@@ -423,6 +445,18 @@ export function ImageManagementModal({
                               rows={2}
                             />
                           </div>
+                          <div>
+                            <Label className="text-sm font-semibold">Thumbnail URL (Optional)</Label>
+                            <Input
+                              value={newImageThumbnail}
+                              onChange={(e) => setNewImageThumbnail(e.target.value)}
+                              placeholder="https://example.com/thumbnail.jpg"
+                              className="mt-1"
+                            />
+                            <p className="text-xs text-muted-foreground mt-1">
+                              Leave empty to use main image as thumbnail
+                            </p>
+                          </div>
                           <div className="px-3 py-2 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg">
                             <p className="text-xs text-gray-700 dark:text-gray-300">
                               💡 Tip: Use image hosting services like imgur.com, postimages.org, or imgbb.com to get image URLs
@@ -563,7 +597,7 @@ export function ImageManagementModal({
                           }`}
                         >
                           <img
-                            src={img.url}
+                            src={img.thumbnail || img.url}
                             alt={img.caption || `Image ${index + 1}`}
                             className="w-full h-20 object-cover"
                           />
@@ -581,10 +615,11 @@ export function ImageManagementModal({
 
                   {/* Edit Actions */}
                   <Tabs value={editAction} onValueChange={(v) => setEditAction(v as EditAction)}>
-                    <TabsList className="grid w-full grid-cols-3 bg-yellow-100/50 dark:bg-yellow-900/30">
+                    <TabsList className="grid w-full grid-cols-4 bg-yellow-100/50 dark:bg-yellow-900/30">
                       <TabsTrigger value="replace" className="text-xs">Replace</TabsTrigger>
                       <TabsTrigger value="caption" className="text-xs">Caption</TabsTrigger>
                       <TabsTrigger value="url" className="text-xs">URL</TabsTrigger>
+                      <TabsTrigger value="thumbnail" className="text-xs">Thumbnail</TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="replace" className="space-y-3 mt-4">
@@ -638,6 +673,32 @@ export function ImageManagementModal({
                         </p>
                       </div>
                     </TabsContent>
+
+                    <TabsContent value="thumbnail" className="space-y-3 mt-4">
+                      <div>
+                        <Label className="text-sm font-semibold">Edit Thumbnail URL</Label>
+                        <Input
+                          value={editThumbnail}
+                          onChange={(e) => setEditThumbnail(e.target.value)}
+                          placeholder="https://example.com/thumbnail.jpg"
+                          className="mt-1"
+                        />
+                      </div>
+                      {editThumbnail && (
+                        <div className="relative rounded-lg overflow-hidden border border-border bg-muted/30">
+                          <img 
+                            src={editThumbnail} 
+                            alt="Thumbnail Preview" 
+                            className="w-full h-32 object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className="px-3 py-2 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg">
+                        <p className="text-xs text-gray-700 dark:text-gray-300">
+                          🖼️ Leave empty to use main image as thumbnail. Useful for video thumbnails or low-res previews.
+                        </p>
+                      </div>
+                    </TabsContent>
                   </Tabs>
                 </TabsContent>
 
@@ -665,7 +726,7 @@ export function ImageManagementModal({
                               }`}
                             >
                               <img
-                                src={img.url}
+                                src={img.thumbnail || img.url}
                                 alt={img.caption || `Image ${index + 1}`}
                                 className="w-full h-20 object-cover"
                               />
@@ -700,7 +761,7 @@ export function ImageManagementModal({
                               }`}
                             >
                               <img
-                                src={img.url}
+                                src={img.thumbnail || img.url}
                                 alt={img.caption || `Image ${index + 1}`}
                                 className="w-full h-20 object-cover"
                               />
@@ -738,7 +799,7 @@ export function ImageManagementModal({
                         {images.map((img, index) => (
                           <div key={index} className="relative rounded-lg overflow-hidden border border-red-300">
                             <img
-                              src={img.url}
+                              src={img.thumbnail || img.url}
                               alt={img.caption || `Image ${index + 1}`}
                               className="w-full h-16 object-cover opacity-50"
                             />
@@ -799,6 +860,18 @@ export function ImageManagementModal({
                         className="mt-1"
                         rows={2}
                       />
+                    </div>
+                    <div>
+                      <Label className="text-sm font-semibold">Thumbnail URL (Optional)</Label>
+                      <Input
+                        value={newImageThumbnail}
+                        onChange={(e) => setNewImageThumbnail(e.target.value)}
+                        placeholder="https://example.com/thumbnail.jpg"
+                        className="mt-1"
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Leave empty to use main image as thumbnail
+                      </p>
                     </div>
                     <div className="px-3 py-2 bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg">
                       <p className="text-xs text-gray-700 dark:text-gray-300">

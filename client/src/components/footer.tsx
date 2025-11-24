@@ -130,7 +130,7 @@ export function Footer({ editMode = false }: FooterProps) {
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
         }`}
       >
-        <div className="container mx-auto px-4 py-2">
+        <div className="container mx-auto px-2 md:px-4 py-2">
           <div className={`transition-all duration-700 ease-out ${
             isLoaded ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
           }`}>
