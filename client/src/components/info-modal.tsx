@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Info, ListChecks, QrCode, ExternalLink, CheckCircle, Save, X, FileText, Loader2 } from "lucide-react";
+import { Info, ListChecks, QrCode, ExternalLink, CheckCircle, Save, X, FileText, Loader2, FolderOpen, Upload } from "lucide-react";
 import { SiGooglemaps, SiWaze } from "react-icons/si";
 import { MiniMap } from "@/components/mini-map";
 import { SlidingDescription } from "@/components/sliding-description";
@@ -43,6 +43,7 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
   const [showSaveConfirm, setShowSaveConfirm] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showActionsMenu, setShowActionsMenu] = useState(false);
   
   // State for tracking edits
   const [originalData, setOriginalData] = useState({ info: "", qrCode: "", latitude: "", longitude: "", markerColor: "" });
@@ -607,37 +608,84 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
 
         </div>
         <DialogFooter 
-          className="pt-6 mt-2 border-t border-blue-900 dark:border-cyan-400/50 bg-blue-50/50 dark:bg-black/30 backdrop-blur-sm rounded-b-2xl -mx-6 -mb-6 px-6"
-          style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+          className="pt-5 mt-0 border-t border-gray-200/60 dark:border-gray-800/60 bg-white/90 dark:bg-gray-950/90 backdrop-blur-2xl rounded-b-3xl -mx-6 -mb-6 px-6 relative overflow-hidden transition-all duration-300"
+          style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
         >
-          <div className="flex flex-col gap-4 w-full">
-            {/* Action Buttons Row */}
-            <div className="flex justify-between items-center w-full">
-              <div className="flex gap-2 flex-wrap">
+          {/* Main Grid Button - Apple Style */}
+          <div className={`flex justify-center items-center w-full transition-all duration-300 my-2 ${showActionsMenu ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+            <Button
+              variant="ghost"
+              className="h-11 w-11 p-0 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 active:scale-95 transition-all duration-200 rounded-2xl"
+              onClick={() => setShowActionsMenu(!showActionsMenu)}
+              data-testid="button-actions-menu"
+            >
+              <FolderOpen className="w-5 h-5 text-white" />
+            </Button>
+          </div>
+          
+          {/* Sliding Actions Menu - Apple Style */}
+          <div 
+            className={`absolute left-0 right-0 bottom-0 bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl border-t border-gray-200/60 dark:border-gray-800/60 transition-all duration-300 ease-out rounded-t-3xl ${
+              showActionsMenu 
+                ? 'translate-x-0 opacity-100' 
+                : 'translate-x-full opacity-0 pointer-events-none'
+            }`}
+            style={{ 
+              paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))',
+            }}
+          >
+            {/* Close Button */}
+            <div className="absolute top-3 right-3 z-50">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 w-7 p-0 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 touch-auto pointer-events-auto active:scale-90 transition-all duration-200"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowActionsMenu(false);
+                }}
+                data-testid="button-close-actions-menu"
+              >
+                <X className="w-3.5 h-3.5" />
+              </Button>
+            </div>
+
+            {/* Actions Grid - Apple Style with Horizontal Scroll */}
+            <div className="overflow-x-auto overflow-y-hidden px-6 pt-6 pb-3">
+              <div className="flex gap-3 min-w-max justify-center">
               {location !== "QL Kitchen" && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleEditClick}
-                  className="bg-transparent border-transparent hover:bg-transparent hover:border-transparent"
-                  data-testid={`button-edit-${rowId}`}
-                >
-                  <ListChecks className="w-4 h-4 text-green-600" />
-                </Button>
+                <div className="flex items-center justify-center animate-in slide-in-from-right-10 duration-300" style={{animationDelay: '50ms'}}>
+                  <Button
+                    variant="ghost"
+                    className="h-10 w-10 p-0 bg-transparent hover:bg-green-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-green-500/30"
+                    onClick={() => {
+                      handleEditClick();
+                      setShowActionsMenu(false);
+                    }}
+                    data-testid={`button-edit-${rowId}`}
+                  >
+                    <ListChecks className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  </Button>
+                </div>
               )}
+              
               {qrCode && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleQrCodeClick}
-                  disabled={isScanning}
-                  className="bg-transparent border-transparent hover:bg-transparent hover:border-transparent"
-                  data-testid={`button-qrcode-${rowId}`}
-                >
-                  <QrCode className="w-4 h-4 text-purple-600" />
-                  {isScanning && <span className="ml-1 text-xs">Scanning...</span>}
-                </Button>
+                <div className="flex items-center justify-center animate-in slide-in-from-right-10 duration-300" style={{animationDelay: '100ms'}}>
+                  <Button
+                    variant="ghost"
+                    className="h-10 w-10 p-0 bg-transparent hover:bg-purple-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl disabled:opacity-50 border border-purple-500/30"
+                    onClick={() => {
+                      handleQrCodeClick();
+                      setShowActionsMenu(false);
+                    }}
+                    disabled={isScanning}
+                    data-testid={`button-qrcode-${rowId}`}
+                  >
+                    <QrCode className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                  </Button>
+                </div>
               )}
+              
               {(() => {
                 const url = (() => {
                   if (!info) return "";
@@ -648,37 +696,51 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                 })();
                 
                 return url.trim() ? (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleUrlClick(url)}
-                    className="bg-transparent border-transparent hover:bg-transparent hover:border-transparent"
-                    data-testid={`button-open-url-${rowId}`}
-                  >
-                    <ExternalLink className="w-4 h-4 text-cyan-600" />
-                  </Button>
+                  <div className="flex items-center justify-center animate-in slide-in-from-right-10 duration-300" style={{animationDelay: '150ms'}}>
+                    <Button
+                      variant="ghost"
+                      className="h-10 w-10 p-0 bg-transparent hover:bg-cyan-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-cyan-500/30"
+                      onClick={() => {
+                        handleUrlClick(url);
+                        setShowActionsMenu(false);
+                      }}
+                      data-testid={`button-open-url-${rowId}`}
+                    >
+                      <ExternalLink className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                    </Button>
+                  </div>
                 ) : null;
               })()}
+              
               {latitude && longitude && !isNaN(parseFloat(latitude)) && !isNaN(parseFloat(longitude)) && (
                 <>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleDirectionClick}
-                    className="bg-transparent border-transparent hover:bg-transparent hover:border-transparent"
-                    data-testid={`button-direction-${rowId}`}
-                  >
-                    <SiGooglemaps className="w-4 h-4 text-red-500" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleWazeClick}
-                    className="bg-transparent border-transparent hover:bg-transparent hover:border-transparent"
-                    data-testid={`button-waze-${rowId}`}
-                  >
-                    <SiWaze className="w-4 h-4 text-blue-500" />
-                  </Button>
+                  <div className="flex items-center justify-center animate-in slide-in-from-right-10 duration-300" style={{animationDelay: '200ms'}}>
+                    <Button
+                      variant="ghost"
+                      className="h-10 w-10 p-0 bg-transparent hover:bg-red-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-red-500/30"
+                      onClick={() => {
+                        handleDirectionClick();
+                        setShowActionsMenu(false);
+                      }}
+                      data-testid={`button-direction-${rowId}`}
+                    >
+                      <SiGooglemaps className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    </Button>
+                  </div>
+                  
+                  <div className="flex items-center justify-center animate-in slide-in-from-right-10 duration-300" style={{animationDelay: '250ms'}}>
+                    <Button
+                      variant="ghost"
+                      className="h-10 w-10 p-0 bg-transparent hover:bg-sky-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-sky-500/30"
+                      onClick={() => {
+                        handleWazeClick();
+                        setShowActionsMenu(false);
+                      }}
+                      data-testid={`button-waze-${rowId}`}
+                    >
+                      <SiWaze className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+                    </Button>
+                  </div>
                 </>
               )}
               </div>
