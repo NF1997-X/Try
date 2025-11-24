@@ -1660,11 +1660,15 @@ html.dark tfoot tr th .footer-total-blue {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
+  height: 120px !important; /* Ensure full thumbnail visibility */
+  min-height: 120px !important;
 }
 
 .lg-outer .lg-thumb {
   display: flex !important;
   visibility: visible !important;
+  height: 100% !important;
+  padding: 10px 0 !important; /* Add padding to prevent cutoff */
 }
 
 .lg-outer .lg-thumb-item {
@@ -1676,4 +1680,18 @@ html.dark tfoot tr th .footer-total-blue {
 .lg-outer .lg-thumb-item.active,
 .lg-outer .lg-thumb-item:hover {
   border-color: #3b82f6 !important;
+}
+
+/* LightGallery Caption Positioning */
+.lg-outer .lg-sub-html {
+  position: absolute !important;
+  bottom: 130px !important; /* Position above thumbnail bar */
+  left: 0 !important;
+  right: 0 !important;
+  background: rgba(0, 0, 0, 0.75) !important;
+  color: white !important;
+  padding: 12px 20px !important;
+  text-align: center !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
 }
