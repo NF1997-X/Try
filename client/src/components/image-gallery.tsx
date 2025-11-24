@@ -99,15 +99,6 @@ export function ImageGallery({
               playsinline: 1
             }
           });
-
-          // Prevent default link behavior
-          galleryElement.addEventListener('click', (e) => {
-            const target = e.target as HTMLElement;
-            const link = target.closest('a[data-src]');
-            if (link) {
-              e.preventDefault();
-            }
-          });
         } catch (error) {
           console.error("Failed to load LightGallery:", error);
         }
@@ -186,7 +177,7 @@ export function ImageGallery({
         return (
           <a
             key={index}
-            href="#"
+            href="javascript:void(0)"
             data-src={media.url}
             data-sub-html={media.caption}
             data-video={videoData}
