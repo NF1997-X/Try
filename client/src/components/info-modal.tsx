@@ -10,12 +10,6 @@ import { MiniMap } from "@/components/mini-map";
 import { SlidingDescription } from "@/components/sliding-description";
 import { EditableDescriptionList } from "@/components/editable-description-list";
 import QrScanner from "qr-scanner";
-import lightGallery from "lightgallery";
-import lgZoom from "lightgallery/plugins/zoom";
-import lgThumbnail from "lightgallery/plugins/thumbnail";
-import "lightgallery/css/lightgallery.css";
-import "lightgallery/css/lg-zoom.css";
-import "lightgallery/css/lg-thumbnail.css";
 
 interface InfoModalProps {
   info: string;
@@ -73,23 +67,41 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
   
   // Initialize lightGallery
   useEffect(() => {
-    if (open && galleryRef.current && images.length > 0) {
-      // Destroy previous instance if exists
-      if (lgInstance.current) {
-        lgInstance.current.destroy();
+    const initLightGallery = async () => {
+      if (open && galleryRef.current && images.length > 0) {
+        // Destroy previous instance if exists
+        if (lgInstance.current) {
+          lgInstance.current.destroy();
+        }
+        
+        // Dynamic imports
+        const [lightGalleryModule, lgZoomModule, lgThumbnailModule] = await Promise.all([
+          import("lightgallery"),
+          import("lightgallery/plugins/zoom"),
+          import("lightgallery/plugins/thumbnail"),
+          import("lightgallery/css/lightgallery.css"),
+          import("lightgallery/css/lg-zoom.css"),
+          import("lightgallery/css/lg-thumbnail.css")
+        ]);
+
+        const lightGallery = lightGalleryModule.default;
+        const lgZoom = lgZoomModule.default;
+        const lgThumbnail = lgThumbnailModule.default;
+        
+        // Initialize new lightGallery instance
+        lgInstance.current = lightGallery(galleryRef.current, {
+          plugins: [lgZoom, lgThumbnail],
+          speed: 500,
+          download: false,
+          selector: 'a',
+          thumbnail: true,
+          animateThumb: true,
+          showThumbByDefault: false,
+        });
       }
-      
-      // Initialize new lightGallery instance
-      lgInstance.current = lightGallery(galleryRef.current, {
-        plugins: [lgZoom, lgThumbnail],
-        speed: 500,
-        download: false,
-        selector: 'a',
-        thumbnail: true,
-        animateThumb: true,
-        showThumbByDefault: false,
-      });
-    }
+    };
+
+    initLightGallery();
     
     // Cleanup on unmount or when modal closes
     return () => {
