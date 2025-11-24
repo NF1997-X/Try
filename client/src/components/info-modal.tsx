@@ -98,6 +98,15 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
           animateThumb: true,
           showThumbByDefault: false,
         });
+
+        // Prevent default link behavior
+        galleryRef.current.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement;
+          const link = target.closest('a[data-src]');
+          if (link) {
+            e.preventDefault();
+          }
+        });
       }
     };
 
@@ -687,7 +696,6 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                     data-lg-size="1600-2400"
                     className="relative rounded-lg overflow-hidden border-2 border-pink-200 dark:border-pink-700 shadow-md hover:border-pink-400 dark:hover:border-pink-500 transition-all cursor-pointer group"
                     data-sub-html={img.caption ? `<h4>${img.caption}</h4>` : ''}
-                    onClick={(e) => e.preventDefault()}
                   >
                     <div className="aspect-square">
                       <img

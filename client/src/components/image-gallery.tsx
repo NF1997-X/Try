@@ -99,6 +99,15 @@ export function ImageGallery({
               playsinline: 1
             }
           });
+
+          // Prevent default link behavior
+          galleryElement.addEventListener('click', (e) => {
+            const target = e.target as HTMLElement;
+            const link = target.closest('a[data-src]');
+            if (link) {
+              e.preventDefault();
+            }
+          });
         } catch (error) {
           console.error("Failed to load LightGallery:", error);
         }
@@ -183,7 +192,6 @@ export function ImageGallery({
             data-video={videoData}
             data-poster={isVideo && media.thumbnail ? media.thumbnail : undefined}
             className="inline-block rounded overflow-hidden hover:scale-105 transition-transform"
-            onClick={(e) => e.preventDefault()}
             data-testid={`media-${rowId}-${index}`}
           >
             {isVideo ? (
