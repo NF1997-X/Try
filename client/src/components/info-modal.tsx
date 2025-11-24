@@ -93,7 +93,7 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
           plugins: [lgZoom, lgThumbnail],
           speed: 500,
           download: false,
-          selector: 'a',
+          selector: 'a[data-src]',
           thumbnail: true,
           animateThumb: true,
           showThumbByDefault: false,
@@ -682,10 +682,12 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                 {images.map((img, index) => (
                   <a
                     key={index}
-                    href={img.url}
+                    href="#"
+                    data-src={img.url}
                     data-lg-size="1600-2400"
                     className="relative rounded-lg overflow-hidden border-2 border-pink-200 dark:border-pink-700 shadow-md hover:border-pink-400 dark:hover:border-pink-500 transition-all cursor-pointer group"
                     data-sub-html={img.caption ? `<h4>${img.caption}</h4>` : ''}
+                    onClick={(e) => e.preventDefault()}
                   >
                     <div className="aspect-square">
                       <img

@@ -177,12 +177,13 @@ export function ImageGallery({
         return (
           <a
             key={index}
-            href={media.url}
+            href="#"
             data-src={media.url}
             data-sub-html={media.caption}
             data-video={videoData}
             data-poster={isVideo && media.thumbnail ? media.thumbnail : undefined}
             className="inline-block rounded overflow-hidden hover:scale-105 transition-transform"
+            onClick={(e) => e.preventDefault()}
             data-testid={`media-${rowId}-${index}`}
           >
             {isVideo ? (
