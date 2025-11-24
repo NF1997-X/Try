@@ -101,7 +101,7 @@ export function Navigation({ editMode, onEditModeRequest, onShowCustomization, o
             <DropdownMenuContent 
               align="end"
               sideOffset={8}
-              className="w-56 bg-white/95 dark:bg-black/95 backdrop-blur-2xl border-2 border-gray-200/60 dark:border-white/10 shadow-[0_20px_60px_0_rgba(0,0,0,0.25)] rounded-2xl"
+              className="w-56 bg-white/95 dark:bg-black/95 backdrop-blur-2xl border-2 border-gray-200/60 dark:border-white/10 shadow-[0_20px_60px_0_rgba(0,0,0,0.25)] rounded-2xl overflow-hidden"
             >
               {/* VM Route Submenu */}
               <DropdownMenuSub>
@@ -114,7 +114,9 @@ export function Navigation({ editMode, onEditModeRequest, onShowCustomization, o
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent 
-                    className="w-56 bg-white/98 dark:bg-black/98 backdrop-blur-2xl border-2 border-gray-200/60 dark:border-white/10 shadow-[0_20px_60px_0_rgba(0,0,0,0.35)] rounded-2xl"
+                    className="w-56 bg-white/98 dark:bg-black/98 backdrop-blur-2xl border-2 border-gray-200/60 dark:border-white/10 shadow-[0_20px_60px_0_rgba(0,0,0,0.35)] rounded-2xl overflow-hidden"
+                    sideOffset={2}
+                    alignOffset={-4}
                   >
                     <DropdownMenuItem 
                       onClick={() => navigate('/share/tzqe9a')}
@@ -164,7 +166,9 @@ export function Navigation({ editMode, onEditModeRequest, onShowCustomization, o
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent 
-                    className="w-56 bg-white/98 dark:bg-black/98 backdrop-blur-2xl border-2 border-gray-200/60 dark:border-white/10 shadow-[0_20px_60px_0_rgba(0,0,0,0.35)] rounded-2xl"
+                    className="w-56 bg-white/98 dark:bg-black/98 backdrop-blur-2xl border-2 border-gray-200/60 dark:border-white/10 shadow-[0_20px_60px_0_rgba(0,0,0,0.35)] rounded-2xl overflow-hidden"
+                    sideOffset={2}
+                    alignOffset={-4}
                   >
                     <DropdownMenuItem 
                       onClick={onToggleTheme}
@@ -210,7 +214,9 @@ export function Navigation({ editMode, onEditModeRequest, onShowCustomization, o
                     </DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent 
-                        className="w-56 bg-white/98 dark:bg-black/98 backdrop-blur-2xl border-2 border-gray-200/60 dark:border-white/10 shadow-[0_20px_60px_0_rgba(0,0,0,0.35)] rounded-2xl"
+                        className="w-56 bg-white/98 dark:bg-black/98 backdrop-blur-2xl border-2 border-gray-200/60 dark:border-white/10 shadow-[0_20px_60px_0_rgba(0,0,0,0.35)] rounded-2xl overflow-hidden"
+                        sideOffset={2}
+                        alignOffset={-4}
                       >
                         <DropdownMenuItem 
                           onClick={onAddRow}

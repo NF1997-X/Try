@@ -1169,7 +1169,7 @@ export function DataTable({
       <div className="overflow-x-auto w-full">
         <DragDropContext onDragEnd={handleDragEnd}>
           <Table className="min-w-full overflow-hidden">
-            <TableHeader className="table-header-glass sticky top-0 z-20 bg-gradient-to-r from-blue-50/50 via-slate-50/30 to-blue-50/50 dark:from-slate-800/50 dark:via-slate-900/30 dark:to-slate-800/50 backdrop-blur-md border-b-2 border-yellow-400/30">
+            <TableHeader className="table-header-glass sticky top-0 z-20 bg-gradient-to-r from-white/80 via-gray-100/60 to-white/80 dark:from-black/90 dark:via-gray-950/70 dark:to-black/90 backdrop-blur-xl border-b-2 border-gray-200/50 dark:border-white/10 shadow-lg">
               <Droppable
                 droppableId="columns"
                 direction="horizontal"
@@ -1190,7 +1190,7 @@ export function DataTable({
                           <TableHead
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className="px-4 py-4 text-center table-header-footer-12px font-semibold text-slate-700 dark:text-slate-200 tracking-wider sticky top-0 bg-gradient-to-b from-slate-100/80 to-transparent dark:from-slate-800/80 dark:to-transparent backdrop-blur-md shadow-sm whitespace-nowrap"
+                            className="px-4 py-4 text-center table-header-footer-12px font-semibold text-gray-700 dark:text-white/95 tracking-wider sticky top-0 bg-gradient-to-b from-white/70 via-gray-50/50 to-transparent dark:from-black/80 dark:via-black/60 dark:to-transparent backdrop-blur-lg border-r border-gray-200/30 dark:border-white/5 shadow-lg whitespace-nowrap"
                             style={{
                               textAlign: "center",
                               textDecoration: "normal",
@@ -1214,7 +1214,7 @@ export function DataTable({
                       </Draggable>
                     ))}
                     <TableHead
-                      className="px-4 py-4 text-center table-header-footer-12px font-bold tracking-wider sticky top-0 bg-gradient-to-b from-slate-100/80 to-transparent dark:from-slate-800/80 dark:to-transparent backdrop-blur-md shadow-sm whitespace-nowrap"
+                      className="px-4 py-4 text-center table-header-footer-12px font-bold tracking-wider sticky top-0 bg-gradient-to-b from-white/70 via-gray-50/50 to-transparent dark:from-black/80 dark:via-black/60 dark:to-transparent backdrop-blur-lg border-r border-gray-200/30 dark:border-white/5 shadow-lg whitespace-nowrap"
                       style={{
                         textAlign: "center",
                         textDecoration: "normal",
@@ -1317,7 +1317,7 @@ export function DataTable({
                               {visibleColumns.map((column) => (
                                 <TableCell
                                   key={column.id}
-                                  className="p-4 align-middle [&:has([role=checkbox])]:pr-0 px-3 py-3 table-cell-10px text-center text-[13px] bg-transparent text-black dark:text-gray-100 font-bold whitespace-nowrap table-zoom-in"
+                                  className="p-4 align-middle [&:has([role=checkbox])]:pr-0 px-3 py-3 table-cell-10px text-center text-[13px] bg-white/40 hover:bg-gray-50/60 dark:bg-black/30 dark:hover:bg-black/40 backdrop-blur-sm border-r border-gray-200/20 dark:border-white/5 text-gray-900 dark:text-gray-100 font-bold whitespace-nowrap table-zoom-in"
                                   style={{
                                     minWidth: "100px",
                                     ...(column.dataKey === "location" && {
@@ -1702,7 +1702,7 @@ export function DataTable({
                 {visibleColumns.map((column, index) => (
                   <TableCell
                     key={column.id}
-                    className="px-3 py-3 text-center table-header-footer-12px font-semibold tracking-wide border-t border-border sticky bottom-0 bg-transparent backdrop-blur-sm shadow-sm whitespace-nowrap"
+                    className="px-3 py-3 text-center table-header-footer-12px font-semibold tracking-wide border-t border-gray-200/50 dark:border-white/10 sticky bottom-0 bg-gradient-to-t from-white/80 via-gray-100/60 to-transparent dark:from-black/90 dark:via-gray-950/70 dark:to-transparent backdrop-blur-xl border-r border-gray-200/30 dark:border-white/5 shadow-lg whitespace-nowrap"
                     style={{
                       textAlign: "center",
                       fontSize: "10px",
@@ -1739,7 +1739,7 @@ export function DataTable({
                     )}
                   </TableCell>
                 ))}
-                <TableCell className="px-3 py-3 text-center table-header-footer-12px font-semibold tracking-wide border-t border-border sticky bottom-0 bg-transparent backdrop-blur-sm shadow-sm text-foreground whitespace-nowrap" style={{ textAlign: "center", fontSize: '10px' }}>
+                <TableCell className="px-3 py-3 text-center table-header-footer-12px font-semibold tracking-wide border-t border-gray-200/50 dark:border-white/10 sticky bottom-0 bg-gradient-to-t from-white/80 via-gray-100/60 to-transparent dark:from-black/90 dark:via-gray-950/70 dark:to-transparent backdrop-blur-xl border-r border-gray-200/30 dark:border-white/5 shadow-lg text-foreground whitespace-nowrap" style={{ textAlign: "center", fontSize: '10px' }}>
                   <span className="font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">—</span>
                 </TableCell>
               </TableRow>
