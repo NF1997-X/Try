@@ -65,13 +65,24 @@ export function ImageGallery({
             mode: "lg-slide",
             download: false,
             selector: "a[data-src]",
+            // Thumbnail settings
+            thumbnail: true,
             animateThumb: true,
+            showThumbByDefault: true,
+            thumbWidth: 100,
+            thumbHeight: 80,
+            thumbMargin: 5,
+            // Zoom settings
+            actualSize: false,
+            // Animation
             startClass: "lg-start-zoom",
             backdropDuration: 300,
             hideBarsDelay: 3000,
+            // Controls
             mousewheel: true,
             enableSwipe: true,
             enableDrag: true,
+            // Video settings
             autoplayFirstVideo: false,
             youTubePlayerParams: {
               modestbranding: 1,
