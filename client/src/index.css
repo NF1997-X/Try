@@ -67,9 +67,6 @@ img, svg, video, canvas {
   image-rendering: crisp-edges;
 }
 
-/* Leaflet Map Styles */
-@import url('https://unpkg.com/leaflet@1.7.1/dist/leaflet.css');
-
 /* Smooth Dropdown/Menu Transitions - Optimized */
 [data-radix-dropdown-menu-content],
 [data-radix-popper-content-wrapper],

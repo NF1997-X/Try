@@ -120,12 +120,32 @@ const port = parseInt(process.env.PORT || '5000', 10);
     process.on('uncaughtException', (error) => {
       log(`Uncaught Exception: ${error.message}`, "error");
       console.error(error);
+      
+      // For database-related errors, try to recover instead of exiting
+      if (error.message.includes('Cannot set property message') || 
+          error.message.includes('WebSocket') ||
+          error.message.includes('ECONNREFUSED')) {
+        log('Database connection error detected, attempting to continue...', "error");
+        return; // Don't exit, let the connection pool retry
+      }
+      
       process.exit(1);
     });
 
     process.on('unhandledRejection', (reason, promise) => {
       log(`Unhandled Rejection at: ${promise}, reason: ${reason}`, "error");
       console.error(reason);
+      
+      // For database-related errors, try to recover instead of exiting
+      const reasonStr = String(reason);
+      if (reasonStr.includes('Cannot set property message') || 
+          reasonStr.includes('WebSocket') ||
+          reasonStr.includes('ECONNREFUSED') ||
+          reasonStr.includes('database')) {
+        log('Database connection rejection detected, attempting to continue...', "error");
+        return; // Don't exit, let the connection pool retry
+      }
+      
       process.exit(1);
     });
 

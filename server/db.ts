@@ -5,6 +5,9 @@ import * as schema from "@shared/schema";
 
 neonConfig.webSocketConstructor = ws;
 
+// Configure fetch for Neon (required for serverless environments)
+neonConfig.fetchConnectionCache = true;
+
 let _pool: Pool | null = null;
 let _db: ReturnType<typeof drizzle> | null = null;
 
@@ -19,10 +22,18 @@ export function initDb() {
   
   const poolConfig: PoolConfig = {
     connectionString: process.env.DATABASE_URL,
-    connectionTimeoutMillis: 5000,
+    connectionTimeoutMillis: 10000, // Increased timeout to 10s
+    idleTimeoutMillis: 30000,
+    max: 1, // Limit connections in serverless environment
   };
   
   _pool = new Pool(poolConfig);
+  
+  // Add error handlers for the pool
+  _pool.on('error', (err) => {
+    console.error('Unexpected database pool error:', err);
+  });
+  
   _db = drizzle({ client: _pool, schema });
   
   return _db;

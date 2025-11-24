@@ -35,6 +35,34 @@ import { randomUUID } from "crypto";
 import { db } from "./db.js";
 import { eq, asc, desc } from "drizzle-orm";
 
+// Helper function to retry database operations
+async function retryOperation<T>(
+  operation: () => Promise<T>,
+  maxRetries = 3,
+  delayMs = 1000
+): Promise<T> {
+  let lastError: Error | undefined;
+  
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await operation();
+    } catch (error) {
+      lastError = error as Error;
+      console.error(`Database operation failed (attempt ${attempt}/${maxRetries}):`, error);
+      
+      // Don't retry if it's the last attempt
+      if (attempt === maxRetries) {
+        break;
+      }
+      
+      // Wait before retrying (exponential backoff)
+      await new Promise(resolve => setTimeout(resolve, delayMs * attempt));
+    }
+  }
+  
+  throw lastError || new Error('Database operation failed after retries');
+}
+
 export interface IStorage {
   // Table rows
   getTableRows(): Promise<TableRow[]>;
@@ -1324,16 +1352,22 @@ export class DatabaseStorage implements IStorage {
 
   // Table rows methods
   async getTableRows(): Promise<TableRow[]> {
-    return await db.select().from(tableRows).orderBy(asc(tableRows.sortOrder));
+    return await retryOperation(() => 
+      db.select().from(tableRows).orderBy(asc(tableRows.sortOrder))
+    );
   }
 
   async getTableRow(id: string): Promise<TableRow | undefined> {
-    const [row] = await db.select().from(tableRows).where(eq(tableRows.id, id));
+    const [row] = await retryOperation(() =>
+      db.select().from(tableRows).where(eq(tableRows.id, id))
+    );
     return row || undefined;
   }
 
   async getQlKitchenRow(): Promise<TableRow | undefined> {
-    const [row] = await db.select().from(tableRows).where(eq(tableRows.sortOrder, -1));
+    const [row] = await retryOperation(() =>
+      db.select().from(tableRows).where(eq(tableRows.sortOrder, -1))
+    );
     return row || undefined;
   }
 
