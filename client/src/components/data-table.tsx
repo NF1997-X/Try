@@ -140,8 +140,8 @@ function MobileTooltip({ content, children, showBelow = false }: MobileTooltipPr
       </div>
       
       {isVisible && (
-        <div className={`absolute left-1/2 transform -translate-x-1/2 z-50 ${showBelow ? 'top-full mt-1' : 'bottom-full mb-1'}`}>
-          <div className="px-2 py-1 text-xs bg-gray-900 text-white rounded shadow-lg whitespace-nowrap">
+        <div className={`fixed left-1/2 transform -translate-x-1/2 z-[100] ${showBelow ? 'top-full mt-2' : 'bottom-full mb-2'}`} style={{ minWidth: 'max-content' }}>
+          <div className="px-3 py-2 text-xs bg-gray-900 text-white rounded-lg shadow-2xl whitespace-nowrap">
             {content}
           </div>
           <div className={`absolute left-1/2 transform -translate-x-1/2 border-4 border-transparent ${showBelow ? 'bottom-full border-b-gray-900' : 'top-full border-t-gray-900'}`} />
@@ -1136,29 +1136,33 @@ export function DataTable({
               const isSL = routeUpper.includes('SL');
               
               return (
-                <div key={route} className="flex items-center gap-0.5 px-2 py-0.5 bg-transparent border border-transparent rounded-full text-gray-400 text-xs">
+                <button 
+                  key={route} 
+                  onClick={() => toggleRouteFilter(route)}
+                  className="flex items-center gap-1 px-2 py-1 bg-blue-100/80 dark:bg-blue-900/40 hover:bg-blue-200/90 dark:hover:bg-blue-800/50 border border-blue-300/50 dark:border-blue-700/50 rounded-full transition-all cursor-pointer active:scale-95"
+                  aria-label={`Remove route filter: ${route}`}
+                >
                   {isKL ? (
-                    <img src="/assets/kl-flag.png" alt="KL" className="w-5 h-4 object-contain" />
+                    <img src="/assets/kl-flag.png" alt="KL" className="w-4 h-3 object-contain" />
                   ) : isSL ? (
-                    <img src="/assets/selangor-flag.png" alt="Selangor" className="w-5 h-4 object-contain" />
+                    <img src="/assets/selangor-flag.png" alt="Selangor" className="w-4 h-3 object-contain" />
                   ) : (
                     <Filter className="w-2.5 h-2.5" />
                   )}
-                  <span>{route}</span>
-                  <button onClick={() => toggleRouteFilter(route)} className="ml-0.5 p-0.5 hover:text-red-600 flex items-center justify-center rounded-full hover:bg-red-500/10" aria-label={`Remove route filter: ${route}`}>
-                    <X className="w-2.5 h-2.5 text-red-500" />
-                  </button>
-                </div>
+                  <span className="text-[8px] font-semibold text-blue-700 dark:text-blue-300">{route}</span>
+                </button>
               );
             })}
             {deliveryFilterValue.map(delivery => (
-              <div key={delivery} className="flex items-center gap-0.5 px-2 py-0.5 bg-transparent border border-transparent rounded-full text-gray-400 text-xs">
+              <button 
+                key={delivery} 
+                onClick={() => toggleDeliveryFilter(delivery)}
+                className="flex items-center gap-1 px-2 py-1 bg-green-100/80 dark:bg-green-900/40 hover:bg-green-200/90 dark:hover:bg-green-800/50 border border-green-300/50 dark:border-green-700/50 rounded-full transition-all cursor-pointer active:scale-95"
+                aria-label={`Remove delivery filter: ${delivery}`}
+              >
                 <Filter className="w-2.5 h-2.5" />
-                <span>{delivery}</span>
-                <button onClick={() => toggleDeliveryFilter(delivery)} className="ml-0.5 p-0.5 hover:text-red-600 flex items-center justify-center rounded-full hover:bg-red-500/10" aria-label={`Remove delivery filter: ${delivery}`}>
-                  <X className="w-2.5 h-2.5 text-red-500" />
-                </button>
-              </div>
+                <span className="text-[8px] font-semibold text-green-700 dark:text-green-300">{delivery}</span>
+              </button>
             ))}
             <div className="ml-auto text-muted-foreground text-xs">
               {filteredRowsCount} of {totalRowsCount} results
