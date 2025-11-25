@@ -615,11 +615,11 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
           <div className={`flex justify-center items-center w-full transition-all duration-300 my-2 ${showActionsMenu ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
             <Button
               variant="ghost"
-              className="h-11 w-11 p-0 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 active:scale-95 transition-all duration-200 rounded-2xl"
+              className="h-11 w-11 p-0 bg-transparent border-transparent hover:bg-transparent hover:border-transparent shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 active:scale-95 transition-all duration-200 rounded-2xl"
               onClick={() => setShowActionsMenu(!showActionsMenu)}
               data-testid="button-actions-menu"
             >
-              <FolderOpen className="w-5 h-5 text-white" />
+              <FolderOpen className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             </Button>
           </div>
           

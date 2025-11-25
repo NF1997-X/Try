@@ -118,23 +118,27 @@ export function Navigation({ editMode, onEditModeRequest, onShowCustomization, o
                     sideOffset={2}
                     alignOffset={-4}
                   >
-                    <DropdownMenuItem 
-                      onClick={() => navigate('/share/tzqe9a')}
-                      className="cursor-pointer"
-                      data-testid="submenu-share-example"
-                    >
-                      <Link2 className="w-4 h-4 mr-2 text-blue-500 dark:text-blue-400" />
-                      <span style={{fontSize: '10px'}}>Share Link Page (Example)</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={() => navigate('/custom/8m2v27')}
-                      className="cursor-pointer"
-                      data-testid="submenu-custom-example"
-                    >
-                      <Table2 className="w-4 h-4 mr-2 text-green-500 dark:text-green-400" />
-                      <span style={{fontSize: '10px'}}>Custom Page (Example)</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-gray-200/50 dark:bg-gray-700/50" />
+                    {editMode && (
+                      <>
+                        <DropdownMenuItem 
+                          onClick={() => navigate('/share/tzqe9a')}
+                          className="cursor-pointer"
+                          data-testid="submenu-share-example"
+                        >
+                          <Link2 className="w-4 h-4 mr-2 text-blue-500 dark:text-blue-400" />
+                          <span style={{fontSize: '10px'}}>Share Link (Preview)</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem 
+                          onClick={() => navigate('/custom/8m2v27')}
+                          className="cursor-pointer"
+                          data-testid="submenu-custom-example"
+                        >
+                          <Table2 className="w-4 h-4 mr-2 text-green-500 dark:text-green-400" />
+                          <span style={{fontSize: '10px'}}>Custom Page (Preview)</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator className="bg-gray-200/50 dark:bg-gray-700/50" />
+                      </>
+                    )}
                     <DropdownMenuItem 
                       onClick={() => navigate('/custom-tables')}
                       className="cursor-pointer"
@@ -246,6 +250,15 @@ export function Navigation({ editMode, onEditModeRequest, onShowCustomization, o
                         >
                           <Palette className="w-4 h-4 mr-2 text-purple-500 dark:text-purple-400" />
                           <span style={{fontSize: '10px'}}>Bulk Edit Color</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator className="bg-gray-200/50 dark:bg-gray-700/50" />
+                        <DropdownMenuItem 
+                          onClick={onSaveLayout}
+                          className="cursor-pointer"
+                          data-testid="submenu-save-layout"
+                        >
+                          <Save className="w-4 h-4 mr-2 text-green-500 dark:text-green-400" />
+                          <span style={{fontSize: '10px'}}>Save Layout</span>
                         </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
