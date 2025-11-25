@@ -60,6 +60,7 @@ import {
   Share2,
   Power,
   Bookmark,
+  ImageIcon,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -1496,7 +1497,7 @@ export function DataTable({
                                       <GripVertical className="w-4 h-4" />
                                     </div>
                                     <div className="flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity">
-                                    {/* Image button - always visible */}
+                                    {/* Image button - always visible, icon changes based on mode */}
                                     <Button
                                       size="sm"
                                       variant="ghost"
@@ -1512,9 +1513,13 @@ export function DataTable({
                                         onUpdateRow.variables?.id === row.id
                                       }
                                       data-testid={`button-add-image-${row.id}`}
-                                      title="Manage images"
+                                      title={editMode ? "Add/Edit images" : "View images"}
                                     >
-                                      <PlusCircle className="w-4 h-4" />
+                                      {editMode ? (
+                                        <PlusCircle className="w-4 h-4" />
+                                      ) : (
+                                        <ImageIcon className="w-4 h-4" />
+                                      )}
                                     </Button>
                                     {editMode && (
                                       <>
