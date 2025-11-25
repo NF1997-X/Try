@@ -1417,12 +1417,12 @@ export function DataTable({
                                         }
                                       />
                                     ) : (
-                                      <span className="text-[9px] text-black dark:text-slate-100 font-medium">
+                                      <span className="text-[9px] text-black dark:text-slate-400 font-medium">
                                         {getCellValue(row, column, index) || '—'}
                                       </span>
                                     )
                                   ) : column.dataKey === "id" ? (
-                                    <span className="font-mono text-black dark:text-slate-100" style={{ fontSize: '10px' }}>
+                                    <span className="font-mono text-black dark:text-slate-400" style={{ fontSize: '10px' }}>
                                       {getCellValue(row, column, index)}
                                     </span>
                                   ) : column.dataKey === "no" && editMode && row.location !== "QL Kitchen" ? (
@@ -1452,10 +1452,13 @@ export function DataTable({
                                       }
                                     />
                                   ) : (
-                                    <span className="text-[9px] text-black dark:text-slate-100 font-medium">
+                                    <span className="text-[9px] text-black dark:text-slate-400 font-medium">
                                       {column.dataKey === "kilometer" ? (
                                         <MobileTooltip
                                           content={(() => {
+                                            if (row.location === "QL Kitchen") {
+                                              return "Starting point - Front of route";
+                                            }
                                             const segmentDistance = (row as any).segmentDistance;
                                             if (segmentDistance && typeof segmentDistance === "number" && segmentDistance > 0) {
                                               return `${segmentDistance.toFixed(2)} km`;
