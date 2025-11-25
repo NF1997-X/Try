@@ -1005,12 +1005,12 @@ export function DataTable({
                 </Button>
               </PopoverTrigger>
             <PopoverContent className="w-64 p-0" align="start">
-              <div className="space-y-4 p-4 text-sm btn-glass">
+              <div className="p-3 btn-glass rounded-lg">
                 {/* Routes Section - Hidden in shared view */}
                 {!isSharedView && (
                   <>
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
+                    <div className="space-y-1.5 text-sm">
+                      <div className="flex items-center justify-between mb-2">
                         <h4 className="font-medium text-sm flex items-center gap-2">
                           <MapPin className="w-3 h-3 text-accent" />
                           Routes ({filterValue.length} selected)
@@ -1022,7 +1022,7 @@ export function DataTable({
                           </Button>
                         )}
                       </div>
-                      <div className="space-y-2 max-h-32 overflow-y-auto border rounded p-2 bg-background/50">
+                      <div className="space-y-1.5 max-h-32 overflow-y-auto border rounded p-2 bg-background/50">
                         {routeOptions.filter(route => route !== "WH").map(route => (
                           <div key={route} className="flex items-center space-x-2">
                             <Checkbox
@@ -1039,13 +1039,13 @@ export function DataTable({
                     </div>
                     
                     {/* Separator */}
-                    <div className="border-t border-border/20"></div>
+                    <div className="border-t border-border/20 my-2"></div>
                   </>
                 )}
                 
                 {/* Trips Section (Delivery Filter) */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
+                <div className="space-y-1.5 text-sm">
+                  <div className="flex items-center justify-between mb-2">
                     <h4 className="font-medium text-sm flex items-center gap-2">
                       <Filter className="w-3 h-3 text-orange-500" />
                       Hide Deliveries ({deliveryFilterValue.length} hidden)
@@ -1057,7 +1057,7 @@ export function DataTable({
                       </Button>
                     )}
                   </div>
-                  <div className="space-y-2 max-h-32 overflow-y-auto border rounded p-2 bg-background/50">
+                  <div className="space-y-1.5 max-h-32 overflow-y-auto border rounded p-2 bg-background/50">
                     {deliveryOptions.map(delivery => (
                       <div key={delivery} className="flex items-center space-x-2">
                         <Checkbox
@@ -1754,8 +1754,8 @@ export function DataTable({
           {!disablePagination && (
             <div className="flex flex-col items-center justify-center gap-2 px-4 py-2 border-t border-blue-200 dark:border-blue-500/20 transition-smooth-fast">
               <div className="flex items-center justify-center gap-1.5 w-full">
-                {/* Show First button only when currentPage > 3 (has 3+ pages before) */}
-                {currentPage > 3 && (
+                {/* Show First button only when total pages > 5 and not showing page 1 */}
+                {totalPages > 5 && currentPage > 3 && (
                   <Button
                     variant="outline"
                     size="xs"
@@ -1769,10 +1769,10 @@ export function DataTable({
 
                 <div className="flex items-center gap-1">
                   {(() => {
-                    // Calculate sliding window of max 6 pages
-                    const maxButtons = 6;
+                    // Max 5 buttons untuk page numbers
+                    const maxButtons = 5;
                     
-                    // If total pages <= maxButtons, show all pages
+                    // Jika total pages <= 5, show all pages (no arrows)
                     if (totalPages <= maxButtons) {
                       const pages = [];
                       for (let i = 1; i <= totalPages; i++) {
@@ -1798,13 +1798,21 @@ export function DataTable({
                       });
                     }
                     
-                    // For more than maxButtons pages, calculate sliding window
-                    let startPage = Math.max(1, currentPage - 3);
-                    let endPage = Math.min(totalPages, startPage + maxButtons - 1);
-
-                    // Adjust if we're near the end to always show maxButtons
-                    if (endPage - startPage < maxButtons - 1) {
-                      startPage = Math.max(1, endPage - maxButtons + 1);
+                    // For more than 5 pages, calculate sliding window
+                    let startPage, endPage;
+                    
+                    if (currentPage <= 3) {
+                      // Near start: show 1 2 3 4 + arrow last
+                      startPage = 1;
+                      endPage = 4;
+                    } else if (currentPage >= totalPages - 2) {
+                      // Near end: show arrow first + last 4 pages
+                      startPage = totalPages - 3;
+                      endPage = totalPages;
+                    } else {
+                      // Middle: show arrow first + 2 3 4 + arrow last
+                      startPage = currentPage - 1;
+                      endPage = currentPage + 1;
                     }
 
                     const pages = [];
@@ -1833,8 +1841,8 @@ export function DataTable({
                   })()}
                 </div>
 
-                {/* Show Last button only when (totalPages - currentPage) >= 3 (has 3+ pages after) */}
-                {(totalPages - currentPage) >= 3 && (
+                {/* Show Last button only when total pages > 5 and not showing last page */}
+                {totalPages > 5 && currentPage < totalPages - 2 && (
                   <Button
                     variant="outline"
                     size="xs"

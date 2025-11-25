@@ -451,6 +451,7 @@ import { Pool, neonConfig } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-serverless";
 import ws from "ws";
 neonConfig.webSocketConstructor = ws;
+neonConfig.fetchConnectionCache = true;
 var _pool = null;
 var _db = null;
 function initDb() {
@@ -462,9 +463,16 @@ function initDb() {
   }
   const poolConfig = {
     connectionString: process.env.DATABASE_URL,
-    connectionTimeoutMillis: 5e3
+    connectionTimeoutMillis: 1e4,
+    // Increased timeout to 10s
+    idleTimeoutMillis: 3e4,
+    max: 1
+    // Limit connections in serverless environment
   };
   _pool = new Pool(poolConfig);
+  _pool.on("error", (err) => {
+    console.error("Unexpected database pool error:", err);
+  });
   _db = drizzle({ client: _pool, schema: schema_exports });
   return _db;
 }
@@ -483,6 +491,22 @@ var db = new Proxy({}, {
 
 // server/storage.ts
 import { eq, asc, desc } from "drizzle-orm";
+async function retryOperation(operation, maxRetries = 3, delayMs = 1e3) {
+  let lastError;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await operation();
+    } catch (error) {
+      lastError = error;
+      console.error(`Database operation failed (attempt ${attempt}/${maxRetries}):`, error);
+      if (attempt === maxRetries) {
+        break;
+      }
+      await new Promise((resolve) => setTimeout(resolve, delayMs * attempt));
+    }
+  }
+  throw lastError || new Error("Database operation failed after retries");
+}
 var DatabaseStorage = class {
   constructor() {
     this.initializeData().catch(console.error);
@@ -843,14 +867,20 @@ var DatabaseStorage = class {
   }
   // Table rows methods
   async getTableRows() {
-    return await db.select().from(tableRows).orderBy(asc(tableRows.sortOrder));
+    return await retryOperation(
+      () => db.select().from(tableRows).orderBy(asc(tableRows.sortOrder))
+    );
   }
   async getTableRow(id) {
-    const [row] = await db.select().from(tableRows).where(eq(tableRows.id, id));
+    const [row] = await retryOperation(
+      () => db.select().from(tableRows).where(eq(tableRows.id, id))
+    );
     return row || void 0;
   }
   async getQlKitchenRow() {
-    const [row] = await db.select().from(tableRows).where(eq(tableRows.sortOrder, -1));
+    const [row] = await retryOperation(
+      () => db.select().from(tableRows).where(eq(tableRows.sortOrder, -1))
+    );
     return row || void 0;
   }
   async createTableRow(insertRow) {
@@ -1758,7 +1788,7 @@ async function registerRoutes(app2) {
       if (!validationResult.success) {
         return res.status(400).json({ message: "Invalid row ID format" });
       }
-      const { imageUrl, caption } = req.body;
+      const { imageUrl, caption, thumbnail } = req.body;
       if (!imageUrl || typeof imageUrl !== "string") {
         return res.status(400).json({ message: "imageUrl is required" });
       }
@@ -1773,7 +1803,8 @@ async function registerRoutes(app2) {
       const newImage = {
         url: imageUrl,
         caption: caption && typeof caption === "string" ? caption : "",
-        type: "image"
+        type: "image",
+        thumbnail: thumbnail && typeof thumbnail === "string" ? thumbnail : void 0
       };
       const updatedImages = [...row.images, newImage];
       const updatedRow = await storage.updateTableRow(req.params.id, { images: updatedImages });
@@ -1788,7 +1819,7 @@ async function registerRoutes(app2) {
       if (!validationResult.success) {
         return res.status(400).json({ message: "Invalid row ID format" });
       }
-      const { imageUrl, caption } = req.body;
+      const { imageUrl, caption, thumbnail } = req.body;
       const imageIndex = parseInt(req.params.imageIndex);
       if (isNaN(imageIndex) || imageIndex < 0 || !Number.isInteger(imageIndex)) {
         return res.status(400).json({ message: "Image index must be a non-negative integer" });
@@ -1811,7 +1842,7 @@ async function registerRoutes(app2) {
         url: imageUrl !== void 0 ? imageUrl : updatedImages[imageIndex].url,
         caption: caption !== void 0 ? caption : updatedImages[imageIndex].caption,
         type: updatedImages[imageIndex].type || "image",
-        thumbnail: updatedImages[imageIndex].thumbnail
+        thumbnail: thumbnail !== void 0 ? thumbnail : updatedImages[imageIndex].thumbnail
       };
       const updatedRow = await storage.updateTableRow(req.params.id, { images: updatedImages });
       res.json(updatedRow);
