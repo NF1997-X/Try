@@ -1496,35 +1496,28 @@ export function DataTable({
                                       <GripVertical className="w-4 h-4" />
                                     </div>
                                     <div className="flex items-center gap-3 opacity-60 group-hover:opacity-100 transition-opacity">
+                                    {/* Image button - always visible */}
+                                    <Button
+                                      size="sm"
+                                      variant="ghost"
+                                      className={`bg-transparent border-transparent hover:bg-transparent hover:border-transparent text-blue-400 dark:text-blue-300 hover:text-blue-500 dark:hover:text-blue-400 ${
+                                        onUpdateRow.isPending &&
+                                        onUpdateRow.variables?.id === row.id
+                                          ? "opacity-50"
+                                          : ""
+                                      }`}
+                                      onClick={() => onSelectRowForImage(row.id)}
+                                      disabled={
+                                        onUpdateRow.isPending &&
+                                        onUpdateRow.variables?.id === row.id
+                                      }
+                                      data-testid={`button-add-image-${row.id}`}
+                                      title="Manage images"
+                                    >
+                                      <PlusCircle className="w-4 h-4" />
+                                    </Button>
                                     {editMode && (
                                       <>
-                                        <Button
-                                          size="sm"
-                                          variant="ghost"
-                                          className={`bg-transparent border-transparent hover:bg-transparent hover:border-transparent text-blue-400 dark:text-blue-300 hover:text-blue-500 dark:hover:text-blue-400 ${
-                                            onUpdateRow.isPending &&
-                                            onUpdateRow.variables?.id === row.id
-                                              ? "opacity-50"
-                                              : ""
-                                          }`}
-                                          onClick={() => {
-                                            if (editMode) {
-                                              onSelectRowForImage(row.id);
-                                            } else {
-                                              onSelectRowForImage(
-                                                "access-denied",
-                                              );
-                                            }
-                                          }}
-                                          disabled={
-                                            onUpdateRow.isPending &&
-                                            onUpdateRow.variables?.id === row.id
-                                          }
-                                          data-testid={`button-add-image-${row.id}`}
-                                          title="Add image"
-                                        >
-                                          <PlusCircle className="w-4 h-4" />
-                                        </Button>
                                       <Button
                                         size="sm"
                                         variant="ghost"

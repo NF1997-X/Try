@@ -295,9 +295,9 @@ export class MemStorage implements IStorage {
         id: randomUUID(),
         no: 999,
         route: "Warehouse",
-        code: "QL001",
+        code: "QLK",
         location: "QL Kitchen",
-        delivery: "Daily",
+        delivery: "Available",
         info: "Special QL Kitchen warehouse route",
         tngSite: "QL Central",
         tngRoute: "0.00",
@@ -1092,7 +1092,7 @@ export class DatabaseStorage implements IStorage {
 
       // Always ensure QL Kitchen row exists
       const qlKitchenExists = existingRows.some(row => 
-        row.route === "Warehouse" && row.location === "QL Kitchen" && row.sortOrder === -1
+        row.location === "QL Kitchen" && row.sortOrder === -1
       );
 
       if (!qlKitchenExists) {
@@ -1101,9 +1101,9 @@ export class DatabaseStorage implements IStorage {
           await db.insert(tableRows).values({
             no: 999,
             route: "Warehouse",
-            code: "QL001",
+            code: "QLK",
             location: "QL Kitchen",
-            delivery: "Daily",
+            delivery: "Available",
             info: "Special QL Kitchen warehouse route",
             tngSite: "QL Central",
             tngRoute: "0.00",

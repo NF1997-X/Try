@@ -41,8 +41,8 @@ export function ColumnCustomizationModal({
   useEffect(() => {
     if (columns.length > 0) {
       const columnsToHide = editMode 
-        ? ['longitude', 'latitude', 'tollPrice', 'tngRoute'] // In edit mode, hide longitude, latitude, tollPrice, tngRoute (TRIP)
-        : ['longitude', 'latitude', 'info', 'tollPrice', 'tngRoute']; // In view mode, also hide info column, tollPrice, tngRoute (TRIP)
+        ? ['longitude', 'latitude', 'tollPrice', 'tngRoute', 'images'] // In edit mode, hide longitude, latitude, tollPrice, tngRoute (TRIP), images
+        : ['longitude', 'latitude', 'info', 'tollPrice', 'tngRoute', 'images']; // In view mode, also hide info column, tollPrice, tngRoute (TRIP), images
       
       const columnItems: ColumnItem[] = columns
         .filter(column => !columnsToHide.includes(column.dataKey))
@@ -86,8 +86,8 @@ export function ColumnCustomizationModal({
 
   const handleReset = () => {
     const columnsToHide = editMode 
-      ? ['longitude', 'latitude', 'tollPrice', 'tngRoute'] // In edit mode, hide longitude, latitude, tollPrice, tngRoute (TRIP)
-      : ['longitude', 'latitude', 'info', 'tollPrice', 'tngRoute']; // In view mode, also hide info column, tollPrice, tngRoute (TRIP)
+      ? ['longitude', 'latitude', 'tollPrice', 'tngRoute', 'images'] // In edit mode, hide longitude, latitude, tollPrice, tngRoute (TRIP), images
+      : ['longitude', 'latitude', 'info', 'tollPrice', 'tngRoute', 'images']; // In view mode, also hide info column, tollPrice, tngRoute (TRIP), images
     
     const resetColumns = columns
       .filter(column => !columnsToHide.includes(column.dataKey))
