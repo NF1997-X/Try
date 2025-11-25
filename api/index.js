@@ -293,6 +293,8 @@ var createInsertSchema = (entity, refine) => {
 // shared/schema.ts
 import { z as z2 } from "zod";
 var mediaSchema = z2.object({
+  id: z2.string().optional(),
+  // Optional ID for media library identification
   url: z2.string(),
   caption: z2.string().optional().default(""),
   type: z2.enum(["image", "video"]).default("image"),
@@ -457,6 +459,11 @@ var _db = null;
 function initDb() {
   if (_db) return _db;
   if (!process.env.DATABASE_URL) {
+    if (process.env.NODE_ENV === "development") {
+      console.warn("\u26A0\uFE0F  DATABASE_URL not set. Running in development mode without database.");
+      console.warn("\u26A0\uFE0F  Data will not persist. Set DATABASE_URL for full functionality.");
+      return null;
+    }
     throw new Error(
       "DATABASE_URL must be set. Did you forget to provision a database?"
     );
@@ -638,16 +645,16 @@ var DatabaseStorage = class {
         await db.insert(tableColumns).values(columnsWithOrder);
       }
       const qlKitchenExists = existingRows.some(
-        (row) => row.route === "Warehouse" && row.location === "QL Kitchen" && row.sortOrder === -1
+        (row) => row.location === "QL Kitchen" && row.sortOrder === -1
       );
       if (!qlKitchenExists) {
         try {
           await db.insert(tableRows).values({
             no: 999,
             route: "Warehouse",
-            code: "QL001",
+            code: "QLK",
             location: "QL Kitchen",
-            delivery: "Daily",
+            delivery: "Available",
             info: "Special QL Kitchen warehouse route",
             tngSite: "QL Central",
             tngRoute: "0.00",

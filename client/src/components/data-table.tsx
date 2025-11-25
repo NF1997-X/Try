@@ -1315,7 +1315,7 @@ export function DataTable({
                                     return "bg-white/30 dark:bg-black/20 backdrop-blur-sm";
                                   }
                                 })()
-                              } hover:bg-gray-50/70 dark:hover:bg-black/40 table-cell-unique-transition ${
+                              } hover:bg-blue-50/40 hover:shadow-[0_2px_12px_rgba(59,130,246,0.15)] dark:hover:bg-blue-950/30 dark:hover:shadow-[0_2px_12px_rgba(59,130,246,0.25)] hover:scale-[1.01] table-cell-unique-transition ${
                                 snapshot.isDragging ? "drag-elevate" : ""
                               }`}
                               data-testid={`table-row-${row.id}`}
