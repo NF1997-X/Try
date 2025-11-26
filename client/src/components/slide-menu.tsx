@@ -86,17 +86,32 @@ export function SlideMenu({
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Full Page Backdrop Blur */}
       <div 
-        className="fixed inset-0 bg-black/50 z-50 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-lg z-[60] animate-in fade-in duration-200"
         onClick={() => {
           onOpenChange(false);
           setCurrentView('main');
         }}
+        style={{
+          WebkitBackdropFilter: 'blur(12px)',
+          backdropFilter: 'blur(12px)',
+        }}
       />
       
       {/* Menu Panel - Premium iOS Style */}
-      <div className="fixed top-16 right-4 z-50 w-[calc(100vw-2rem)] sm:w-[360px] max-w-[360px] bg-white/98 dark:bg-gray-900/98 backdrop-blur-3xl border border-gray-200/40 dark:border-gray-700/40 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)] rounded-[24px] overflow-hidden">
+      <div 
+        className="fixed top-16 right-4 z-[70] w-[calc(100vw-2rem)] sm:w-[360px] max-w-[360px] bg-white/98 dark:bg-gray-900/98 backdrop-blur-3xl border border-gray-200/40 dark:border-gray-700/40 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6)] rounded-[24px] overflow-hidden animate-in slide-in-from-right duration-300"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="menu-title"
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') {
+            onOpenChange(false);
+            setCurrentView('main');
+          }
+        }}
+      >
         <div className="relative h-[70vh] max-h-[600px] overflow-hidden">
           {/* Main Menu */}
           <div 
