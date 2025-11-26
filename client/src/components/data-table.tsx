@@ -1251,7 +1251,7 @@ export function DataTable({
                         (_, index) => (
                           <tr
                             key={`skeleton-${index}`}
-                            className={`skeleton-row border-b border-gray-200/20 dark:border-white/5 shadow-md dark:shadow-none ${
+                            className={`skeleton-row shadow-md dark:shadow-none ${
                               index % 2 === 0 
                                 ? 'bg-white/80 dark:bg-gray-900/50' 
                                 : 'bg-blue-50/50 dark:bg-blue-900/20'
@@ -1298,7 +1298,7 @@ export function DataTable({
                             <TableRow
                               ref={provided.innerRef}
                               {...provided.draggableProps}
-                              className={`table-row-glass group shadow-lg dark:shadow-none ${
+                              className={`table-row-glass group shadow-lg dark:shadow-none border-none ${
                                 (() => {
                                   // Main page (NOT shared view): only dim if power off (inactive)
                                   if (!isSharedView) {
