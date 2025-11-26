@@ -1491,6 +1491,80 @@ export function DataTable({
                               >
                                 <div className="flex flex-col items-center gap-1">
                                   <div className="flex items-center gap-1">
+                                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                    {editMode ? (
+                                      <>
+                                        {/* Manage Image button - edit mode only */}
+                                        <Button
+                                          size="sm"
+                                          variant="ghost"
+                                          className={`bg-transparent border-transparent hover:bg-transparent hover:border-transparent text-blue-400 dark:text-blue-300 hover:text-blue-500 dark:hover:text-blue-400 ${
+                                            onUpdateRow.isPending &&
+                                            onUpdateRow.variables?.id === row.id
+                                              ? "opacity-50"
+                                              : ""
+                                          }`}
+                                          onClick={() => onSelectRowForImage(row.id)}
+                                          disabled={
+                                            onUpdateRow.isPending &&
+                                            onUpdateRow.variables?.id === row.id
+                                          }
+                                          data-testid={`button-add-image-${row.id}`}
+                                          title="Manage images"
+                                        >
+                                          <PlusCircle className="w-4 h-4" />
+                                        </Button>
+                                        {/* Edit Modal button - edit mode only */}
+                                        <InfoModal
+                                          info={row.info || ""}
+                                          rowId={row.id}
+                                          code={row.code}
+                                          route={row.route}
+                                          location={row.location}
+                                          latitude={row.latitude ? String(row.latitude) : undefined}
+                                          longitude={row.longitude ? String(row.longitude) : undefined}
+                                          qrCode={row.qrCode || undefined}
+                                          no={row.no}
+                                          markerColor={row.markerColor || undefined}
+                                          images={row.images || []}
+                                          onUpdateRow={(updates) =>
+                                            onUpdateRow.mutate({
+                                              id: row.id,
+                                              updates,
+                                            })
+                                          }
+                                          onOpenImageModal={() => onSelectRowForImage(row.id)}
+                                          editMode={editMode}
+                                          allRows={rows}
+                                          iconType="filetext"
+                                        />
+                                      </>
+                                    ) : (
+                                      /* Info button - normal mode only */
+                                      <InfoModal
+                                        info={row.info || ""}
+                                        rowId={row.id}
+                                        code={row.code}
+                                        route={row.route}
+                                        location={row.location}
+                                        latitude={row.latitude ? String(row.latitude) : undefined}
+                                        longitude={row.longitude ? String(row.longitude) : undefined}
+                                        qrCode={row.qrCode || undefined}
+                                        no={row.no}
+                                        markerColor={row.markerColor || undefined}
+                                        images={row.images || []}
+                                        onUpdateRow={(updates) =>
+                                          onUpdateRow.mutate({
+                                            id: row.id,
+                                            updates,
+                                          })
+                                        }
+                                        onOpenImageModal={() => onSelectRowForImage(row.id)}
+                                        editMode={editMode}
+                                        allRows={rows}
+                                        iconType="info"
+                                      />
+                                    )}
                                     <div
                                       {...provided.dragHandleProps}
                                       className={`p-2 rounded ${
@@ -1501,30 +1575,33 @@ export function DataTable({
                                     >
                                       <GripVertical className="w-4 h-4" />
                                     </div>
-                                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                    <InfoModal
-                                      info={row.info || ""}
-                                      rowId={row.id}
-                                      code={row.code}
-                                      route={row.route}
-                                      location={row.location}
-                                      latitude={row.latitude ? String(row.latitude) : undefined}
-                                      longitude={row.longitude ? String(row.longitude) : undefined}
-                                      qrCode={row.qrCode || undefined}
-                                      no={row.no}
-                                      markerColor={row.markerColor || undefined}
-                                      images={row.images || []}
-                                      onUpdateRow={(updates) =>
-                                        onUpdateRow.mutate({
-                                          id: row.id,
-                                          updates,
-                                        })
-                                      }
-                                      onOpenImageModal={() => onSelectRowForImage(row.id)}
-                                      editMode={editMode}
-                                      allRows={rows}
-                                      iconType="info"
-                                    />
+                                    {editMode && (
+                                      /* Delete button - edit mode only */
+                                      <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        className={`bg-transparent border-transparent hover:bg-transparent hover:border-transparent text-blue-400 dark:text-blue-300 hover:text-blue-500 dark:hover:text-blue-400 ${
+                                          onDeleteRow.isPending &&
+                                          onDeleteRow.variables === row.id
+                                            ? "mutation-loading"
+                                            : ""
+                                        }`}
+                                        onClick={() => handleDeleteClick(row.id)}
+                                        disabled={
+                                          onDeleteRow.isPending &&
+                                          onDeleteRow.variables === row.id
+                                        }
+                                        data-testid={`button-delete-row-${row.id}`}
+                                        title="Delete row"
+                                      >
+                                        {onDeleteRow.isPending &&
+                                        onDeleteRow.variables === row.id ? (
+                                          <InlineLoading type="particles" />
+                                        ) : (
+                                          <Trash className="w-4 h-4" />
+                                        )}
+                                      </Button>
+                                    )}
                                     {editMode ? (
                                       <Select
                                         value={row.deliveryAlt || "normal"}
