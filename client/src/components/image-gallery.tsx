@@ -61,20 +61,15 @@ export function ImageGallery({
               lgFullscreen.default,
               lgVideo.default,
             ],
-            speed: 500,
-            mode: "lg-fade",
-            download: true,
+            speed: 800,
             selector: "a[data-src]",
-            // Thumbnail settings - auto follow image
+            // Thumbnail settings
             thumbnail: true,
             animateThumb: true,
             showThumbByDefault: true,
-            thumbWidth: 80,
-            thumbHeight: 60,
-            thumbMargin: 8,
-            exThumbImage: 'data-thumb',
-            // Zoom settings
-            actualSize: true,
+            thumbWidth: 100,
+            thumbHeight: 80,
+            thumbMargin: 5,
             // Animation
             startClass: "lg-start-zoom",
             backdropDuration: 200,
@@ -182,7 +177,6 @@ export function ImageGallery({
             key={index}
             href="javascript:void(0)"
             data-src={media.url}
-            data-thumb={isVideo && media.thumbnail ? media.thumbnail : media.url}
             data-sub-html={media.caption}
             data-video={videoData}
             data-poster={isVideo && media.thumbnail ? media.thumbnail : undefined}
