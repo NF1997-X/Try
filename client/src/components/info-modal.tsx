@@ -44,6 +44,7 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
   const [isSaving, setIsSaving] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
+  const [qrScanning, setQrScanning] = useState(false);
   
   // State for tracking edits
   const [originalData, setOriginalData] = useState({ info: "", qrCode: "", latitude: "", longitude: "", markerColor: "" });
@@ -122,6 +123,11 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
   const handleQrCodeClick = async () => {
     if (!qrCode) return;
 
+    setQrScanning(true);
+    
+    // Show scanning animation for at least 800ms
+    await new Promise(resolve => setTimeout(resolve, 800));
+
     setIsScanning(true);
     try {
       let imageSource: string | Blob = qrCode;
@@ -139,9 +145,11 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
       // Try to decode QR code from the image
       const result = await QrScanner.scanImage(imageSource, { returnDetailedScanResult: true });
       setScannedResult(result.data);
+      setQrScanning(false);
       setShowConfirmDialog(true);
     } catch (error) {
       console.error("QR scanning error:", error);
+      setQrScanning(false);
       // Show error toast instead of incorrect navigation
       alert("Could not read QR code from the image. Please check if the image contains a valid QR code.");
     } finally {
@@ -673,15 +681,24 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                 <div className="flex items-center justify-center animate-in slide-in-from-right-10 duration-300" style={{animationDelay: '100ms'}}>
                   <Button
                     variant="ghost"
-                    className="h-10 w-10 p-0 bg-transparent hover:bg-purple-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl disabled:opacity-50 border border-purple-500/30"
+                    className="h-10 w-10 p-0 bg-transparent hover:bg-purple-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl disabled:opacity-50 border border-purple-500/30 relative overflow-hidden"
                     onClick={() => {
                       handleQrCodeClick();
                       setShowActionsMenu(false);
                     }}
-                    disabled={isScanning}
+                    disabled={isScanning || qrScanning}
                     data-testid={`button-qrcode-${rowId}`}
                   >
-                    <QrCode className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                    {qrScanning ? (
+                      <>
+                        <span className="text-[8px] font-medium text-purple-600 dark:text-purple-400 animate-pulse">
+                          Scanning...
+                        </span>
+                        <div className="absolute inset-0 bg-purple-500/20 animate-pulse" />
+                      </>
+                    ) : (
+                      <QrCode className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                    )}
                   </Button>
                 </div>
               )}
