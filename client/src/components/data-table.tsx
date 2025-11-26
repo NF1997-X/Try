@@ -142,11 +142,13 @@ function MobileTooltip({ content, children, showBelow = false }: MobileTooltipPr
       </div>
       
       {isVisible && (
-        <div className={`fixed left-1/2 transform -translate-x-1/2 z-[100] ${showBelow ? 'top-full mt-2' : 'bottom-full mb-2'}`} style={{ minWidth: 'max-content' }}>
-          <div className="px-3 py-2 text-xs bg-gray-900 text-white rounded-lg shadow-2xl whitespace-nowrap">
+        <div 
+          className={`absolute left-0 z-[100] pointer-events-none ${showBelow ? 'top-full mt-2' : 'bottom-full mb-2'}`}
+        >
+          <div className="px-3 py-2 text-xs bg-gray-900 dark:bg-gray-800 text-white rounded-lg shadow-2xl whitespace-nowrap border border-gray-700">
             {content}
           </div>
-          <div className={`absolute left-1/2 transform -translate-x-1/2 border-4 border-transparent ${showBelow ? 'bottom-full border-b-gray-900' : 'top-full border-t-gray-900'}`} />
+          <div className={`absolute left-4 w-0 h-0 border-4 border-transparent ${showBelow ? 'bottom-full border-b-gray-900 dark:border-b-gray-800' : 'top-full border-t-gray-900 dark:border-t-gray-800'}`} />
         </div>
       )}
     </div>
