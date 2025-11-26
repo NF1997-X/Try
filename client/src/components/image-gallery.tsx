@@ -61,27 +61,30 @@ export function ImageGallery({
               lgFullscreen.default,
               lgVideo.default,
             ],
-            speed: 800,
-            mode: "lg-slide",
-            download: false,
+            speed: 500,
+            mode: "lg-fade",
+            download: true,
             selector: "a[data-src]",
-            // Thumbnail settings
+            // Thumbnail settings - auto follow image
             thumbnail: true,
             animateThumb: true,
             showThumbByDefault: true,
-            thumbWidth: 100,
-            thumbHeight: 80,
-            thumbMargin: 5,
+            thumbWidth: 80,
+            thumbHeight: 60,
+            thumbMargin: 8,
+            exThumbImage: 'data-thumb',
             // Zoom settings
-            actualSize: false,
+            actualSize: true,
             // Animation
             startClass: "lg-start-zoom",
-            backdropDuration: 300,
-            hideBarsDelay: 3000,
+            backdropDuration: 200,
+            hideBarsDelay: 4000,
             // Controls
             mousewheel: true,
             enableSwipe: true,
             enableDrag: true,
+            // Counter
+            counter: true,
             // Video settings
             autoplayFirstVideo: false,
             youTubePlayerParams: {
@@ -179,6 +182,7 @@ export function ImageGallery({
             key={index}
             href="javascript:void(0)"
             data-src={media.url}
+            data-thumb={isVideo && media.thumbnail ? media.thumbnail : media.url}
             data-sub-html={media.caption}
             data-video={videoData}
             data-poster={isVideo && media.thumbnail ? media.thumbnail : undefined}

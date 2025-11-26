@@ -60,7 +60,7 @@ export function Navigation({ editMode, onEditModeRequest, onShowCustomization, o
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b border-blue-500/20 dark:border-blue-400/20 bg-white/80 dark:bg-black/80 backdrop-blur-2xl supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-black/70 shadow-[0_8px_32px_0_rgba(59,130,246,0.12)] dark:shadow-[0_8px_32px_0_rgba(59,130,246,0.25)]">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b-2 border-blue-500/50 dark:border-blue-400/50 bg-gradient-to-r from-blue-500/10 via-blue-600/10 to-blue-700/10 dark:from-blue-500/20 dark:via-blue-600/20 dark:to-blue-700/20 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg shadow-blue-500/20">
       <div className="container mx-auto px-2 md:px-4">
         <div className="flex h-16 items-center justify-between text-[12px]">
           {/* Logo/Brand */}
