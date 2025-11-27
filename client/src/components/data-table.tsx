@@ -1683,11 +1683,11 @@ export function DataTable({
               )}
             </Droppable>
             <tfoot>
-              <TableRow>
+              <TableRow className="premium-table-footer">
                 {visibleColumns.map((column, index) => (
                   <TableCell
                     key={column.id}
-                    className="px-4 py-4 text-center table-header-footer-12px font-semibold tracking-wide sticky bottom-0 bg-gradient-to-t from-white/90 via-gray-50/80 to-transparent dark:from-black/95 dark:via-gray-900/80 dark:to-transparent backdrop-blur-xl shadow-xl border-t-2 border-gray-200/50 dark:border-white/10 whitespace-nowrap text-slate-600 dark:text-slate-300"
+                    className="px-4 py-4 text-center table-header-footer-12px font-semibold tracking-wide sticky bottom-0 whitespace-nowrap"
                     style={{
                       textAlign: "center",
                       fontSize: "10px",
@@ -1724,7 +1724,7 @@ export function DataTable({
                     )}
                   </TableCell>
                 ))}
-                <TableCell className="px-4 py-4 text-center table-header-footer-12px font-semibold tracking-wide sticky bottom-0 bg-gradient-to-t from-white/90 via-gray-50/80 to-transparent dark:from-black/95 dark:via-gray-900/80 dark:to-transparent backdrop-blur-xl shadow-xl border-t-2 border-gray-200/50 dark:border-white/10 text-slate-600 dark:text-slate-300 whitespace-nowrap" style={{ textAlign: "center", fontSize: '10px' }}>
+                <TableCell className="px-4 py-4 text-center table-header-footer-12px font-semibold tracking-wide sticky bottom-0 whitespace-nowrap" style={{ textAlign: "center", fontSize: '10px' }}>
                   <span className="font-semibold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">—</span>
                 </TableCell>
               </TableRow>

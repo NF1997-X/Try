@@ -339,6 +339,7 @@ textarea {
     backdrop-filter: blur(50px) saturate(180%);
     -webkit-backdrop-filter: blur(50px) saturate(180%);
     border-radius: 20px;
+    border: 2px solid rgba(59, 130, 246, 0.25);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9),
                 0 4px 12px rgba(0, 0, 0, 0.06),
                 0 12px 40px rgba(0, 0, 0, 0.08);
@@ -348,6 +349,7 @@ textarea {
     background: rgba(25, 25, 25, 0.78);
     backdrop-filter: blur(50px) saturate(180%);
     -webkit-backdrop-filter: blur(50px) saturate(180%);
+    border: 2px solid rgba(59, 130, 246, 0.35);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04),
                 0 4px 12px rgba(0, 0, 0, 0.4),
                 0 12px 40px rgba(0, 0, 0, 0.6);
@@ -628,6 +630,79 @@ textarea {
 }
 
 .dark .premium-table-header th {
+  color: #93c5fd;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8),
+               0 0 8px rgba(59, 130, 246, 0.3);
+}
+
+/* Premium Table Footer - Matching Header Style */
+.premium-table-footer {
+  background: linear-gradient(180deg, 
+    rgba(241, 245, 249, 0.88) 0%,
+    rgba(248, 250, 252, 0.92) 50%,
+    rgba(255, 255, 255, 0.95) 100%);
+  backdrop-filter: blur(60px) saturate(200%) brightness(1.05);
+  -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(1.05);
+  border-top: 2px solid rgba(59, 130, 246, 0.15);
+  box-shadow: 
+    inset 0 -1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 1px 0 rgba(59, 130, 246, 0.08),
+    0 -4px 24px rgba(0, 0, 0, 0.04),
+    0 -8px 40px rgba(59, 130, 246, 0.06),
+    0 -1px 2px rgba(0, 0, 0, 0.02);
+  position: relative;
+}
+
+.premium-table-footer::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(90deg,
+    rgba(59, 130, 246, 0.03) 0%,
+    rgba(147, 197, 253, 0.04) 25%,
+    rgba(59, 130, 246, 0.03) 50%,
+    rgba(147, 197, 253, 0.04) 75%,
+    rgba(59, 130, 246, 0.03) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.premium-table-footer td {
+  color: #1e40af;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  position: relative;
+  z-index: 2;
+}
+
+.dark .premium-table-footer {
+  background: linear-gradient(180deg,
+    rgba(51, 65, 85, 0.88) 0%,
+    rgba(30, 41, 59, 0.92) 50%,
+    rgba(15, 23, 42, 0.95) 100%);
+  backdrop-filter: blur(60px) saturate(200%) brightness(0.9);
+  -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(0.9);
+  border-top: 2px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(59, 130, 246, 0.2),
+    0 -4px 24px rgba(0, 0, 0, 0.3),
+    0 -8px 40px rgba(59, 130, 246, 0.15),
+    0 -1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.dark .premium-table-footer::before {
+  background: linear-gradient(90deg,
+    rgba(59, 130, 246, 0.08) 0%,
+    rgba(147, 197, 253, 0.1) 25%,
+    rgba(59, 130, 246, 0.08) 50%,
+    rgba(147, 197, 253, 0.1) 75%,
+    rgba(59, 130, 246, 0.08) 100%);
+}
+
+.dark .premium-table-footer td {
   color: #93c5fd;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8),
                0 0 8px rgba(59, 130, 246, 0.3);
