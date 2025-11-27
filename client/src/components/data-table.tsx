@@ -778,97 +778,8 @@ export function DataTable({
       className="glass-table border-none shadow-2xl table-container my-10 rounded-xl overflow-hidden"
       data-testid="data-table"
     >
-      {/* Top Row: Entries (Left) and Customize Buttons (Right) */}
-      <div className="px-6 py-3 border-b border-border/20 bg-gradient-to-r from-blue-500/5 via-transparent to-blue-500/5 dark:from-blue-500/5 dark:via-transparent dark:to-blue-500/5 backdrop-blur-sm text-[10px]" style={{ fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif" }}>
-        <div className="flex flex-row gap-3 items-center justify-between">
-          
-          {/* Left Side: Entries Selector */}
-          {!disablePagination && (
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <span className="text-sm text-muted-foreground pagination-10px">
-                Show
-              </span>
-              <Select
-                value={pageSize.toString()}
-                onValueChange={handlePageSizeChange}
-              >
-                <SelectTrigger className="h-6 px-2 pagination-button text-xs font-semibold [&>svg]:hidden w-auto min-w-[3rem]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700">
-                  <SelectItem value="16" className="font-semibold">16</SelectItem>
-                  <SelectItem value="30" className="font-semibold">30</SelectItem>
-                  <SelectItem value="50" className="font-semibold">50</SelectItem>
-                  <SelectItem value="100" className="font-semibold">100</SelectItem>
-                </SelectContent>
-              </Select>
-              <span className="text-sm text-muted-foreground pagination-10px">
-                of {totalRows} entries
-              </span>
-            </div>
-          )}
-          
-          {/* Right Side: Customize and Other Buttons */}
-          <div className="flex items-center gap-2">
-            <Button
-              onClick={onShowCustomization}
-              variant="outline"
-              size="sm"
-              className="w-8 h-8 p-0 pagination-button rounded-lg"
-              data-testid="button-show"
-              title="Customize columns"
-            >
-              <Eye className="w-3 h-3 text-blue-600 dark:text-blue-400" />
-            </Button>
-            <Button
-              onClick={onOptimizeRoute}
-              variant="outline"
-              size="sm"
-              className="w-8 h-8 p-0 pagination-button rounded-lg"
-              data-testid="button-optimize-route"
-              title="Optimize delivery route with AI"
-            >
-              <Route className="w-3 h-3 text-blue-600 dark:text-blue-400" />
-            </Button>
-            {!hideShareButton && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-8 h-8 p-0 pagination-button rounded-lg"
-                    data-testid="button-share-menu"
-                    title="Share & Links"
-                  >
-                    <Share2 className="w-3 h-3 text-green-500 dark:text-green-400" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem
-                    onClick={onShareTable}
-                    className="cursor-pointer"
-                    data-testid="menu-share-table"
-                  >
-                    <Share2 className="h-4 w-4 mr-2 text-green-500" />
-                    Share Table
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={onSavedLinks}
-                    className="cursor-pointer"
-                    data-testid="menu-saved-links"
-                  >
-                    <Bookmark className="h-4 w-4 mr-2 text-blue-500" />
-                    Saved Links
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
-          </div>
-        </div>
-        
-      </div>
-      {/* Bottom Row: Sort/Filter/Clear (Left) and Search (Right) */}
-      <div className="flex justify-between items-center px-6 py-3 border-b border-border/20 bg-background/30">
+      {/* Single Row: Filter/Sort/Search + Action Buttons */}
+      <div className="flex justify-between items-center px-6 py-3 border-b border-border/20 bg-gradient-to-r from-blue-500/5 via-transparent to-blue-500/5 dark:from-blue-500/5 dark:via-transparent dark:to-blue-500/5 backdrop-blur-sm">
         <div className="flex items-center gap-2 flex-shrink-0">
           {/* Sort Popover */}
           <Popover>
@@ -1096,8 +1007,8 @@ export function DataTable({
           )}
         </div>
         
-        {/* Right Side: Search Input */}
-        <div className="flex-1 max-w-[30%] lg:max-w-md ml-auto flex items-center gap-2">
+        {/* Middle: Search Input */}
+        <div className="flex-1 max-w-[30%] lg:max-w-md ml-4 flex items-center gap-2">
           <div className="relative group flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-3 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
             <Input
@@ -1119,6 +1030,53 @@ export function DataTable({
             )}
           </div>
         </div>
+        
+        {/* Right Side: Action Buttons */}
+        {!isSharedView && (
+          <div className="flex items-center gap-2 ml-auto flex-shrink-0">
+            {onShowCustomization && (
+              <Button
+                onClick={onShowCustomization}
+                variant="outline"
+                size="sm"
+                className="h-8 px-3 pagination-button rounded-lg text-xs"
+                title="Customize Columns"
+                data-testid="button-customize-columns"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
+                <span className="hidden sm:inline ml-1.5">Customize</span>
+              </Button>
+            )}
+            {onOptimizeRoute && (
+              <Button
+                onClick={onOptimizeRoute}
+                variant="outline"
+                size="sm"
+                className="h-8 px-3 pagination-button rounded-lg text-xs"
+                title="Route Optimization"
+                data-testid="button-optimize-route"
+              >
+                <Route className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline ml-1.5">Optimize</span>
+              </Button>
+            )}
+            {onShareTable && !hideShareButton && (
+              <Button
+                onClick={onShareTable}
+                variant="outline"
+                size="sm"
+                className="h-8 px-3 pagination-button rounded-lg text-xs"
+                title="Share Table"
+                data-testid="button-share-table"
+              >
+                <Share2 className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline ml-1.5">Share</span>
+              </Button>
+            )}
+          </div>
+        )}
       </div>
       {/* Active Filters Display */}
       {(searchTerm || filterValue.length > 0 || deliveryFilterValue.length > 0) && (
@@ -1776,6 +1734,29 @@ export function DataTable({
           {/* Pagination Controls */}
           {!disablePagination && (
             <div className="flex flex-col items-center justify-center gap-2 px-4 py-2 border-t border-blue-200 dark:border-blue-500/20 transition-smooth-fast">
+              {/* Entries Selector */}
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span className="font-medium">Entries per page:</span>
+                <Select value={String(pageSize)} onValueChange={handlePageSizeChange}>
+                  <SelectTrigger className="h-7 w-16 text-xs pagination-button">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="8">8</SelectItem>
+                    <SelectItem value="16">16</SelectItem>
+                    <SelectItem value="24">24</SelectItem>
+                    <SelectItem value="32">32</SelectItem>
+                    <SelectItem value="48">48</SelectItem>
+                    <SelectItem value="999999">
+                      <div className="flex items-center gap-1">
+                        <Infinity className="w-3 h-3" />
+                        <span>All</span>
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
               <div className="flex items-center justify-center gap-1.5 w-full">
                 {/* Show First button only when total pages > 5 and not showing page 1 */}
                 {totalPages > 5 && currentPage > 3 && (
