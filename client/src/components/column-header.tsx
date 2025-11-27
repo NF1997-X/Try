@@ -17,7 +17,7 @@ export function ColumnHeader({ column, dragHandleProps, onDelete, isAuthenticate
   
   return (
     <div className="flex items-center justify-center w-[98%] mx-auto relative">
-      <div {...dragHandleProps} className="text-center ios-glass-header rounded-xl px-3 py-1.5">
+      <div {...dragHandleProps} className="text-center px-3 py-1.5">
         <span className="block font-bold tracking-wide" style={{fontSize: '11px'}}>{column.name}</span>
       </div>
       {!isCoreColumn && (
