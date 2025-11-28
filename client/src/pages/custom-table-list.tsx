@@ -46,7 +46,7 @@ export default function CustomTableList() {
   const [deliveryFilter, setDeliveryFilter] = useState<string[]>([]);
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [, setLocation] = useLocation();
 
   // Fetch all table rows

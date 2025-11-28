@@ -19,10 +19,10 @@ interface NavigationProps {
   onBulkColorEdit?: () => void;
   isAuthenticated?: boolean;
   theme?: string;
-  onToggleTheme?: () => void;
+  onSetTheme?: (theme: 'dark' | 'light' | 'ocean') => void;
 }
 
-export function Navigation({ editMode, onEditModeRequest, onShowCustomization, onAddRow, onSaveData, onGenerateTng, onAddColumn, onOptimizeRoute, onCalculateTolls, onSaveLayout, onSavedLinks, onShowTutorial, onBulkColorEdit, isAuthenticated, theme, onToggleTheme }: NavigationProps) {
+export function Navigation({ editMode, onEditModeRequest, onShowCustomization, onAddRow, onSaveData, onGenerateTng, onAddColumn, onOptimizeRoute, onCalculateTolls, onSaveLayout, onSavedLinks, onShowTutorial, onBulkColorEdit, isAuthenticated, theme, onSetTheme }: NavigationProps) {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -105,7 +105,7 @@ export function Navigation({ editMode, onEditModeRequest, onShowCustomization, o
         onShowTutorial={onShowTutorial}
         onBulkColorEdit={onBulkColorEdit}
         theme={theme}
-        onToggleTheme={onToggleTheme}
+        onSetTheme={onSetTheme}
       />
     </nav>
   );

@@ -16,7 +16,8 @@ import {
   Layout,
   Palette,
   Sparkles,
-  DoorOpen
+  DoorOpen,
+  Waves
 } from "lucide-react";
 import { useLocation } from "wouter";
 
@@ -37,7 +38,7 @@ interface SlideMenuProps {
   onShowTutorial?: () => void;
   onBulkColorEdit?: () => void;
   theme?: string;
-  onToggleTheme?: () => void;
+  onSetTheme?: (theme: 'dark' | 'light' | 'ocean') => void;
 }
 
 export function SlideMenu({
@@ -57,7 +58,7 @@ export function SlideMenu({
   onShowTutorial,
   onBulkColorEdit,
   theme,
-  onToggleTheme,
+  onSetTheme,
 }: SlideMenuProps) {
   const [, navigate] = useLocation();
 
@@ -246,22 +247,49 @@ export function SlideMenu({
             {/* Settings */}
             <div className="h-px bg-gray-200 dark:bg-gray-700 mx-3" />
 
-            <button
-              onClick={() => handleItemClick(onToggleTheme!)}
-              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200 font-normal text-[15px] active:bg-gray-200 dark:active:bg-gray-700 transition-colors"
-            >
-              {theme === 'dark' ? (
-                <>
-                  <Sun className="w-5 h-5" />
-                  <span>Light Mode</span>
-                </>
-              ) : (
-                <>
-                  <Moon className="w-5 h-5" />
-                  <span>Dark Mode</span>
-                </>
-              )}
-            </button>
+            {/* Theme Switcher */}
+            <div className="px-4 py-2">
+              <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">Theme</div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleItemClick(() => onSetTheme?.('dark'))}
+                  className={`flex-1 flex flex-col items-center gap-1.5 px-3 py-2.5 rounded-lg transition-all ${
+                    theme === 'dark' 
+                      ? 'bg-gray-900 dark:bg-gray-800 ring-2 ring-blue-500' 
+                      : 'bg-gray-100 dark:bg-gray-800/50 hover:bg-gray-200 dark:hover:bg-gray-800'
+                  }`}
+                >
+                  <Moon className="w-4 h-4 text-gray-700 dark:text-gray-200" />
+                  <span className="text-[11px] font-medium text-gray-700 dark:text-gray-200">Dark</span>
+                </button>
+                
+                <button
+                  onClick={() => handleItemClick(() => onSetTheme?.('light'))}
+                  className={`flex-1 flex flex-col items-center gap-1.5 px-3 py-2.5 rounded-lg transition-all ${
+                    theme === 'light' 
+                      ? 'bg-white ring-2 ring-blue-500' 
+                      : 'bg-gray-100 dark:bg-gray-800/50 hover:bg-gray-200 dark:hover:bg-gray-800'
+                  }`}
+                >
+                  <Sun className="w-4 h-4 text-gray-700 dark:text-gray-200" />
+                  <span className="text-[11px] font-medium text-gray-700 dark:text-gray-200">Light</span>
+                </button>
+                
+                <button
+                  onClick={() => handleItemClick(() => onSetTheme?.('ocean'))}
+                  className={`flex-1 flex flex-col items-center gap-1.5 px-3 py-2.5 rounded-lg transition-all ${
+                    theme === 'ocean' 
+                      ? 'bg-blue-900/30 ring-2 ring-blue-500' 
+                      : 'bg-gray-100 dark:bg-gray-800/50 hover:bg-gray-200 dark:hover:bg-gray-800'
+                  }`}
+                >
+                  <Waves className="w-4 h-4 text-gray-700 dark:text-gray-200" />
+                  <span className="text-[11px] font-medium text-gray-700 dark:text-gray-200">Ocean</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="h-px bg-gray-200 dark:bg-gray-700 mx-3 mt-2" />
 
             <button
               onClick={() => handleItemClick(() => navigate('/help'))}

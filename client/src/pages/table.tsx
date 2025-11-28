@@ -81,7 +81,7 @@ export default function TablePage() {
   const tableRef = useRef<HTMLDivElement>(null);
   const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
-  const { theme, toggleTheme} = useTheme();
+  const { theme, setTheme } = useTheme();
   
   const {
     rows,
@@ -1145,7 +1145,7 @@ export default function TablePage() {
           }}
           isAuthenticated={true}
           theme={theme}
-          onToggleTheme={toggleTheme}
+          onSetTheme={setTheme}
         />
       </div>
       <main className="pt-[72px] animate-in slide-in-from-bottom-4 fade-in duration-700 delay-150">

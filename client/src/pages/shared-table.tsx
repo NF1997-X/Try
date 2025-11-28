@@ -15,7 +15,7 @@ import type { SharedTableState, TableColumn, TableRow } from "@shared/schema";
 export default function SharedTablePage() {
   const [, params] = useRoute("/share/:shareId");
   const shareId = params?.shareId;
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   const { 
     rows, 
