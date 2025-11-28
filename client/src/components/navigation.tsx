@@ -48,8 +48,12 @@ export function Navigation({ editMode, onEditModeRequest, onShowCustomization, o
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b-2 border-blue-500/50 dark:border-blue-400/50 ocean:border-cyan-500/50 bg-gradient-to-r from-blue-500/10 via-blue-600/10 to-blue-700/10 dark:from-blue-500/20 dark:via-blue-600/20 dark:to-blue-700/20 ocean:from-cyan-500/15 ocean:via-cyan-600/15 ocean:to-blue-600/15 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg shadow-blue-500/20 ocean:shadow-cyan-500/20">
-      <div className="container mx-auto px-2 md:px-4">
+    <>
+      {/* Content fade overlay - hides content when scrolling near nav */}
+      <div className="fixed top-0 left-0 right-0 h-24 z-40 pointer-events-none bg-gradient-to-b from-background via-background/80 to-transparent" />
+      
+      <nav className="fixed top-0 left-0 right-0 z-50 w-full border-b-2 border-blue-500/50 dark:border-blue-400/50 ocean:border-cyan-500/50 bg-gradient-to-r from-blue-500/10 via-blue-600/10 to-blue-700/10 dark:from-blue-500/20 dark:via-blue-600/20 dark:to-blue-700/20 ocean:from-cyan-500/15 ocean:via-cyan-600/15 ocean:to-blue-600/15 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg shadow-blue-500/20 ocean:shadow-cyan-500/20">
+        <div className="container mx-auto px-2 md:px-4">
         <div className="flex h-16 items-center justify-between text-[12px]">
           {/* Logo/Brand */}
           <div className="flex items-center space-x-3">
@@ -108,5 +112,6 @@ export function Navigation({ editMode, onEditModeRequest, onShowCustomization, o
         onSetTheme={onSetTheme}
       />
     </nav>
+    </>
   );
 }

@@ -125,6 +125,9 @@ export function Footer({ editMode = false }: FooterProps) {
 
   return (
     <>
+      {/* Content fade overlay - hides content when scrolling near footer */}
+      <div className="fixed bottom-0 left-0 right-0 h-20 z-30 pointer-events-none bg-gradient-to-t from-background via-background/80 to-transparent" />
+      
       <footer 
         className={`fixed bottom-0 left-0 right-0 z-40 w-full border-t-2 border-blue-500/50 dark:border-blue-400/50 ocean:border-cyan-500/50 bg-gradient-to-r from-blue-500/10 via-blue-600/10 to-blue-700/10 dark:from-blue-500/20 dark:via-blue-600/20 dark:to-blue-700/20 ocean:from-cyan-500/15 ocean:via-cyan-600/15 ocean:to-blue-600/15 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 shadow-lg shadow-blue-500/20 ocean:shadow-cyan-500/20 transition-all duration-500 ease-out ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
