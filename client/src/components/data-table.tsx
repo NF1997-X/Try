@@ -1135,7 +1135,7 @@ export function DataTable({
       <div className="overflow-x-auto w-full">
         <DragDropContext onDragEnd={handleDragEnd}>
           <Table className="min-w-full overflow-hidden">
-            <TableHeader className="table-header-glass sticky top-0 z-20 bg-gradient-to-r from-white/95 via-gray-50/90 to-white/95 dark:from-black/95 dark:via-gray-900/90 dark:to-black/95 backdrop-blur-xl">
+            <TableHeader className="sticky top-0 z-20">
               <Droppable
                 droppableId="columns"
                 direction="horizontal"
@@ -1145,6 +1145,7 @@ export function DataTable({
                   <TableRow
                     ref={provided.innerRef}
                     {...provided.droppableProps}
+                    className="premium-table-footer"
                   >
                     {visibleColumns.map((column, index) => (
                       <Draggable
@@ -1156,7 +1157,7 @@ export function DataTable({
                           <TableHead
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className="px-4 py-4 text-center table-header-footer-12px font-semibold text-gray-900 dark:text-white tracking-wider sticky top-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-950/80 dark:via-indigo-950/80 dark:to-purple-950/80 backdrop-blur-xl whitespace-nowrap transition-all duration-300 shadow-md hover:shadow-lg"
+                            className="px-4 py-4 text-center table-header-footer-12px font-semibold tracking-wide sticky top-0 whitespace-nowrap"
                             style={{
                               textAlign: "center",
                               textDecoration: "normal",
@@ -1180,7 +1181,7 @@ export function DataTable({
                       </Draggable>
                     ))}
                     <TableHead
-                      className="p-0 text-center table-header-footer-12px font-bold tracking-wider sticky top-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-950/80 dark:via-indigo-950/80 dark:to-purple-950/80 backdrop-blur-xl whitespace-nowrap transition-all duration-300 shadow-md hover:shadow-lg"
+                      className="p-0 text-center table-header-footer-12px font-semibold tracking-wide sticky top-0 whitespace-nowrap"
                       style={{
                         textAlign: "center",
                         textDecoration: "normal",
