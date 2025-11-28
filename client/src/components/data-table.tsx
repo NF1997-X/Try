@@ -1447,9 +1447,7 @@ export function DataTable({
                                 className="px-2 py-2 text-sm text-center text-foreground"
                                 style={{ textAlign: "center" }}
                               >
-                                <div className="flex flex-col items-center gap-1">
-                                  <div className="flex items-center gap-1">
-                                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                <div className="flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                                     {editMode ? (
                                       <>
                                         {/* Manage Image button - edit mode only */}
@@ -1670,8 +1668,6 @@ export function DataTable({
                                         <Power className="w-4 h-4" />
                                       </Button>
                                     )}
-                                    </div>
-                                  </div>
                                 </div>
                               </TableCell>
                             </TableRow>
