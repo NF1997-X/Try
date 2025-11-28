@@ -1134,7 +1134,7 @@ export function DataTable({
       )}
       <div className="overflow-x-auto w-full">
         <DragDropContext onDragEnd={handleDragEnd}>
-          <Table className="min-w-full overflow-hidden">
+          <Table className="w-auto overflow-hidden">
             <TableHeader className="premium-table-header sticky top-0 z-20">
               <Droppable
                 droppableId="columns"
