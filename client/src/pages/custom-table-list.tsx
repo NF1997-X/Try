@@ -440,15 +440,16 @@ export default function CustomTableList() {
         </div>
 
         {/* Existing Custom Tables */}
-        <div className="bg-white/90 dark:bg-black/30 backdrop-blur-2xl border-2 border-gray-300 dark:border-white/10 shadow-xl rounded-xl p-6">
-          <h6 className="font-semibold mb-6 text-gray-900 dark:text-white text-center" style={{ fontSize: '14px' }}>📋 My Custom Tables</h6>
-          {customTables.length === 0 ? (
-            <p className="text-center text-gray-600 dark:text-gray-400 py-8">
-              No custom tables yet. Create one to get started!
-            </p>
-          ) : (
-            <div className="space-y-4 max-w-4xl mx-auto">
-              {customTables.map((table) => (
+        <div className="flex justify-center w-full">
+          <div className="bg-white/90 dark:bg-black/30 backdrop-blur-2xl border-2 border-gray-300 dark:border-white/10 shadow-xl rounded-xl p-6 w-full max-w-3xl">
+            <h6 className="font-semibold mb-6 text-gray-900 dark:text-white text-center" style={{ fontSize: '14px' }}>📋 My Custom Tables</h6>
+            {customTables.length === 0 ? (
+              <p className="text-center text-gray-600 dark:text-gray-400 py-8">
+                No custom tables yet. Create one to get started!
+              </p>
+            ) : (
+              <div className="space-y-4">
+                {customTables.map((table) => (
                 <Collapsible key={table.id}>
                   <div className="custom-table-card flex items-center justify-between p-4 bg-transparent rounded-xl border border-gray-300 dark:border-gray-800/40 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
                     <div className="flex-1">
@@ -527,6 +528,7 @@ export default function CustomTableList() {
               ))}
             </div>
           )}
+          </div>
         </div>
 
         {/* Create Table Dialog */}
