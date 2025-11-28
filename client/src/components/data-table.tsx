@@ -779,7 +779,7 @@ export function DataTable({
       data-testid="data-table"
     >
       {/* Single Row: Filter/Sort/Search + Action Buttons */}
-      <div className="flex justify-between items-center px-6 py-3 border-b border-border/20 bg-gradient-to-r from-blue-500/5 via-transparent to-blue-500/5 dark:from-blue-500/5 dark:via-transparent dark:to-blue-500/5 backdrop-blur-sm">
+      <div className="flex justify-between items-center px-6 py-5 border-b border-border/20 bg-gradient-to-r from-blue-500/5 via-transparent to-blue-500/5 dark:from-blue-500/5 dark:via-transparent dark:to-blue-500/5 backdrop-blur-sm">
         <div className="flex items-center gap-2 flex-shrink-0">
           {/* Sort Popover */}
           <Popover>
@@ -1157,7 +1157,7 @@ export function DataTable({
                           <TableHead
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className="px-4 py-4 text-center table-header-footer-12px font-semibold tracking-wide sticky top-0 whitespace-nowrap"
+                            className="px-4 py-4 text-center table-header-footer-12px font-semibold tracking-wide sticky top-0 whitespace-nowrap border-transparent"
                             style={{
                               textAlign: "center",
                               textDecoration: "normal",
@@ -1181,7 +1181,7 @@ export function DataTable({
                       </Draggable>
                     ))}
                     <TableHead
-                      className="p-0 text-center table-header-footer-12px font-semibold tracking-wide sticky top-0 whitespace-nowrap"
+                      className="p-0 text-center table-header-footer-12px font-semibold tracking-wide sticky top-0 whitespace-nowrap border-transparent"
                       style={{
                         textAlign: "center",
                         textDecoration: "normal",
@@ -1205,7 +1205,7 @@ export function DataTable({
                 <TableBody
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className="pt-4 motion-layer zoom-in"
+                  className="pt-2 motion-layer zoom-in"
                   key={`page-${currentPage}`}
                 >
                   {isLoading
