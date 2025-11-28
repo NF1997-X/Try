@@ -355,7 +355,8 @@ export default function CustomTableView() {
       </nav>
 
       <main className="pt-[56px]">
-        <div className="container mx-auto px-4 py-8">
+        <div className="w-full flex justify-center">
+        <div className="max-w-7xl w-full px-4 py-8">
           {/* Data Table with all interactive features enabled */}
           <DataTable
             rows={rowsWithDistances}
@@ -385,6 +386,7 @@ export default function CustomTableView() {
             filteredRowsCount={rowsWithDistances.length}
             totalRowsCount={rows.length}
           />
+        </div>
         </div>
       </main>
 
