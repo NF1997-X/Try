@@ -913,7 +913,7 @@ export function DataTable({
                 >
                   <Filter className="w-4 h-4" />
                   {(filterValue.length > 0 || deliveryFilterValue.length > 0) && (
-                    <span className="absolute -top-2.5 -right-2.5 bg-gradient-to-r from-red-500 to-rose-500 dark:from-red-400 dark:to-rose-400 text-white text-[9px] font-bold rounded-full min-w-[18px] h-[18px] px-1 flex items-center justify-center shadow-lg border-2 border-white dark:border-gray-900 z-10">
+                    <span className="absolute -top-2.5 -right-2.5 bg-gradient-to-r from-red-500 to-rose-500 dark:from-red-400 dark:to-rose-400 text-white text-[9px] font-bold rounded-full min-w-[18px] h-[18px] px-1 flex items-center justify-center shadow-lg border-2 border-white dark:border-gray-900 z-50">
                       {filterValue.length + deliveryFilterValue.length}
                     </span>
                   )}
@@ -991,20 +991,6 @@ export function DataTable({
             </PopoverContent>
           </Popover>
           </div>
-          
-          {/* Clear All Section */}
-          {(searchTerm || filterValue.length > 0 || deliveryFilterValue.length > 0) && (
-            <Button
-              onClick={onClearAllFilters}
-              variant="outline"
-              size="sm"
-              className="h-6 px-2 pagination-button text-xs border-destructive/30 hover:bg-destructive/10 hover:border-destructive/50 rounded-lg"
-              data-testid="clear-all-filters"
-            >
-              <span className="hidden sm:inline bg-gradient-to-r from-red-600 to-rose-600 dark:from-red-400 dark:to-rose-400 bg-clip-text text-transparent">Clear</span>
-              <span className="sm:hidden bg-gradient-to-r from-red-600 to-rose-600 dark:from-red-400 dark:to-rose-400 bg-clip-text text-transparent">Clear</span>
-            </Button>
-          )}
         </div>
         
         {/* Middle: Search Input */}
@@ -1126,6 +1112,16 @@ export function DataTable({
                 <span className="text-[8px] font-semibold text-green-700 dark:text-green-300">{delivery}</span>
               </button>
             ))}
+            {/* Clear All button */}
+            <button 
+              onClick={onClearAllFilters}
+              className="flex items-center gap-1 px-2 py-1 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 hover:border-red-500/50 rounded-full transition-all cursor-pointer active:scale-95"
+              data-testid="clear-all-filters"
+              aria-label="Clear all filters"
+            >
+              <X className="w-2.5 h-2.5 text-red-600 dark:text-red-400" />
+              <span className="text-[8px] font-semibold text-red-600 dark:text-red-400">Clear All</span>
+            </button>
             <div className="ml-auto text-muted-foreground text-xs">
               {filteredRowsCount} of {totalRowsCount} results
             </div>
