@@ -170,39 +170,39 @@ textarea {
 @tailwind utilities;
 
 :root {
-  /* Light Theme - Modern Sky Blue with Professional Gray */
-  --background: hsl(210, 40%, 98%);
-  --foreground: hsl(215, 25%, 27%);
+  /* Light Theme - Black & White */
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(0, 0%, 0%);
   --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(215, 25%, 27%);
+  --card-foreground: hsl(0, 0%, 0%);
   --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(215, 25%, 27%);
-  --primary: hsl(210, 100%, 50%);
+  --popover-foreground: hsl(0, 0%, 0%);
+  --primary: hsl(0, 0%, 0%);
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(210, 40%, 96%);
-  --secondary-foreground: hsl(215, 25%, 27%);
-  --muted: hsl(210, 40%, 94%);
-  --muted-foreground: hsl(215, 16%, 47%);
-  --accent: hsl(210, 100%, 95%);
-  --accent-foreground: hsl(215, 25%, 27%);
-  --destructive: hsl(0, 84%, 60%);
+  --secondary: hsl(0, 0%, 96%);
+  --secondary-foreground: hsl(0, 0%, 0%);
+  --muted: hsl(0, 0%, 94%);
+  --muted-foreground: hsl(0, 0%, 45%);
+  --accent: hsl(0, 0%, 95%);
+  --accent-foreground: hsl(0, 0%, 0%);
+  --destructive: hsl(0, 0%, 20%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --border: hsl(214, 32%, 91%);
-  --input: hsl(214, 32%, 91%);
-  --ring: hsl(210, 100%, 50%);
-  --chart-1: hsl(210, 100%, 50%);
-  --chart-2: hsl(142, 76%, 36%);
-  --chart-3: hsl(38, 92%, 50%);
-  --chart-4: hsl(280, 65%, 60%);
-  --chart-5: hsl(340, 82%, 52%);
-  --sidebar: hsl(210, 40%, 98%);
-  --sidebar-foreground: hsl(215, 25%, 27%);
-  --sidebar-primary: hsl(210, 100%, 50%);
+  --border: hsl(0, 0%, 90%);
+  --input: hsl(0, 0%, 90%);
+  --ring: hsl(0, 0%, 0%);
+  --chart-1: hsl(0, 0%, 20%);
+  --chart-2: hsl(0, 0%, 35%);
+  --chart-3: hsl(0, 0%, 50%);
+  --chart-4: hsl(0, 0%, 65%);
+  --chart-5: hsl(0, 0%, 80%);
+  --sidebar: hsl(0, 0%, 100%);
+  --sidebar-foreground: hsl(0, 0%, 0%);
+  --sidebar-primary: hsl(0, 0%, 0%);
   --sidebar-primary-foreground: hsl(0, 0%, 100%);
-  --sidebar-accent: hsl(210, 100%, 95%);
-  --sidebar-accent-foreground: hsl(215, 25%, 27%);
-  --sidebar-border: hsl(214, 32%, 91%);
-  --sidebar-ring: hsl(210, 100%, 50%);
+  --sidebar-accent: hsl(0, 0%, 95%);
+  --sidebar-accent-foreground: hsl(0, 0%, 0%);
+  --sidebar-border: hsl(0, 0%, 90%);
+  --sidebar-ring: hsl(0, 0%, 0%);
   
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   --font-serif: Georgia, serif;
@@ -339,7 +339,7 @@ textarea {
     backdrop-filter: blur(50px) saturate(180%);
     -webkit-backdrop-filter: blur(50px) saturate(180%);
     border-radius: 20px;
-    border: 2px solid rgba(59, 130, 246, 0.45);
+    border: 2px solid rgba(0, 0, 0, 0.45);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9),
                 0 4px 12px rgba(0, 0, 0, 0.06),
                 0 12px 40px rgba(0, 0, 0, 0.08);
@@ -566,16 +566,16 @@ textarea {
 .premium-table-header {
   background: linear-gradient(180deg, 
     rgba(255, 255, 255, 0.95) 0%, 
-    rgba(248, 250, 252, 0.92) 50%,
-    rgba(241, 245, 249, 0.88) 100%);
+    rgba(250, 250, 250, 0.92) 50%,
+    rgba(245, 245, 245, 0.88) 100%);
   backdrop-filter: blur(60px) saturate(200%) brightness(1.05);
   -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(1.05);
-  border-bottom: 2px solid rgba(59, 130, 246, 0.15);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.15);
   box-shadow: 
     inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1px 0 rgba(59, 130, 246, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.08),
     0 4px 24px rgba(0, 0, 0, 0.04),
-    0 8px 40px rgba(59, 130, 246, 0.06),
+    0 8px 40px rgba(0, 0, 0, 0.06),
     0 1px 2px rgba(0, 0, 0, 0.02);
   position: relative;
 }
@@ -588,17 +588,17 @@ textarea {
   right: 0;
   height: 100%;
   background: linear-gradient(90deg,
-    rgba(59, 130, 246, 0.03) 0%,
-    rgba(147, 197, 253, 0.04) 25%,
-    rgba(59, 130, 246, 0.03) 50%,
-    rgba(147, 197, 253, 0.04) 75%,
-    rgba(59, 130, 246, 0.03) 100%);
+    rgba(0, 0, 0, 0.03) 0%,
+    rgba(128, 128, 128, 0.04) 25%,
+    rgba(0, 0, 0, 0.03) 50%,
+    rgba(128, 128, 128, 0.04) 75%,
+    rgba(0, 0, 0, 0.03) 100%);
   pointer-events: none;
   z-index: 1;
 }
 
 .premium-table-header th {
-  color: #1e40af;
+  color: #000000;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   position: relative;
   z-index: 2;
@@ -638,17 +638,17 @@ textarea {
 /* Premium Table Footer - Matching Header Style */
 .premium-table-footer {
   background: linear-gradient(180deg, 
-    rgba(241, 245, 249, 0.88) 0%,
-    rgba(248, 250, 252, 0.92) 50%,
+    rgba(245, 245, 245, 0.88) 0%,
+    rgba(250, 250, 250, 0.92) 50%,
     rgba(255, 255, 255, 0.95) 100%);
   backdrop-filter: blur(60px) saturate(200%) brightness(1.05);
   -webkit-backdrop-filter: blur(60px) saturate(200%) brightness(1.05);
-  border-top: 2px solid rgba(59, 130, 246, 0.15);
+  border-top: 2px solid rgba(0, 0, 0, 0.15);
   box-shadow: 
     inset 0 -1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 1px 0 rgba(59, 130, 246, 0.08),
+    inset 0 1px 0 rgba(0, 0, 0, 0.08),
     0 -4px 24px rgba(0, 0, 0, 0.04),
-    0 -8px 40px rgba(59, 130, 246, 0.06),
+    0 -8px 40px rgba(0, 0, 0, 0.06),
     0 -1px 2px rgba(0, 0, 0, 0.02);
   position: relative;
 }
@@ -661,17 +661,17 @@ textarea {
   right: 0;
   height: 100%;
   background: linear-gradient(90deg,
-    rgba(59, 130, 246, 0.03) 0%,
-    rgba(147, 197, 253, 0.04) 25%,
-    rgba(59, 130, 246, 0.03) 50%,
-    rgba(147, 197, 253, 0.04) 75%,
-    rgba(59, 130, 246, 0.03) 100%);
+    rgba(0, 0, 0, 0.03) 0%,
+    rgba(128, 128, 128, 0.04) 25%,
+    rgba(0, 0, 0, 0.03) 50%,
+    rgba(128, 128, 128, 0.04) 75%,
+    rgba(0, 0, 0, 0.03) 100%);
   pointer-events: none;
   z-index: 1;
 }
 
 .premium-table-footer td {
-  color: #1e40af;
+  color: #000000;
   text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   position: relative;
   z-index: 2;
@@ -710,8 +710,8 @@ textarea {
 
 /* Table header footer style matching */
 .table-header-footer-blue {
-  color: #60a5fa !important;
-  text-shadow: 0 0 1px #60a5fa !important;
+  color: #000000 !important;
+  text-shadow: 0 0 1px #666666 !important;
   font-weight: bold !important;
 }
 
@@ -846,8 +846,8 @@ textarea {
 tfoot tr td .footer-total-blue,
 tfoot tr th .footer-total-blue,
 .footer-total-blue {
-  color: #60a5fa !important;
-  text-shadow: 0 0 1px #60a5fa !important;
+  color: #000000 !important;
+  text-shadow: 0 0 1px #666666 !important;
   font-weight: bold !important;
 }
 
@@ -881,9 +881,9 @@ html.dark tfoot tr th .footer-total-blue {
 .pagination-button {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(239, 246, 255, 0.9));
-  border-color: rgb(191, 219, 254);
-  color: rgb(37, 99, 235);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(245, 245, 245, 0.9));
+  border-color: rgb(200, 200, 200);
+  color: rgb(0, 0, 0);
   font-weight: 500;
 }
 
@@ -902,9 +902,9 @@ html.dark tfoot tr th .footer-total-blue {
 }
 
 .pagination-button:hover {
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(219, 234, 254, 1));
-  border-color: rgb(59, 130, 246);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(235, 235, 235, 1));
+  border-color: rgb(100, 100, 100);
 }
 
 .dark .pagination-button:hover {
@@ -915,8 +915,8 @@ html.dark tfoot tr th .footer-total-blue {
 
 .pagination-button.active {
   /* Same background as normal button */
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(239, 246, 255, 0.9));
-  color: rgb(37, 99, 235);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(245, 245, 245, 0.9));
+  color: rgb(0, 0, 0);
   font-weight: 600;
   /* Slow blinking border animation */
   animation: pagination-border-blink 2s ease-in-out infinite;
@@ -933,12 +933,12 @@ html.dark tfoot tr th .footer-total-blue {
 /* Slow blinking border animation for light mode */
 @keyframes pagination-border-blink {
   0%, 100% {
-    border-color: rgb(191, 219, 254);
+    border-color: rgb(200, 200, 200);
     box-shadow: none;
   }
   50% {
-    border-color: rgb(59, 130, 246);
-    box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+    border-color: rgb(100, 100, 100);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
   }
 }
 
