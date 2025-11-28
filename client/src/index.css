@@ -170,39 +170,39 @@ textarea {
 @tailwind utilities;
 
 :root {
-  /* Light Theme - Black & White */
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(0, 0%, 0%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(0, 0%, 0%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(0, 0%, 0%);
-  --primary: hsl(0, 0%, 0%);
+  /* Default: Dark Theme - inspired by Ht.git */
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(0, 0%, 100%);
+  --card: hsl(0, 0%, 6%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --popover: hsl(0, 0%, 6%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --primary: hsl(217, 91%, 60%);
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(0, 0%, 96%);
-  --secondary-foreground: hsl(0, 0%, 0%);
-  --muted: hsl(0, 0%, 94%);
-  --muted-foreground: hsl(0, 0%, 45%);
-  --accent: hsl(0, 0%, 95%);
-  --accent-foreground: hsl(0, 0%, 0%);
-  --destructive: hsl(0, 0%, 20%);
+  --secondary: hsl(0, 0%, 10%);
+  --secondary-foreground: hsl(0, 0%, 95%);
+  --muted: hsl(0, 0%, 15%);
+  --muted-foreground: hsl(0, 0%, 65%);
+  --accent: hsl(0, 0%, 18%);
+  --accent-foreground: hsl(0, 0%, 95%);
+  --destructive: hsl(0, 70%, 50%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --border: hsl(0, 0%, 90%);
-  --input: hsl(0, 0%, 90%);
-  --ring: hsl(0, 0%, 0%);
-  --chart-1: hsl(0, 0%, 20%);
-  --chart-2: hsl(0, 0%, 35%);
-  --chart-3: hsl(0, 0%, 50%);
-  --chart-4: hsl(0, 0%, 65%);
-  --chart-5: hsl(0, 0%, 80%);
-  --sidebar: hsl(0, 0%, 100%);
-  --sidebar-foreground: hsl(0, 0%, 0%);
-  --sidebar-primary: hsl(0, 0%, 0%);
+  --border: hsl(0, 0%, 20%);
+  --input: hsl(0, 0%, 10%);
+  --ring: hsl(217, 91%, 60%);
+  --chart-1: hsl(217, 91%, 60%);
+  --chart-2: hsl(199, 89%, 48%);
+  --chart-3: hsl(173, 58%, 39%);
+  --chart-4: hsl(142, 71%, 45%);
+  --chart-5: hsl(79, 70%, 43%);
+  --sidebar: hsl(0, 0%, 2%);
+  --sidebar-foreground: hsl(0, 0%, 98%);
+  --sidebar-primary: hsl(217, 91%, 60%);
   --sidebar-primary-foreground: hsl(0, 0%, 100%);
-  --sidebar-accent: hsl(0, 0%, 95%);
-  --sidebar-accent-foreground: hsl(0, 0%, 0%);
-  --sidebar-border: hsl(0, 0%, 90%);
-  --sidebar-ring: hsl(0, 0%, 0%);
+  --sidebar-accent: hsl(0, 0%, 12%);
+  --sidebar-accent-foreground: hsl(0, 0%, 95%);
+  --sidebar-border: hsl(0, 0%, 15%);
+  --sidebar-ring: hsl(217, 91%, 60%);
   
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   --font-serif: Georgia, serif;
@@ -220,35 +220,107 @@ textarea {
   --spacing: 0.25rem;
 }
 
-.dark {
-  /* Dark Theme - Black with Blue Ocean & Glass */
-  --background: hsl(0, 0%, 0%);
-  --foreground: hsl(0, 0%, 98%);
-  --card: hsl(210, 100%, 5%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --popover: hsl(210, 100%, 5%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --primary: hsl(205, 100%, 50%);
+.light {
+  /* Light Theme - inspired by Ht.git */
+  --background: hsl(240, 20%, 97%);
+  --foreground: hsl(240, 10%, 11%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(240, 10%, 11%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(240, 10%, 11%);
+  --primary: hsl(221, 83%, 53%);
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(210, 100%, 8%);
+  --secondary: hsl(240, 20%, 93%);
+  --secondary-foreground: hsl(240, 10%, 11%);
+  --muted: hsl(240, 20%, 90%);
+  --muted-foreground: hsl(240, 5%, 50%);
+  --accent: hsl(240, 20%, 95%);
+  --accent-foreground: hsl(240, 10%, 11%);
+  --destructive: hsl(0, 70%, 50%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 10%, 85%);
+  --input: hsl(240, 20%, 90%);
+  --ring: hsl(221, 83%, 53%);
+  --chart-1: hsl(221, 83%, 53%);
+  --chart-2: hsl(199, 89%, 48%);
+  --chart-3: hsl(173, 58%, 39%);
+  --chart-4: hsl(142, 71%, 45%);
+  --chart-5: hsl(79, 70%, 43%);
+  --sidebar: hsl(0, 0%, 100%);
+  --sidebar-foreground: hsl(240, 10%, 11%);
+  --sidebar-primary: hsl(221, 83%, 53%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(240, 20%, 95%);
+  --sidebar-accent-foreground: hsl(240, 10%, 11%);
+  --sidebar-border: hsl(240, 10%, 90%);
+  --sidebar-ring: hsl(221, 83%, 53%);
+}
+
+.ocean {
+  /* Ocean Theme - inspired by Ht.git */
+  --background: hsl(210, 55%, 8%);
+  --foreground: hsl(199, 89%, 94%);
+  --card: hsl(210, 50%, 12%);
+  --card-foreground: hsl(199, 89%, 94%);
+  --popover: hsl(210, 50%, 12%);
+  --popover-foreground: hsl(199, 89%, 94%);
+  --primary: hsl(207, 90%, 68%);
+  --primary-foreground: hsl(210, 55%, 8%);
+  --secondary: hsl(210, 50%, 15%);
+  --secondary-foreground: hsl(199, 89%, 94%);
+  --muted: hsl(210, 50%, 18%);
+  --muted-foreground: hsl(207, 60%, 70%);
+  --accent: hsl(210, 50%, 20%);
+  --accent-foreground: hsl(199, 89%, 94%);
+  --destructive: hsl(0, 70%, 50%);
+  --destructive-foreground: hsl(199, 89%, 94%);
+  --border: hsl(207, 50%, 25%);
+  --input: hsl(210, 50%, 15%);
+  --ring: hsl(207, 90%, 68%);
+  --chart-1: hsl(207, 90%, 68%);
+  --chart-2: hsl(199, 89%, 48%);
+  --chart-3: hsl(173, 58%, 39%);
+  --chart-4: hsl(142, 71%, 45%);
+  --chart-5: hsl(79, 70%, 43%);
+  --sidebar: hsl(210, 60%, 10%);
+  --sidebar-foreground: hsl(199, 89%, 94%);
+  --sidebar-primary: hsl(207, 90%, 68%);
+  --sidebar-primary-foreground: hsl(210, 55%, 8%);
+  --sidebar-accent: hsl(210, 50%, 20%);
+  --sidebar-accent-foreground: hsl(199, 89%, 94%);
+  --sidebar-border: hsl(207, 50%, 25%);
+  --sidebar-ring: hsl(207, 90%, 68%);
+}
+
+/* Keep dark class for backward compatibility */
+.dark {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(0, 0%, 100%);
+  --card: hsl(0, 0%, 6%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --popover: hsl(0, 0%, 6%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --primary: hsl(217, 91%, 60%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(0, 0%, 10%);
   --secondary-foreground: hsl(0, 0%, 95%);
-  --muted: hsl(210, 100%, 10%);
-  --muted-foreground: hsl(205, 30%, 65%);
-  --accent: hsl(210, 100%, 12%);
+  --muted: hsl(0, 0%, 15%);
+  --muted-foreground: hsl(0, 0%, 65%);
+  --accent: hsl(0, 0%, 18%);
   --accent-foreground: hsl(0, 0%, 95%);
   --destructive: hsl(0, 70%, 50%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --border: hsl(210, 50%, 15%);
-  --input: hsl(210, 100%, 8%);
-  --ring: hsl(205, 100%, 50%);
-  --sidebar: hsl(210, 100%, 2%);
+  --border: hsl(0, 0%, 20%);
+  --input: hsl(0, 0%, 10%);
+  --ring: hsl(217, 91%, 60%);
+  --sidebar: hsl(0, 0%, 2%);
   --sidebar-foreground: hsl(0, 0%, 98%);
-  --sidebar-primary: hsl(205, 100%, 50%);
+  --sidebar-primary: hsl(217, 91%, 60%);
   --sidebar-primary-foreground: hsl(0, 0%, 100%);
-  --sidebar-accent: hsl(210, 100%, 12%);
+  --sidebar-accent: hsl(0, 0%, 12%);
   --sidebar-accent-foreground: hsl(0, 0%, 95%);
-  --sidebar-border: hsl(210, 50%, 15%);
-  --sidebar-ring: hsl(205, 100%, 50%);
+  --sidebar-border: hsl(0, 0%, 15%);
+  --sidebar-ring: hsl(217, 91%, 60%);
 }
 
 @layer base {
