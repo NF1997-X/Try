@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useTableData } from "@/hooks/use-table-data";
 import { DataTable } from "@/components/data-table";
-import { ImageManagementModal } from "@/components/image-management-modal";
+import { SimpleImageModal } from "@/components/simple-image-modal";
+import { ImageListModal } from "@/components/image-list-modal";
 import { ColumnCustomizationModal } from "@/components/column-customization-modal";
 import { PasswordPrompt } from "@/components/password-prompt";
 import { Navigation } from "@/components/navigation";
@@ -40,7 +41,9 @@ interface DescriptionItem {
 export default function TablePage() {
   const [editMode, setEditMode] = useState(false);
   const [selectedRowForImage, setSelectedRowForImage] = useState<string | null>(null);
+  const [editingImageIndex, setEditingImageIndex] = useState<number | null>(null);
   const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [imageListModalOpen, setImageListModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterValue, setFilterValue] = useState<string[]>([]);
   const [deliveryFilterValue, setDeliveryFilterValue] = useState<string[]>([]);
@@ -1508,27 +1511,92 @@ export default function TablePage() {
         </DialogContent>
       </Dialog>
 
-      {/* Image Management Section */}
+      {/* Image List Modal - shows list of images with edit/delete options */}
       {selectedRowForImage && selectedRowForImage !== 'access-denied' && !exitingEditMode && (
         (() => {
           const selectedRow = rows.find(row => row.id === selectedRowForImage);
           if (!selectedRow) return null;
           
           return (
-            <ImageManagementModal
-              open={imageModalOpen}
+            <ImageListModal
+              open={imageListModalOpen}
               onOpenChange={(open) => {
-                setImageModalOpen(open);
+                setImageListModalOpen(open);
                 if (!open) {
                   setSelectedRowForImage(null);
                 }
               }}
-              rowId={selectedRowForImage}
-              location={selectedRow.location}
               images={selectedRow.images || []}
-              onAddImage={addImageToRow}
-              onUpdateImage={updateImageInRow}
-              onDeleteImage={deleteImageFromRow}
+              location={selectedRow.location}
+              onAddImage={() => {
+                setImageListModalOpen(false);
+                setEditingImageIndex(null);
+                setImageModalOpen(true);
+              }}
+              onEditImage={(index) => {
+                setImageListModalOpen(false);
+                setEditingImageIndex(index);
+                setImageModalOpen(true);
+              }}
+              onDeleteImage={(index) => {
+                if (selectedRowForImage) {
+                  deleteImageFromRow.mutate({
+                    rowId: selectedRowForImage,
+                    imageIndex: index
+                  });
+                }
+              }}
+            />
+          );
+        })()
+      )}
+
+      {/* Image Add/Edit Modal */}
+      {selectedRowForImage && selectedRowForImage !== 'access-denied' && !exitingEditMode && (
+        (() => {
+          const selectedRow = rows.find(row => row.id === selectedRowForImage);
+          if (!selectedRow) return null;
+          
+          const existingImage = editingImageIndex !== null && selectedRow.images?.[editingImageIndex];
+          
+          return (
+            <SimpleImageModal
+              open={imageModalOpen}
+              onOpenChange={(open) => {
+                setImageModalOpen(open);
+                if (!open) {
+                  setEditingImageIndex(null);
+                  // Re-open list modal after closing edit modal
+                  if (selectedRowForImage) {
+                    setImageListModalOpen(true);
+                  }
+                }
+              }}
+              mode={editingImageIndex !== null ? "edit" : "add"}
+              existingMedia={existingImage || undefined}
+              onSave={(media) => {
+                if (selectedRowForImage) {
+                  if (editingImageIndex !== null) {
+                    // Edit existing image
+                    updateImageInRow.mutate({
+                      rowId: selectedRowForImage,
+                      imageIndex: editingImageIndex,
+                      imageUrl: media.url,
+                      caption: media.caption || ""
+                    });
+                  } else {
+                    // Add new image
+                    addImageToRow.mutate({
+                      rowId: selectedRowForImage,
+                      imageUrl: media.url,
+                      caption: media.caption || ""
+                    });
+                  }
+                  setEditingImageIndex(null);
+                  // Re-open list modal after save
+                  setImageListModalOpen(true);
+                }
+              }}
             />
           );
         })()
@@ -1557,7 +1625,7 @@ export default function TablePage() {
             });
           } else {
             setSelectedRowForImage(rowId);
-            setImageModalOpen(true);
+            setImageListModalOpen(true);
           }
         }}
         onShowCustomization={() => setCustomizationModalOpen(true)}

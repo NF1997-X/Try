@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, Video } from "lucide-react";
+import { PlusCircle, Video, Pencil, Trash2 } from "lucide-react";
 import { MediaWithCaption } from "@shared/schema";
 
 interface ImageGalleryProps {
   images: MediaWithCaption[];
   rowId: string;
   onAddImage: () => void;
+  onEditImage?: (index: number) => void;
+  onDeleteImage?: (index: number) => void;
   editMode: boolean;
   onAccessDenied: () => void;
 }
@@ -15,6 +17,8 @@ export function ImageGallery({
   images,
   rowId,
   onAddImage,
+  onEditImage,
+  onDeleteImage,
   editMode,
   onAccessDenied,
 }: ImageGalleryProps) {
@@ -173,40 +177,79 @@ export function ImageGallery({
         }) : undefined;
         
         return (
-          <a
-            key={index}
-            href="javascript:void(0)"
-            data-src={media.url}
-            data-sub-html={media.caption}
-            data-video={videoData}
-            data-poster={isVideo && media.thumbnail ? media.thumbnail : undefined}
-            className="inline-block rounded overflow-hidden hover:scale-105 transition-transform cursor-pointer"
-            data-testid={`media-${rowId}-${index}`}
-          >
-            {isVideo ? (
-              <div className="w-10 h-8 bg-gray-800 border border-border rounded flex items-center justify-center relative">
-                <Video className="w-4 h-4 text-white" />
-                {media.thumbnail && (
-                  <img
-                    src={media.thumbnail}
-                    alt={media.caption || `Video ${index + 1}`}
-                    className="absolute inset-0 w-full h-full object-cover rounded"
-                  />
-                )}
-                <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded">
-                  <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
-                    <div className="w-0 h-0 border-l-[4px] border-l-white border-y-[3px] border-y-transparent ml-0.5"></div>
+          <div key={index} className="relative inline-block group">
+            <a
+              href="javascript:void(0)"
+              data-src={media.url}
+              data-sub-html={media.caption}
+              data-video={videoData}
+              data-poster={isVideo && media.thumbnail ? media.thumbnail : undefined}
+              className="inline-block rounded overflow-hidden hover:scale-105 transition-transform cursor-pointer"
+              data-testid={`media-${rowId}-${index}`}
+            >
+              {isVideo ? (
+                <div className="w-10 h-8 bg-gray-800 border border-border rounded flex items-center justify-center relative">
+                  <Video className="w-4 h-4 text-white" />
+                  {media.thumbnail && (
+                    <img
+                      src={media.thumbnail}
+                      alt={media.caption || `Video ${index + 1}`}
+                      className="absolute inset-0 w-full h-full object-cover rounded"
+                    />
+                  )}
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded">
+                    <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
+                      <div className="w-0 h-0 border-l-[4px] border-l-white border-y-[3px] border-y-transparent ml-0.5"></div>
+                    </div>
                   </div>
                 </div>
+              ) : (
+                <img
+                  src={media.url.startsWith('data:') ? media.url : `${media.url}?w=60&h=40&fit=crop`}
+                  alt={media.caption || `Image ${index + 1}`}
+                  className="w-10 h-8 object-cover border border-border rounded"
+                />
+              )}
+            </a>
+            
+            {/* Edit/Delete buttons - only show in edit mode */}
+            {editMode && (
+              <div className="absolute -top-1 -right-1 flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                {onEditImage && (
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    className="h-4 w-4 rounded-full bg-blue-500 hover:bg-blue-600 text-white p-0"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onEditImage(index);
+                    }}
+                    title="Edit"
+                  >
+                    <Pencil className="h-2.5 w-2.5" />
+                  </Button>
+                )}
+                {onDeleteImage && (
+                  <Button
+                    size="icon"
+                    variant="destructive"
+                    className="h-4 w-4 rounded-full p-0"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (confirm('Delete this image?')) {
+                        onDeleteImage(index);
+                      }
+                    }}
+                    title="Delete"
+                  >
+                    <Trash2 className="h-2.5 w-2.5" />
+                  </Button>
+                )}
               </div>
-            ) : (
-              <img
-                src={media.url.startsWith('data:') ? media.url : `${media.url}?w=60&h=40&fit=crop`}
-                alt={media.caption || `Image ${index + 1}`}
-                className="w-10 h-8 object-cover border border-border rounded"
-              />
             )}
-          </a>
+          </div>
         );
       })}
       <Button

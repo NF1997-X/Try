@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
-type Theme = 'dark' | 'light' | 'ocean';
+type Theme = 'dark' | 'light';
 
 interface ThemeContextType {
   theme: Theme;
@@ -19,7 +19,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const root = document.documentElement;
     
     // Remove all theme classes
-    root.classList.remove('dark', 'light', 'ocean');
+    root.classList.remove('dark', 'light');
     
     // Add current theme class
     root.classList.add(theme);
@@ -29,8 +29,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     // Update browser tab/address bar color
     const themeColors = {
       dark: '#000000',
-      light: '#f5f5f7',
-      ocean: '#0a192f'
+      light: '#f5f5f7'
     };
     
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { LayoutGrid } from "lucide-react";
-import { SlideMenu } from "./slide-menu";
+import { LayoutGrid, Moon, Sun, DoorOpen, Save, ListChecks, Bookmark, BookOpen, Link2, Table2, Rows, Plus, Layout, Palette, RouteIcon, Receipt, Sparkles } from "lucide-react";
+import { useLocation } from "wouter";
 
 interface NavigationProps {
   editMode?: boolean;
@@ -19,12 +19,13 @@ interface NavigationProps {
   onBulkColorEdit?: () => void;
   isAuthenticated?: boolean;
   theme?: string;
-  onSetTheme?: (theme: 'dark' | 'light' | 'ocean') => void;
+  onSetTheme?: (theme: 'dark' | 'light') => void;
 }
 
 export function Navigation({ editMode, onEditModeRequest, onShowCustomization, onAddRow, onSaveData, onGenerateTng, onAddColumn, onOptimizeRoute, onCalculateTolls, onSaveLayout, onSavedLinks, onShowTutorial, onBulkColorEdit, isAuthenticated, theme, onSetTheme }: NavigationProps) {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [menuOpen, setMenuOpen] = useState(false);
+  const [, navigate] = useLocation();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -91,26 +92,177 @@ export function Navigation({ editMode, onEditModeRequest, onShowCustomization, o
         </div>
       </div>
 
-      {/* Slide Menu */}
-      <SlideMenu
-        open={menuOpen}
-        onOpenChange={setMenuOpen}
-        editMode={editMode}
-        onEditModeRequest={onEditModeRequest}
-        onShowCustomization={onShowCustomization}
-        onAddRow={onAddRow}
-        onSaveData={onSaveData}
-        onGenerateTng={onGenerateTng}
-        onAddColumn={onAddColumn}
-        onOptimizeRoute={onOptimizeRoute}
-        onCalculateTolls={onCalculateTolls}
-        onSaveLayout={onSaveLayout}
-        onSavedLinks={onSavedLinks}
-        onShowTutorial={onShowTutorial}
-        onBulkColorEdit={onBulkColorEdit}
-        theme={theme}
-        onSetTheme={onSetTheme}
-      />
+      {/* Dropdown Menu */}
+      {menuOpen && (
+        <div className="absolute top-full right-6 mt-3 w-56 bg-white dark:bg-black/95 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-xl p-2 shadow-xl max-h-[500px] overflow-y-auto">
+          {/* Theme Switcher */}
+          <div className="px-4 py-2">
+            <div className="flex gap-2 p-1 bg-black/5 dark:bg-white/5 rounded-xl border border-black/10 dark:border-white/10">
+              <button
+                onClick={() => onSetTheme?.('dark')}
+                className={`flex-1 p-2 rounded-lg transition-all flex items-center justify-center gap-2 ${theme === 'dark' ? 'bg-black/20 dark:bg-white/20 text-black dark:text-white' : 'text-black/60 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/10'}`}
+                title="Dark Mode"
+              >
+                <Moon className="w-4 h-4" />
+                <span className="text-xs">Dark</span>
+              </button>
+              <button
+                onClick={() => onSetTheme?.('light')}
+                className={`flex-1 p-2 rounded-lg transition-all flex items-center justify-center gap-2 ${theme === 'light' ? 'bg-black/20 dark:bg-white/20 text-black dark:text-white' : 'text-black/60 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/10'}`}
+                title="Light Mode"
+              >
+                <Sun className="w-4 h-4" />
+                <span className="text-xs">Light</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="h-px bg-black/10 dark:bg-white/10 my-1" />
+
+          {/* Primary Actions */}
+          {editMode ? (
+            <>
+              <button
+                onClick={() => { onSaveData?.(); setMenuOpen(false); }}
+                className="w-full text-left px-4 py-3 text-green-600 dark:text-green-400 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm font-medium flex items-center gap-3"
+              >
+                <Save className="w-4 h-4" />
+                Save Changes
+              </button>
+              <div className="h-px bg-black/10 dark:bg-white/10 my-1" />
+              <button
+                onClick={() => { onEditModeRequest?.(); setMenuOpen(false); }}
+                className="w-full text-left px-4 py-3 text-black/90 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm font-medium flex items-center gap-3"
+              >
+                <DoorOpen className="w-4 h-4" />
+                Exit Edit Mode
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => { onEditModeRequest?.(); setMenuOpen(false); }}
+              className="w-full text-left px-4 py-3 text-blue-600 dark:text-blue-400 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm font-medium flex items-center gap-3"
+            >
+              <DoorOpen className="w-4 h-4" />
+              Enter Edit Mode
+            </button>
+          )}
+
+          <div className="h-px bg-black/10 dark:bg-white/10 my-1" />
+
+          {/* Navigation Links */}
+          <button
+            onClick={() => { navigate('/custom-tables'); setMenuOpen(false); }}
+            className="w-full text-left px-4 py-3 text-black/90 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm flex items-center gap-3"
+          >
+            <ListChecks className="w-4 h-4" />
+            All Custom Tables
+          </button>
+
+          <button
+            onClick={() => { onSavedLinks?.(); setMenuOpen(false); }}
+            className="w-full text-left px-4 py-3 text-black/90 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm flex items-center gap-3"
+          >
+            <Bookmark className="w-4 h-4" />
+            Saved Links
+          </button>
+
+          {/* Edit Actions */}
+          {editMode && (
+            <>
+              <div className="h-px bg-black/10 dark:bg-white/10 my-1" />
+              
+              <button
+                onClick={() => { onAddRow?.(); setMenuOpen(false); }}
+                className="w-full text-left px-4 py-3 text-black/90 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm flex items-center gap-3"
+              >
+                <Rows className="w-4 h-4" />
+                Add Row
+              </button>
+
+              {onAddColumn && (
+                <button
+                  onClick={() => {
+                    const addColumnButton = document.querySelector('[data-testid="button-add-column"]') as HTMLButtonElement;
+                    if (addColumnButton) addColumnButton.click();
+                    setMenuOpen(false);
+                  }}
+                  className="w-full text-left px-4 py-3 text-black/90 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm flex items-center gap-3"
+                >
+                  <Plus className="w-4 h-4" />
+                  Add Column
+                </button>
+              )}
+
+              <button
+                onClick={() => { onShowCustomization?.(); setMenuOpen(false); }}
+                className="w-full text-left px-4 py-3 text-black/90 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm flex items-center gap-3"
+              >
+                <Layout className="w-4 h-4" />
+                Customize Columns
+              </button>
+
+              <button
+                onClick={() => { onBulkColorEdit?.(); setMenuOpen(false); }}
+                className="w-full text-left px-4 py-3 text-black/90 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm flex items-center gap-3"
+              >
+                <Palette className="w-4 h-4" />
+                Bulk Color Edit
+              </button>
+
+              {onOptimizeRoute && (
+                <button
+                  onClick={() => { onOptimizeRoute(); setMenuOpen(false); }}
+                  className="w-full text-left px-4 py-3 text-black/90 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm flex items-center gap-3"
+                >
+                  <RouteIcon className="w-4 h-4" />
+                  Optimize Route
+                </button>
+              )}
+
+              {onCalculateTolls && (
+                <button
+                  onClick={() => { onCalculateTolls(); setMenuOpen(false); }}
+                  className="w-full text-left px-4 py-3 text-black/90 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm flex items-center gap-3"
+                >
+                  <Receipt className="w-4 h-4" />
+                  Calculate Tolls
+                </button>
+              )}
+
+              {onGenerateTng && (
+                <button
+                  onClick={() => { onGenerateTng(); setMenuOpen(false); }}
+                  className="w-full text-left px-4 py-3 text-black/90 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm flex items-center gap-3"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  Generate TNG
+                </button>
+              )}
+
+              {onSaveLayout && (
+                <button
+                  onClick={() => { onSaveLayout(); setMenuOpen(false); }}
+                  className="w-full text-left px-4 py-3 text-black/90 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm flex items-center gap-3"
+                >
+                  <Layout className="w-4 h-4" />
+                  Save Layout
+                </button>
+              )}
+            </>
+          )}
+
+          <div className="h-px bg-black/10 dark:bg-white/10 my-1" />
+
+          <button
+            onClick={() => { navigate('/help'); setMenuOpen(false); }}
+            className="w-full text-left px-4 py-3 text-black/90 dark:text-white/90 hover:bg-black/5 dark:hover:bg-white/10 rounded-lg transition-all text-sm flex items-center gap-3"
+          >
+            <BookOpen className="w-4 h-4" />
+            User Guide
+          </button>
+        </div>
+      )}
     </nav>
     </>
   );
