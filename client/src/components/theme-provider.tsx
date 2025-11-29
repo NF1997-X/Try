@@ -30,7 +30,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const themeColors = {
       dark: '#000000',
       light: '#f5f5f7',
-      ocean: '#0a0f1a'
+      ocean: '#0a192f'
     };
     
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');

@@ -1861,3 +1861,343 @@ html.dark tfoot tr th .footer-total-blue {
   font-size: 14px !important;
   line-height: 1.5 !important;
 }
+
+/* ============================================ */
+/* OCEAN MODE - DEEP SEA THEME STYLING */
+/* ============================================ */
+
+.ocean {
+  /* Ocean animated background gradient */
+  background: linear-gradient(135deg, 
+    hsl(210, 60%, 6%) 0%,
+    hsl(210, 55%, 8%) 25%,
+    hsl(207, 58%, 10%) 50%,
+    hsl(210, 55%, 8%) 75%,
+    hsl(210, 60%, 6%) 100%
+  );
+  background-size: 400% 400%;
+  animation: ocean-wave 15s ease infinite;
+}
+
+@keyframes ocean-wave {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Ocean Glass Effects */
+.ocean .ios-glass-header {
+  background: rgba(10, 25, 47, 0.75);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.1),
+              0 1px 2px rgba(0, 0, 0, 0.5),
+              0 2px 8px rgba(6, 182, 212, 0.15);
+  color: hsl(195, 100%, 95%);
+  border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+.ocean .ios-glass-card {
+  background: rgba(10, 25, 47, 0.75);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.1),
+              0 2px 4px rgba(0, 0, 0, 0.5),
+              0 8px 24px rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+}
+
+.ocean .ios-glass-hover:hover {
+  background: rgba(20, 35, 60, 0.85);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.2),
+              0 4px 12px rgba(0, 0, 0, 0.6),
+              0 12px 32px rgba(6, 182, 212, 0.2);
+  transform: translateY(-2px);
+}
+
+.ocean .ios-glass-table {
+  background: rgba(10, 25, 47, 0.8);
+  backdrop-filter: blur(50px) saturate(180%);
+  -webkit-backdrop-filter: blur(50px) saturate(180%);
+  border: 2px solid rgba(6, 182, 212, 0.3);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.08),
+              0 4px 12px rgba(0, 0, 0, 0.6),
+              0 12px 40px rgba(6, 182, 212, 0.15),
+              0 0 80px rgba(6, 182, 212, 0.05);
+}
+
+.ocean .ios-glass-input {
+  background: rgba(15, 30, 52, 0.75);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  color: hsl(195, 100%, 95%) !important;
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.1),
+              0 1px 2px rgba(0, 0, 0, 0.5),
+              0 2px 8px rgba(6, 182, 212, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+.ocean .ios-glass-input:focus {
+  background: rgba(20, 35, 60, 0.85);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.15),
+              0 0 0 3px rgba(6, 182, 212, 0.3),
+              0 4px 12px rgba(0, 0, 0, 0.6);
+  border-color: rgba(6, 182, 212, 0.5);
+}
+
+.ocean .ios-glass-button {
+  background: rgba(15, 30, 52, 0.75);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.1),
+              0 1px 2px rgba(0, 0, 0, 0.5),
+              0 2px 8px rgba(6, 182, 212, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  color: hsl(195, 100%, 95%);
+}
+
+.ocean .ios-glass-button:hover {
+  background: rgba(20, 35, 60, 0.85);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.2),
+              0 4px 12px rgba(0, 0, 0, 0.6),
+              0 8px 24px rgba(6, 182, 212, 0.15);
+  transform: translateY(-1px);
+}
+
+.ocean .ios-glass-panel {
+  background: rgba(10, 25, 47, 0.75);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.1),
+              0 4px 12px rgba(0, 0, 0, 0.6),
+              0 12px 40px rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+/* Ocean Table Rows */
+.ocean .table-row-glass:hover {
+  background: rgba(6, 182, 212, 0.08);
+}
+
+/* Ocean Buttons */
+.ocean .btn-glass {
+  background: rgba(15, 30, 52, 0.75);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.1),
+              0 1px 2px rgba(0, 0, 0, 0.5),
+              0 2px 8px rgba(6, 182, 212, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  color: hsl(195, 100%, 95%);
+}
+
+.ocean .btn-glass:hover {
+  background: rgba(20, 35, 60, 0.85);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.2),
+              0 4px 12px rgba(0, 0, 0, 0.6),
+              0 8px 24px rgba(6, 182, 212, 0.15);
+}
+
+/* Ocean Stats Cards */
+.ocean .stats-card-glass {
+  background: rgba(10, 25, 47, 0.75);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.1),
+              0 2px 8px rgba(0, 0, 0, 0.5),
+              0 8px 24px rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+}
+
+.ocean .stats-card-glass:hover {
+  background: rgba(20, 35, 60, 0.85);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.2),
+              0 4px 12px rgba(0, 0, 0, 0.6),
+              0 12px 32px rgba(6, 182, 212, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Ocean Badge */
+.ocean .badge-glass {
+  background: rgba(15, 30, 52, 0.75);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgba(6, 182, 212, 0.1),
+              0 1px 2px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  color: hsl(195, 100%, 95%);
+}
+
+/* Ocean Footer */
+.ocean .footer-total-blue {
+  color: #06b6d4 !important;
+  text-shadow: 0 0 2px #06b6d4 !important;
+  font-weight: bold !important;
+}
+
+/* Ocean Pagination */
+.ocean .pagination-button {
+  background: linear-gradient(135deg, rgba(15, 30, 52, 0.7), rgba(10, 25, 47, 0.6));
+  border-color: rgba(6, 182, 212, 0.3);
+  color: hsl(195, 100%, 90%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.ocean .pagination-button:hover {
+  box-shadow: 0 8px 25px rgba(6, 182, 212, 0.3);
+  background: linear-gradient(135deg, rgba(20, 40, 65, 0.8), rgba(15, 30, 52, 0.7));
+  border-color: rgba(6, 182, 212, 0.5);
+}
+
+.ocean .pagination-button.active {
+  background: linear-gradient(135deg, rgba(15, 30, 52, 0.7), rgba(10, 25, 47, 0.6));
+  color: #06b6d4;
+  animation: pagination-border-blink-ocean 2s ease-in-out infinite;
+}
+
+@keyframes pagination-border-blink-ocean {
+  0%, 100% {
+    border-color: rgba(6, 182, 212, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    border-color: rgba(6, 182, 212, 0.7);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.5),
+                0 0 20px rgba(6, 182, 212, 0.3);
+  }
+}
+
+/* Ocean Loading Animations - Glowing Cyan */
+.ocean .loading-spinner::before {
+  border-top-color: #06b6d4;
+  border-right-color: #06b6d4;
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+}
+
+.ocean .loading-spinner-lg::before {
+  border-top-color: #06b6d4;
+  border-right-color: #06b6d4;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+}
+
+.ocean .loading-wave .wave-dot {
+  background: #06b6d4;
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.7);
+}
+
+/* Ocean Electric Text */
+.ocean .electric-text {
+  background: linear-gradient(90deg, #06b6d4, #22d3ee, #67e8f9, #22d3ee, #06b6d4);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: electric 2s ease-in-out infinite, shimmer 3s linear infinite;
+  text-shadow: 
+    0 0 4px rgba(6, 182, 212, 0.6),
+    0 0 11px rgba(6, 182, 212, 0.6),
+    0 0 19px rgba(6, 182, 212, 0.5);
+}
+
+/* Ocean Drag Handle */
+.ocean .drag-handle:hover {
+  background: rgba(6, 182, 212, 0.15);
+}
+
+/* Ocean Cell Editing */
+.ocean .cell-editing {
+  background: rgba(6, 182, 212, 0.2);
+  border: 2px solid #06b6d4;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+}
+
+/* Ocean Skeleton Loading */
+.ocean .skeleton {
+  background: linear-gradient(110deg, 
+    rgba(10, 25, 47, 0.8) 8%, 
+    rgba(6, 182, 212, 0.3) 18%, 
+    rgba(10, 25, 47, 0.8) 33%);
+  background-size: 200% 100%;
+  animation: shimmer-wave 1.8s ease-in-out infinite;
+}
+
+.ocean .skeleton-row {
+  background: linear-gradient(110deg, 
+    rgba(6, 182, 212, 0.08) 8%, 
+    rgba(6, 182, 212, 0.2) 18%, 
+    rgba(6, 182, 212, 0.08) 33%);
+  background-size: 200% 100%;
+  animation: shimmer-glass 2.2s ease-in-out infinite;
+  border: 1px solid rgba(6, 182, 212, 0.15);
+}
+
+/* Ocean Mutation Loading */
+.ocean .mutation-loading::after {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(6, 182, 212, 0.3), 
+    transparent);
+}
+
+/* Ocean Custom Table Cards */
+.ocean .custom-table-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.4);
+}
+
+/* Ocean Scrollbar Styling */
+.ocean ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.ocean ::-webkit-scrollbar-track {
+  background: rgba(10, 25, 47, 0.5);
+  border-radius: 5px;
+}
+
+.ocean ::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.5);
+  border-radius: 5px;
+  border: 2px solid rgba(10, 25, 47, 0.5);
+}
+
+.ocean ::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.7);
+}
+
+/* Ocean Ripple Effect */
+.ocean .loading-ripple::before,
+.ocean .loading-ripple::after {
+  border-color: #06b6d4;
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+}
+
+/* Ocean Modal/Dialog Overlays */
+.ocean .table-loading-overlay {
+  background: rgba(10, 15, 26, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Ocean Glow Effects for Interactive Elements */
+.ocean button:hover,
+.ocean a:hover {
+  text-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+}
+
+/* Ocean Border Glow */
+.ocean .border {
+  border-color: rgba(6, 182, 212, 0.25);
+}
+
+/* Ocean Focus States */
+.ocean *:focus-visible {
+  outline: 2px solid rgba(6, 182, 212, 0.5);
+  outline-offset: 2px;
+}
+
+/* Ocean Selection */
+.ocean ::selection {
+  background: rgba(6, 182, 212, 0.3);
+  color: hsl(195, 100%, 95%);
+}
