@@ -787,11 +787,11 @@ export function DataTable({
 
   return (
     <div
-      className="ios-glass-table border-none shadow-2xl table-container my-10 rounded-xl overflow-hidden"
+      className="border-2 border-slate-300 dark:border-blue-500/30 shadow-2xl table-container my-10 rounded-xl overflow-hidden bg-gradient-to-br from-slate-100 via-slate-50 to-slate-100 dark:from-blue-950/40 dark:to-gray-900/40 backdrop-blur-sm"
       data-testid="data-table"
     >
       {/* Single Row: Filter/Sort/Search + Action Buttons */}
-      <div className="flex justify-between items-center px-6 py-5 border-b border-border/40 bg-gradient-to-r from-blue-500/5 via-transparent to-blue-500/5 dark:from-blue-500/5 dark:via-transparent dark:to-blue-500/5 ocean:from-cyan-500/8 ocean:via-transparent ocean:to-cyan-500/8 backdrop-blur-sm">
+      <div className="flex justify-between items-center px-6 py-5 border-b border-slate-300 dark:border-blue-500/20 bg-gradient-to-r from-slate-200/50 via-transparent to-slate-200/50 dark:from-blue-900/20 dark:to-transparent backdrop-blur-sm">
         <div className="flex items-center gap-2 flex-shrink-0">
           {/* Sort Popover */}
           <Popover>
@@ -1141,7 +1141,7 @@ export function DataTable({
       <div className="overflow-x-auto w-full">
         <DragDropContext onDragEnd={handleDragEnd}>
           <Table className="min-w-full overflow-hidden">
-            <TableHeader className="sticky top-0 z-20 [&_tr]:border-b [&_tr]:border-border/20 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)]">
+            <TableHeader className="sticky top-0 z-20 [&_tr]:border-b [&_tr]:border-slate-300 dark:[&_tr]:border-blue-500/20 shadow-lg bg-gradient-to-b from-slate-200 to-slate-100 dark:from-blue-900/30 dark:to-blue-950/20">
               <Droppable
                 droppableId="columns"
                 direction="horizontal"
@@ -1151,7 +1151,7 @@ export function DataTable({
                   <TableRow
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className="premium-table-footer border-0"
+                    className="border-0"
                   >
                     {visibleColumns.map((column, index) => (
                       <Draggable
@@ -1163,7 +1163,7 @@ export function DataTable({
                           <TableHead
                             ref={provided.innerRef}
                             {...provided.draggableProps}
-                            className="px-4 py-4 text-center table-header-footer-12px font-semibold tracking-wide sticky top-0 whitespace-nowrap border-transparent"
+                            className="px-4 py-4 text-center table-header-footer-12px font-semibold tracking-wide sticky top-0 whitespace-nowrap border-transparent text-slate-700 dark:text-blue-100"
                             style={{
                               textAlign: "center",
                               textDecoration: "normal",
@@ -1266,28 +1266,28 @@ export function DataTable({
                             <TableRow
                               ref={provided.innerRef}
                               {...provided.draggableProps}
-                              className={`table-row-glass group shadow-lg dark:shadow-none ${
+                              className={`group ${
                                 (() => {
                                   // Main page (NOT shared view): only dim if power off (inactive)
                                   if (!isSharedView) {
                                     if (row.active === false) {
-                                      return "bg-gray-400/60 dark:bg-gray-700/60 opacity-50";
+                                      return "bg-slate-300 dark:bg-gray-700/60 opacity-50";
                                     } else {
-                                      return "bg-white/60 dark:bg-black/20";
+                                      return "bg-white dark:bg-blue-900/10";
                                     }
                                   }
                                   
                                   // Shared view & custom table: apply schedule-based styling
                                   const status = getScheduleStatus(row);
                                   if (status === 'inactive') {
-                                    return "bg-gray-400/60 dark:bg-gray-700/60 opacity-50";
+                                    return "bg-slate-300 dark:bg-gray-700/60 opacity-50";
                                   } else if (status === 'off-schedule') {
-                                    return "bg-white/60 dark:bg-black/20 opacity-60";
+                                    return "bg-white dark:bg-blue-900/10 opacity-60";
                                   } else {
-                                    return "bg-white/60 dark:bg-black/20";
+                                    return "bg-white dark:bg-blue-900/10";
                                   }
                                 })()
-                              } hover:bg-blue-50/50 hover:shadow-xl dark:hover:bg-blue-950/20 dark:hover:shadow-[0_2px_12px_rgba(59,130,246,0.25)] transition-all duration-200 ${
+                              } hover:bg-slate-50 hover:shadow-md dark:hover:bg-blue-800/20 dark:hover:shadow-[0_2px_12px_rgba(59,130,246,0.25)] transition-all duration-300 hover:-translate-y-0.5 border-b border-slate-200 dark:border-blue-700/20 ${
                                 snapshot.isDragging ? "drag-elevate" : ""
                               }`}
                               data-testid={`table-row-${row.id}`}
@@ -1295,7 +1295,7 @@ export function DataTable({
                               {visibleColumns.map((column) => (
                                 <TableCell
                                   key={column.id}
-                                  className="p-4 align-middle [&:has([role=checkbox])]:pr-0 px-4 py-4 table-cell-10px text-center text-[13px] text-slate-700 dark:text-slate-200 font-semibold whitespace-nowrap"
+                                  className="p-4 align-middle [&:has([role=checkbox])]:pr-0 px-4 py-4 table-cell-10px text-center text-[13px] text-slate-800 dark:text-slate-200 font-semibold whitespace-nowrap"
                                   style={{
                                     minWidth: "100px",
                                     ...(column.dataKey === "location" && {
@@ -1686,8 +1686,8 @@ export function DataTable({
                 </TableBody>
               )}
             </Droppable>
-            <tfoot className="sticky bottom-0 z-20 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-1px_rgba(0,0,0,0.06)]">
-              <TableRow className="premium-table-footer border-t border-border/20">
+            <tfoot className="sticky bottom-0 z-20 shadow-lg bg-gradient-to-t from-slate-200 to-slate-100 dark:from-blue-900/30 dark:to-blue-950/20">
+              <TableRow className="border-t border-slate-300 dark:border-blue-500/20">
                 {visibleColumns.map((column, index) => (
                   <TableCell
                     key={column.id}
