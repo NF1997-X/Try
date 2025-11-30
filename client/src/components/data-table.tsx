@@ -1650,9 +1650,6 @@ export function DataTable({
                                               <span className="text-yellow-600 dark:text-yellow-400 text-xs font-medium">Alt 2</span>
                                             </div>
                                           </SelectItem>
-                                              <span className="text-yellow-600 dark:text-yellow-400 text-xs font-medium">Alt 2</span>
-                                            </div>
-                                          </SelectItem>
                                           <SelectItem value="inactive">
                                             <div className="flex items-center gap-2">
                                               <div className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-white text-xs font-bold">✗</div>
