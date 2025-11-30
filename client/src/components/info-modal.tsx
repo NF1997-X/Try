@@ -688,7 +688,6 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                     className="h-10 w-10 p-0 bg-transparent hover:bg-green-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-green-500/30"
                     onClick={() => {
                       handleEditClick();
-                      setShowActionsMenu(false);
                     }}
                     data-testid={`button-edit-${rowId}`}
                   >
@@ -704,7 +703,6 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                     className="h-10 w-10 p-0 bg-transparent hover:bg-purple-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl disabled:opacity-70 disabled:cursor-not-allowed border border-purple-500/30 relative overflow-hidden"
                     onClick={() => {
                       handleQrCodeClick();
-                      setShowActionsMenu(false);
                     }}
                     disabled={isScanning || qrScanning}
                     data-testid={`button-qrcode-${rowId}`}
@@ -743,7 +741,6 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                       className="h-10 w-10 p-0 bg-transparent hover:bg-cyan-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-cyan-500/30"
                       onClick={() => {
                         handleUrlClick(url);
-                        setShowActionsMenu(false);
                       }}
                       data-testid={`button-open-url-${rowId}`}
                     >
@@ -761,7 +758,6 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                       className="h-10 w-10 p-0 bg-transparent hover:bg-red-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-red-500/30"
                       onClick={() => {
                         handleDirectionClick();
-                        setShowActionsMenu(false);
                       }}
                       data-testid={`button-direction-${rowId}`}
                     >
@@ -775,7 +771,6 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                       className="h-10 w-10 p-0 bg-transparent hover:bg-sky-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-sky-500/30"
                       onClick={() => {
                         handleWazeClick();
-                        setShowActionsMenu(false);
                       }}
                       data-testid={`button-waze-${rowId}`}
                     >

@@ -779,7 +779,7 @@ export function DataTable({
       data-testid="data-table"
     >
       {/* Single Row: Filter/Sort/Search + Action Buttons */}
-      <div className="flex justify-between items-center px-6 py-5 border-b border-slate-300 dark:border-blue-500/20 bg-gradient-to-r from-slate-200/50 via-transparent to-slate-200/50 dark:from-blue-500/5 dark:via-transparent dark:to-blue-500/5 backdrop-blur-sm">
+      <div className="flex justify-between items-center px-6 py-5 border-b border-slate-300 dark:border-blue-500/20 bg-gradient-to-r from-slate-200/50 via-slate-100/30 to-slate-200/50 dark:from-gray-900/40 dark:via-gray-900/50 dark:to-gray-900/40 backdrop-blur-sm">
         <div className="flex items-center gap-2 flex-shrink-0">
           {/* Sort Popover */}
           <Popover>
@@ -1725,7 +1725,7 @@ export function DataTable({
 
           {/* Pagination Controls */}
           {!disablePagination && (
-            <div className="flex flex-col items-center justify-center gap-2 px-6 py-5 border-t border-border/20 bg-gradient-to-r from-slate-200/50 via-transparent to-slate-200/50 dark:from-blue-500/5 dark:via-transparent dark:to-blue-500/5 ocean:from-cyan-500/8 ocean:via-transparent ocean:to-cyan-500/8 backdrop-blur-sm">
+            <div className="flex flex-col items-center justify-center gap-2 px-6 py-5 border-t border-border/20 bg-gradient-to-r from-slate-200/50 via-slate-100/30 to-slate-200/50 dark:from-gray-900/40 dark:via-gray-900/50 dark:to-gray-900/40 ocean:from-cyan-500/8 ocean:via-transparent ocean:to-cyan-500/8 backdrop-blur-sm">
               
               <div className="flex items-center justify-between gap-1.5 w-full">
                 {/* Left: Entries per page selector with showing text */}
