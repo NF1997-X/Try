@@ -956,12 +956,18 @@ export class MemStorage implements IStorage {
 export class DatabaseStorage implements IStorage {
   constructor() {
     // Initialize with sample data if tables are empty
-    this.initializeData().catch(console.error);
-    this.ensureCoreColumns().catch(console.error);
+    // Only initialize if database is available
+    if (process.env.DATABASE_URL) {
+      this.initializeData().catch(console.error);
+      this.ensureCoreColumns().catch(console.error);
+    }
   }
 
   private async initializeData() {
     try {
+      // Skip if no database connection
+      if (!process.env.DATABASE_URL) return;
+      
       // Check if data already exists
       const existingColumns = await db.select().from(tableColumns);
       const existingRows = await db.select().from(tableRows);
@@ -1278,6 +1284,9 @@ export class DatabaseStorage implements IStorage {
 
   private async ensureCoreColumns() {
     try {
+      // Skip if no database connection
+      if (!process.env.DATABASE_URL) return;
+      
       const existingColumns = await this.getTableColumns();
       
       // Remove duplicate kilometer columns (keep only the first one)

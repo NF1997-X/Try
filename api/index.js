@@ -516,11 +516,14 @@ async function retryOperation(operation, maxRetries = 3, delayMs = 1e3) {
 }
 var DatabaseStorage = class {
   constructor() {
-    this.initializeData().catch(console.error);
-    this.ensureCoreColumns().catch(console.error);
+    if (process.env.DATABASE_URL) {
+      this.initializeData().catch(console.error);
+      this.ensureCoreColumns().catch(console.error);
+    }
   }
   async initializeData() {
     try {
+      if (!process.env.DATABASE_URL) return;
       const existingColumns = await db.select().from(tableColumns);
       const existingRows = await db.select().from(tableRows);
       if (existingColumns.length === 0) {
@@ -823,6 +826,7 @@ var DatabaseStorage = class {
   }
   async ensureCoreColumns() {
     try {
+      if (!process.env.DATABASE_URL) return;
       const existingColumns = await this.getTableColumns();
       const kilometerColumns = existingColumns.filter((col) => col.dataKey === "kilometer");
       if (kilometerColumns.length > 1) {

@@ -640,10 +640,10 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
           style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
         >
           {/* Main Grid Button - Apple Style */}
-          <div className={`flex justify-center items-center w-full transition-all duration-300 my-2 ${showActionsMenu ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+          <div className={`flex justify-center items-center w-full transition-all duration-500 ease-out my-2 ${showActionsMenu ? 'opacity-0 pointer-events-none scale-50' : 'opacity-100 scale-100'}`}>
             <Button
               variant="ghost"
-              className="h-11 w-11 p-0 bg-transparent border-transparent hover:bg-transparent hover:border-transparent shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 hover:scale-105 active:scale-95 transition-all duration-200 rounded-2xl"
+              className="h-11 w-11 p-0 bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-400/10 dark:to-blue-500/10 border border-blue-500/20 hover:border-blue-500/40 hover:from-blue-500/20 hover:to-blue-600/20 shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30 hover:scale-110 active:scale-95 transition-all duration-300 rounded-2xl backdrop-blur-sm"
               onClick={() => setShowActionsMenu(!showActionsMenu)}
               data-testid="button-actions-menu"
             >
@@ -653,10 +653,10 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
           
           {/* Sliding Actions Menu - Apple Style */}
           <div 
-            className={`absolute left-0 right-0 bottom-0 bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl border-t border-gray-200/60 dark:border-gray-800/60 transition-all duration-300 ease-out rounded-t-3xl ${
+            className={`absolute left-0 right-0 bottom-0 bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl border-t border-gray-200/60 dark:border-gray-800/60 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] rounded-t-3xl shadow-2xl ${
               showActionsMenu 
-                ? 'translate-x-0 opacity-100' 
-                : 'translate-x-full opacity-0 pointer-events-none'
+                ? 'translate-y-0 opacity-100' 
+                : 'translate-y-full opacity-0 pointer-events-none'
             }`}
             style={{ 
               paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))',
@@ -701,7 +701,7 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                 <div className="flex items-center justify-center animate-in slide-in-from-right-10 duration-300" style={{animationDelay: '100ms'}}>
                   <Button
                     variant="ghost"
-                    className="h-10 w-10 p-0 bg-transparent hover:bg-purple-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl disabled:opacity-50 border border-purple-500/30 relative overflow-hidden pagination-button"
+                    className="h-10 w-10 p-0 bg-transparent hover:bg-purple-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl disabled:opacity-70 disabled:cursor-not-allowed border border-purple-500/30 relative overflow-hidden"
                     onClick={() => {
                       handleQrCodeClick();
                       setShowActionsMenu(false);
@@ -711,10 +711,14 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                   >
                     {qrScanning ? (
                       <>
-                        <div className="absolute inset-0 bg-purple-500/20 animate-pulse"></div>
-                        <span className="relative text-[7px] font-semibold text-purple-600 dark:text-purple-400 whitespace-nowrap animate-pulse">
-                          Scanning{scanningDots}
-                        </span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/30 to-purple-500/0 animate-[shimmer_1.5s_ease-in-out_infinite]"></div>
+                        <div className="absolute inset-0 bg-purple-500/10 animate-pulse"></div>
+                        <div className="relative flex flex-col items-center justify-center">
+                          <Loader2 className="w-4 h-4 text-purple-600 dark:text-purple-400 animate-spin" />
+                          <span className="text-[6px] font-medium text-purple-600 dark:text-purple-400 mt-0.5">
+                            Scan{scanningDots}
+                          </span>
+                        </div>
                       </>
                     ) : (
                       <QrCode className="w-5 h-5 text-purple-600 dark:text-purple-400" />
