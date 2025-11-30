@@ -700,7 +700,7 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                 <div className="flex items-center justify-center animate-in slide-in-from-right-10 duration-300" style={{animationDelay: '100ms'}}>
                   <Button
                     variant="ghost"
-                    className={`h-10 ${qrScanning ? 'w-16' : 'w-10'} p-0 bg-transparent hover:bg-purple-500/10 hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl disabled:opacity-70 disabled:cursor-not-allowed border border-purple-500/30 relative overflow-hidden`}
+                    className="h-10 w-16 p-0 bg-transparent hover:bg-purple-500/10 hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl disabled:opacity-70 disabled:cursor-not-allowed border border-purple-500/30 relative overflow-hidden"
                     onClick={() => {
                       handleQrCodeClick();
                     }}
@@ -709,10 +709,11 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                   >
                     {qrScanning ? (
                       <>
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/0 via-purple-500/30 to-purple-500/0 animate-[shimmer_1.5s_ease-in-out_infinite]"></div>
-                        <div className="absolute inset-0 bg-purple-500/10 animate-pulse"></div>
-                        <div className="relative flex items-center justify-center w-full">
-                          <Loader2 className="w-6 h-6 text-purple-600 dark:text-purple-400 animate-spin" />
+                        <div className="relative flex flex-col items-center justify-center w-full gap-0.5">
+                          <span className="text-[8px] font-semibold text-purple-600 dark:text-purple-400 whitespace-nowrap">
+                            Scan
+                          </span>
+                          <Loader2 className="w-4 h-4 text-purple-600 dark:text-purple-400 animate-spin" />
                         </div>
                       </>
                     ) : (
