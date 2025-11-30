@@ -1570,7 +1570,7 @@ export function DataTable({
                                         }
                                       >
                                         <SelectTrigger 
-                                          className={`h-8 w-16 text-xs border-transparent bg-transparent ${
+                                          className={`h-8 w-20 text-xs border-transparent bg-transparent ${
                                             (() => {
                                               // Apply 3-color styling ONLY for shared view or edit mode
                                               if (isSharedView || editMode) {
@@ -1604,16 +1604,28 @@ export function DataTable({
                                         </SelectTrigger>
                                         <SelectContent>
                                           <SelectItem value="normal">
-                                            <span className="text-green-600 dark:text-green-400">🟢</span>
+                                            <div className="flex items-center gap-2">
+                                              <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center text-white text-xs font-bold">✓</div>
+                                              <span className="text-green-600 dark:text-green-400 text-xs font-medium">Daily</span>
+                                            </div>
                                           </SelectItem>
                                           <SelectItem value="alt1">
-                                            <span className="text-yellow-600 dark:text-yellow-400">🟡</span>
+                                            <div className="flex items-center gap-2">
+                                              <div className="w-4 h-4 rounded-full bg-yellow-500 flex items-center justify-center text-white text-xs font-bold">✓</div>
+                                              <span className="text-yellow-600 dark:text-yellow-400 text-xs font-medium">Alt 1</span>
+                                            </div>
                                           </SelectItem>
                                           <SelectItem value="alt2">
-                                            <span className="text-yellow-600 dark:text-yellow-400">🟡</span>
+                                            <div className="flex items-center gap-2">
+                                              <div className="w-4 h-4 rounded-full bg-yellow-500 flex items-center justify-center text-white text-xs font-bold">✓</div>
+                                              <span className="text-yellow-600 dark:text-yellow-400 text-xs font-medium">Alt 2</span>
+                                            </div>
                                           </SelectItem>
                                           <SelectItem value="inactive">
-                                            <span className="text-red-500 dark:text-red-400">🔴</span>
+                                            <div className="flex items-center gap-2">
+                                              <div className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-white text-xs font-bold">✗</div>
+                                              <span className="text-red-500 dark:text-red-400 text-xs font-medium">Off</span>
+                                            </div>
                                           </SelectItem>
                                         </SelectContent>
                                       </Select>
