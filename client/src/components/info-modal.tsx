@@ -685,7 +685,7 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                 <div className="flex items-center justify-center animate-in slide-in-from-right-10 duration-300" style={{animationDelay: '50ms'}}>
                   <Button
                     variant="ghost"
-                    className="h-10 w-10 p-0 bg-transparent hover:bg-green-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-green-500/30"
+                    className="h-10 w-10 p-0 bg-transparent hover:bg-green-500/10 hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-green-500/30"
                     onClick={() => {
                       handleEditClick();
                     }}
@@ -710,10 +710,10 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                     {qrScanning ? (
                       <>
                         <div className="relative flex flex-col items-center justify-center w-full gap-0.5">
+                          <Loader2 className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400 animate-spin" />
                           <span className="text-[7px] font-semibold text-purple-600 dark:text-purple-400 whitespace-nowrap">
                             Scan
                           </span>
-                          <Loader2 className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400 animate-spin" />
                         </div>
                       </>
                     ) : (
@@ -736,7 +736,7 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                   <div className="flex items-center justify-center animate-in slide-in-from-right-10 duration-300" style={{animationDelay: '150ms'}}>
                     <Button
                       variant="ghost"
-                      className="h-10 w-10 p-0 bg-transparent hover:bg-cyan-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-cyan-500/30"
+                      className="h-10 w-10 p-0 bg-transparent hover:bg-cyan-500/10 hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-cyan-500/30"
                       onClick={() => {
                         handleUrlClick(url);
                       }}
@@ -753,7 +753,7 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                   <div className="flex items-center justify-center animate-in slide-in-from-right-10 duration-300" style={{animationDelay: '200ms'}}>
                     <Button
                       variant="ghost"
-                      className="h-10 w-10 p-0 bg-transparent hover:bg-red-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-red-500/30"
+                      className="h-10 w-10 p-0 bg-transparent hover:bg-red-500/10 hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-red-500/30"
                       onClick={() => {
                         handleDirectionClick();
                       }}
@@ -766,7 +766,7 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
                   <div className="flex items-center justify-center animate-in slide-in-from-right-10 duration-300" style={{animationDelay: '250ms'}}>
                     <Button
                       variant="ghost"
-                      className="h-10 w-10 p-0 bg-transparent hover:bg-sky-500/10 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-sky-500/30"
+                      className="h-10 w-10 p-0 bg-transparent hover:bg-sky-500/10 hover:scale-105 active:scale-95 transition-all duration-200 rounded-xl border border-sky-500/30"
                       onClick={() => {
                         handleWazeClick();
                       }}
