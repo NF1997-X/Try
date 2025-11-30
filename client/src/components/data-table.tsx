@@ -1570,7 +1570,7 @@ export function DataTable({
                                         }
                                       >
                                         <SelectTrigger 
-                                          className={`h-8 w-20 text-xs border-transparent bg-transparent ${
+                                          className={`h-8 w-8 text-xs border-transparent bg-transparent p-0 ${
                                             (() => {
                                               // Apply 3-color styling ONLY for shared view or edit mode
                                               if (isSharedView || editMode) {
@@ -1600,7 +1600,18 @@ export function DataTable({
                                           }`}
                                           data-testid={`select-delivery-alt-${row.id}`}
                                         >
-                                          <SelectValue />
+                                          <SelectValue>
+                                            {(() => {
+                                              const status = getScheduleStatus(row);
+                                              if (status === 'inactive') {
+                                                return <div className="w-4 h-4 rounded-full bg-red-500 flex items-center justify-center text-white text-xs font-bold">✗</div>;
+                                              } else if (status === 'off-schedule') {
+                                                return <div className="w-4 h-4 rounded-full bg-yellow-500 flex items-center justify-center text-white text-xs font-bold opacity-60">✗</div>;
+                                              } else {
+                                                return <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center text-white text-xs font-bold">✓</div>;
+                                              }
+                                            })()}
+                                          </SelectValue>
                                         </SelectTrigger>
                                         <SelectContent>
                                           <SelectItem value="normal">
@@ -1611,13 +1622,34 @@ export function DataTable({
                                           </SelectItem>
                                           <SelectItem value="alt1">
                                             <div className="flex items-center gap-2">
-                                              <div className="w-4 h-4 rounded-full bg-yellow-500 flex items-center justify-center text-white text-xs font-bold">✓</div>
+                                              {(() => {
+                                                const currentDay = new Date().getDay();
+                                                const alt1Days = [1, 3, 5, 0]; // Mon, Wed, Fri, Sun
+                                                const isAlt1Today = alt1Days.includes(currentDay);
+                                                return (
+                                                  <div className={`w-4 h-4 rounded-full bg-yellow-500 flex items-center justify-center text-white text-xs font-bold ${!isAlt1Today ? 'opacity-60' : ''}`}>
+                                                    {isAlt1Today ? '✓' : '✗'}
+                                                  </div>
+                                                );
+                                              })()}
                                               <span className="text-yellow-600 dark:text-yellow-400 text-xs font-medium">Alt 1</span>
                                             </div>
                                           </SelectItem>
                                           <SelectItem value="alt2">
                                             <div className="flex items-center gap-2">
-                                              <div className="w-4 h-4 rounded-full bg-yellow-500 flex items-center justify-center text-white text-xs font-bold">✓</div>
+                                              {(() => {
+                                                const currentDay = new Date().getDay();
+                                                const alt2Days = [2, 4, 6]; // Tue, Thu, Sat
+                                                const isAlt2Today = alt2Days.includes(currentDay);
+                                                return (
+                                                  <div className={`w-4 h-4 rounded-full bg-yellow-500 flex items-center justify-center text-white text-xs font-bold ${!isAlt2Today ? 'opacity-60' : ''}`}>
+                                                    {isAlt2Today ? '✓' : '✗'}
+                                                  </div>
+                                                );
+                                              })()}
+                                              <span className="text-yellow-600 dark:text-yellow-400 text-xs font-medium">Alt 2</span>
+                                            </div>
+                                          </SelectItem>
                                               <span className="text-yellow-600 dark:text-yellow-400 text-xs font-medium">Alt 2</span>
                                             </div>
                                           </SelectItem>
