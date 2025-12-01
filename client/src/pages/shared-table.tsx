@@ -7,6 +7,7 @@ import { LoadingOverlay } from "@/components/skeleton-loader";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { PasswordPrompt } from "@/components/password-prompt";
+import { ImageLightbox } from "@/components/image-lightbox";
 import { Database } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 import { calculateDistance } from "@/utils/distance";
@@ -37,6 +38,7 @@ export default function SharedTablePage() {
   const [deliveryFilters, setDeliveryFilters] = useState<string[]>([]);
   const [routeFilters, setRouteFilters] = useState<string[]>([]); // Hidden but applied from shared state
   const [selectedRowForImage, setSelectedRowForImage] = useState<string | null>(null);
+  const [imageLightboxOpen, setImageLightboxOpen] = useState(false);
   
   // Edit mode state
   const [editMode, setEditMode] = useState(false);
@@ -412,11 +414,13 @@ export default function SharedTablePage() {
                       const hasKL = routeFilters.some(route => route.toUpperCase().includes('KL'));
                       const hasSL = routeFilters.some(route => route.toUpperCase().includes('SL'));
                       
+                      // Show specific flag if only one type is filtered
                       if (hasKL && !hasSL) {
                         return "/assets/kl-flag.png";
                       } else if (hasSL && !hasKL) {
                         return "/assets/selangor-flag.png";
                       }
+                      // Show FM logo for no filter or mixed filters
                       return "/assets/Logofm.png";
                     })()} 
                     alt="Logo" 
@@ -478,7 +482,10 @@ export default function SharedTablePage() {
             onReorderRows={readOnlyReorderRowsMutation as any}
             onReorderColumns={readOnlyReorderColumnsMutation as any}
             onDeleteColumn={readOnlyDeleteColumnMutation as any}
-            onSelectRowForImage={setSelectedRowForImage}
+            onSelectRowForImage={(rowId) => {
+              setSelectedRowForImage(rowId);
+              setImageLightboxOpen(true);
+            }}
             onShowCustomization={() => {}}
             onOptimizeRoute={() => {}}
             isAuthenticated={isAuthenticated}
@@ -498,6 +505,20 @@ export default function SharedTablePage() {
       </main>
 
       <Footer editMode={editMode} />
+
+      {/* Image Lightbox Modal */}
+      {selectedRowForImage && (
+        <ImageLightbox
+          open={imageLightboxOpen}
+          onOpenChange={(open) => {
+            setImageLightboxOpen(open);
+            if (!open) {
+              setSelectedRowForImage(null);
+            }
+          }}
+          images={rows.find(r => r.id === selectedRowForImage)?.images || []}
+        />
+      )}
 
       {/* Password Prompt Dialog */}
       <PasswordPrompt

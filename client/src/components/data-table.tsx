@@ -1100,7 +1100,7 @@ export function DataTable({
                         ) : (
                           <Filter className="w-2.5 h-2.5" />
                         )}
-                        <span className="text-[8px] font-semibold text-blue-700 dark:text-blue-300">{route}</span>
+                        <span className="text-[8px] font-semibold text-gray-400 dark:text-gray-500">{route}</span>
                       </button>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -1562,16 +1562,18 @@ export function DataTable({
                                         />
                                       </>
                                     )}
-                                    <div
-                                      {...provided.dragHandleProps}
-                                      className={`p-2 rounded ${
-                                        snapshot.isDragging ? "cursor-grabbing" : editMode ? "cursor-grab" : "cursor-default"
-                                      } text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-all`}
-                                      title={editMode ? "Drag to reorder" : ""}
-                                      data-testid={`drag-handle-${row.id}`}
-                                    >
-                                      <GripVertical className="w-4 h-4" />
-                                    </div>
+                                    {!isSharedView && (
+                                      <div
+                                        {...provided.dragHandleProps}
+                                        className={`p-2 rounded ${
+                                          snapshot.isDragging ? "cursor-grabbing" : editMode ? "cursor-grab" : "cursor-default"
+                                        } text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-all`}
+                                        title={editMode ? "Drag to reorder" : ""}
+                                        data-testid={`drag-handle-${row.id}`}
+                                      >
+                                        <GripVertical className="w-4 h-4" />
+                                      </div>
+                                    )}
                                     {editMode && (
                                       /* Delete button - edit mode only */
                                       <Button
