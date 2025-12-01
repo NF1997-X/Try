@@ -261,15 +261,14 @@ export function DataTable({
     }
     
     // Shared view & custom table: apply full schedule logic
-    const currentDay = new Date().getDay();
-    const alt1Days = [1, 3, 5, 0]; // Mon, Wed, Fri, Sun
-    const alt2Days = [2, 4, 6];    // Tue, Thu, Sat
+    const currentDate = new Date().getDate(); // Get date (1-31)
+    const isOddDate = currentDate % 2 === 1; // Odd dates = Alt 1, Even dates = Alt 2
     
     if (row.active === false || row.deliveryAlt === "inactive") {
       return 'inactive'; // Red - don't show if power off
     } else if (
-      (row.deliveryAlt === "alt1" && !alt1Days.includes(currentDay)) ||
-      (row.deliveryAlt === "alt2" && !alt2Days.includes(currentDay))
+      (row.deliveryAlt === "alt1" && !isOddDate) || // Alt 1 on even date
+      (row.deliveryAlt === "alt2" && isOddDate)     // Alt 2 on odd date
     ) {
       return 'off-schedule'; // Yellow - alt not matching today
     } else if (
@@ -1533,7 +1532,9 @@ export function DataTable({
                                             <ImageIcon className="w-4 h-4" />
                                           ) : (
                                             <MobileTooltip content="No image" showBelow={true}>
-                                              <ImageOff className="w-4 h-4" />
+                                              <span className="inline-block">
+                                                <ImageOff className="w-4 h-4" />
+                                              </span>
                                             </MobileTooltip>
                                           )}
                                         </Button>
@@ -1671,31 +1672,29 @@ export function DataTable({
                                           <SelectItem value="alt1">
                                             <div className="flex items-center gap-2">
                                               {(() => {
-                                                const currentDay = new Date().getDay();
-                                                const alt1Days = [1, 3, 5, 0]; // Mon, Wed, Fri, Sun
-                                                const isAlt1Today = alt1Days.includes(currentDay);
+                                                const currentDate = new Date().getDate();
+                                                const isOddDate = currentDate % 2 === 1;
                                                 return (
-                                                  <div className={`w-4 h-4 rounded-full bg-yellow-500 flex items-center justify-center text-white text-xs font-bold ${!isAlt1Today ? 'opacity-60' : ''}`}>
-                                                    {isAlt1Today ? '✓' : '✗'}
+                                                  <div className={`w-4 h-4 rounded-full bg-yellow-500 flex items-center justify-center text-white text-xs font-bold ${!isOddDate ? 'opacity-60' : ''}`}>
+                                                    {isOddDate ? '✓' : '✗'}
                                                   </div>
                                                 );
                                               })()}
-                                              <span className="text-yellow-600 dark:text-yellow-400 text-xs font-medium">Alt 1</span>
+                                              <span className="text-yellow-600 dark:text-yellow-400 text-xs font-medium">Alt 1 (Odd)</span>
                                             </div>
                                           </SelectItem>
                                           <SelectItem value="alt2">
                                             <div className="flex items-center gap-2">
                                               {(() => {
-                                                const currentDay = new Date().getDay();
-                                                const alt2Days = [2, 4, 6]; // Tue, Thu, Sat
-                                                const isAlt2Today = alt2Days.includes(currentDay);
+                                                const currentDate = new Date().getDate();
+                                                const isOddDate = currentDate % 2 === 1;
                                                 return (
-                                                  <div className={`w-4 h-4 rounded-full bg-yellow-500 flex items-center justify-center text-white text-xs font-bold ${!isAlt2Today ? 'opacity-60' : ''}`}>
-                                                    {isAlt2Today ? '✓' : '✗'}
+                                                  <div className={`w-4 h-4 rounded-full bg-yellow-500 flex items-center justify-center text-white text-xs font-bold ${isOddDate ? 'opacity-60' : ''}`}>
+                                                    {!isOddDate ? '✓' : '✗'}
                                                   </div>
                                                 );
                                               })()}
-                                              <span className="text-yellow-600 dark:text-yellow-400 text-xs font-medium">Alt 2</span>
+                                              <span className="text-yellow-600 dark:text-yellow-400 text-xs font-medium">Alt 2 (Even)</span>
                                             </div>
                                           </SelectItem>
                                           <SelectItem value="inactive">
@@ -1748,16 +1747,13 @@ export function DataTable({
                                                 return "Red - Terminated (No delivery)";
                                               }
                                               
-                                              const currentDay = new Date().getDay();
-                                              const alt1Days = [1, 3, 5, 0];
-                                              const alt2Days = [2, 4, 6];
+                                              const currentDate = new Date().getDate();
+                                              const isOddDate = currentDate % 2 === 1;
                                               
                                               if (row.deliveryAlt === "alt1") {
-                                                const isToday = alt1Days.includes(currentDay);
-                                                return isToday ? "Green - Delivery today (Alt 1: Mon/Wed/Fri/Sun)" : "Yellow - No delivery today (Alt 1: Mon/Wed/Fri/Sun)";
+                                                return isOddDate ? "Green - Delivery today (Alt 1: Odd dates)" : "Yellow - No delivery today (Alt 1: Odd dates)";
                                               } else if (row.deliveryAlt === "alt2") {
-                                                const isToday = alt2Days.includes(currentDay);
-                                                return isToday ? "Green - Delivery today (Alt 2: Tue/Thu/Sat)" : "Yellow - No delivery today (Alt 2: Tue/Thu/Sat)";
+                                                return !isOddDate ? "Green - Delivery today (Alt 2: Even dates)" : "Yellow - No delivery today (Alt 2: Even dates)";
                                               } else {
                                                 return "Green - Daily delivery";
                                               }
@@ -1765,7 +1761,9 @@ export function DataTable({
                                           }
                                           showBelow={true}
                                         >
-                                          <Power className="w-4 h-4" />
+                                          <span className="inline-block">
+                                            <Power className="w-4 h-4" />
+                                          </span>
                                         </MobileTooltip>
                                       </Button>
                                     )}
