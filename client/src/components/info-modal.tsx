@@ -47,6 +47,10 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
   const [qrScanning, setQrScanning] = useState(false);
   const [scanningDots, setScanningDots] = useState("");
   
+  // Swipe down gesture state
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchDelta, setTouchDelta] = useState(0);
+  
   // State for tracking edits
   const [originalData, setOriginalData] = useState({ info: "", qrCode: "", latitude: "", longitude: "", markerColor: "" });
   const [currentData, setCurrentData] = useState({ info: "", qrCode: "", latitude: "", longitude: "", markerColor: "" });
@@ -653,31 +657,30 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
           
           {/* Sliding Actions Menu - Apple Style */}
           <div 
-            className={`absolute left-0 right-0 bottom-0 bg-white/95 dark:bg-gray-950/95 backdrop-blur-2xl border-t border-gray-200/60 dark:border-gray-800/60 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] rounded-t-3xl shadow-2xl ${
+            className={`absolute left-0 right-0 bottom-0 bg-transparent backdrop-blur-none transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
               showActionsMenu 
                 ? 'translate-y-0 opacity-100' 
                 : 'translate-y-full opacity-0 pointer-events-none'
             }`}
             style={{ 
               paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))',
+              transform: showActionsMenu ? `translateY(${Math.max(touchDelta, 0)}px)` : undefined,
+            }}
+            onTouchStart={(e) => {
+              setTouchStart(e.touches[0].clientY);
+            }}
+            onTouchMove={(e) => {
+              const delta = e.touches[0].clientY - touchStart;
+              setTouchDelta(delta);
+            }}
+            onTouchEnd={() => {
+              if (touchDelta > 50) {
+                setShowActionsMenu(false);
+              }
+              setTouchDelta(0);
+              setTouchStart(0);
             }}
           >
-            {/* Close Button */}
-            <div className="absolute top-3 right-3 z-50">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-7 w-7 p-0 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 touch-auto pointer-events-auto active:scale-90 transition-all duration-200"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowActionsMenu(false);
-                }}
-                data-testid="button-close-actions-menu"
-              >
-                <X className="w-3.5 h-3.5" />
-              </Button>
-            </div>
-
             {/* Actions Grid - Apple Style with Horizontal Scroll */}
             <div className="overflow-x-auto overflow-y-hidden px-6 pt-6 pb-3">
               <div className="flex gap-3 min-w-max justify-center">
@@ -834,16 +837,16 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
         </DialogContent>
       </Dialog>
 
-      {/* Checklist Confirmation Dialog */}
+      {/* Web Portal Confirmation Dialog */}
       <Dialog open={showChecklistConfirm} onOpenChange={setShowChecklistConfirm}>
         <DialogContent className="max-w-md animate-in zoom-in-95 duration-200 bg-gradient-to-br from-background/95 via-background/98 to-background dark:from-black/95 dark:via-black/98 dark:to-black border-2 border-blue-500/20 dark:border-blue-400/20">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
               <ListChecks className="w-5 h-5" />
-              Open Checklist
+              Open Web Portal
             </DialogTitle>
             <DialogDescription>
-              Access the refill service checklist for this location.
+              Access the refill service web portal for this location.
             </DialogDescription>
           </DialogHeader>
           
@@ -861,7 +864,7 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
             </div>
 
             <p className="text-sm text-muted-foreground">
-              Do you want to open the refill service checklist? It will open in a new tab.
+              Do you want to open the refill service web portal? It will open in a new tab.
             </p>
           </div>
 
@@ -879,7 +882,7 @@ export function InfoModal({ info, rowId, code, route, location, latitude, longit
               data-testid="button-confirm-checklist"
             >
               <ListChecks className="w-4 h-4 mr-2" />
-              Open Checklist
+              Open Web Portal
             </Button>
           </DialogFooter>
         </DialogContent>

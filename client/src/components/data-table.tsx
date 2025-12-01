@@ -262,6 +262,7 @@ export function DataTable({
     
     // Shared view & custom table: apply full schedule logic
     const currentDate = new Date().getDate(); // Get date (1-31)
+    const currentDay = new Date().getDay(); // Get day (0-6)
     const isOddDate = currentDate % 2 === 1; // Odd dates = Alt 1, Even dates = Alt 2
     
     if (row.active === false || row.deliveryAlt === "inactive") {
@@ -1461,7 +1462,7 @@ export function DataTable({
                                 className="p-0 text-sm text-center text-foreground"
                                 style={{ textAlign: "center", width: "140px", minWidth: "140px", maxWidth: "140px" }}
                               >
-                                <div className="flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                <div className="flex items-center justify-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                                     {editMode ? (
                                       <>
                                         {/* Manage Image button - edit mode only */}
