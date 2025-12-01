@@ -61,6 +61,7 @@ import {
   Power,
   Bookmark,
   ImageIcon,
+  ImageOff,
   Slash,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -1082,33 +1083,49 @@ export function DataTable({
               const isSL = routeUpper.includes('SL');
               
               return (
-                <button 
-                  key={route} 
-                  onClick={() => toggleRouteFilter(route)}
-                  className="flex items-center gap-1 px-2 py-1 bg-transparent hover:bg-blue-500/10 border border-transparent hover:border-blue-500/20 rounded-full transition-all cursor-pointer active:scale-95"
-                  aria-label={`Remove route filter: ${route}`}
-                >
-                  {isKL ? (
-                    <img src="/assets/kl-flag.png" alt="KL" className="w-4 h-3 object-contain" />
-                  ) : isSL ? (
-                    <img src="/assets/selangor-flag.png" alt="Selangor" className="w-4 h-3 object-contain" />
-                  ) : (
-                    <Filter className="w-2.5 h-2.5" />
-                  )}
-                  <span className="text-[8px] font-semibold text-blue-700 dark:text-blue-300">{route}</span>
-                </button>
+                <TooltipProvider key={route}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button 
+                        onClick={() => toggleRouteFilter(route)}
+                        className="flex items-center gap-1 px-2 py-1 bg-transparent hover:bg-blue-500/10 border border-transparent hover:border-blue-500/20 rounded-full transition-all cursor-pointer active:scale-95"
+                        aria-label={`Remove route filter: ${route}`}
+                      >
+                        {isKL ? (
+                          <img src="/assets/kl-flag.png" alt="KL" className="w-4 h-3 object-contain" />
+                        ) : isSL ? (
+                          <img src="/assets/selangor-flag.png" alt="Selangor" className="w-4 h-3 object-contain" />
+                        ) : (
+                          <Filter className="w-2.5 h-2.5" />
+                        )}
+                        <span className="text-[8px] font-semibold text-blue-700 dark:text-blue-300">{route}</span>
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="text-xs">Click to remove filter: {route}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               );
             })}
             {deliveryFilterValue.map(delivery => (
-              <button 
-                key={delivery} 
-                onClick={() => toggleDeliveryFilter(delivery)}
-                className="flex items-center gap-1 px-2 py-1 bg-transparent hover:bg-green-500/10 border border-transparent hover:border-green-500/20 rounded-full transition-all cursor-pointer active:scale-95"
-                aria-label={`Remove delivery filter: ${delivery}`}
-              >
-                <Filter className="w-2.5 h-2.5" />
-                <span className="text-[8px] font-semibold text-green-700 dark:text-green-300">{delivery}</span>
-              </button>
+              <TooltipProvider key={delivery}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button 
+                      onClick={() => toggleDeliveryFilter(delivery)}
+                      className="flex items-center gap-1 px-2 py-1 bg-transparent hover:bg-green-500/10 border border-transparent hover:border-green-500/20 rounded-full transition-all cursor-pointer active:scale-95"
+                      aria-label={`Remove delivery filter: ${delivery}`}
+                    >
+                      <Filter className="w-2.5 h-2.5" />
+                      <span className="text-[8px] font-semibold text-green-700 dark:text-green-300">{delivery}</span>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="text-xs">Click to remove filter: {delivery}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             ))}
             {/* Clear All button */}
             <button 
@@ -1492,30 +1509,56 @@ export function DataTable({
                                         />
                                       </>
                                     ) : (
-                                      /* Info button - normal mode only */
-                                      <InfoModal
-                                        info={row.info || ""}
-                                        rowId={row.id}
-                                        code={row.code}
-                                        route={row.route}
-                                        location={row.location}
-                                        latitude={row.latitude ? String(row.latitude) : undefined}
-                                        longitude={row.longitude ? String(row.longitude) : undefined}
-                                        qrCode={row.qrCode || undefined}
-                                        no={row.no}
-                                        markerColor={row.markerColor || undefined}
-                                        images={row.images || []}
-                                        onUpdateRow={(updates) =>
-                                          onUpdateRow.mutate({
-                                            id: row.id,
-                                            updates,
-                                          })
-                                        }
-                                        onOpenImageModal={() => onSelectRowForImage(row.id)}
-                                        editMode={editMode}
-                                        allRows={rows}
-                                        iconType="info"
-                                      />
+                                      <>
+                                        {/* Image Lightbox button - non-edit mode only */}
+                                        <Button
+                                          size="sm"
+                                          variant="ghost"
+                                          className={`bg-transparent border-transparent hover:bg-transparent hover:border-transparent ${
+                                            row.images && row.images.length > 0
+                                              ? "text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300"
+                                              : "text-gray-400 dark:text-gray-600"
+                                          }`}
+                                          onClick={() => {
+                                            if (row.images && row.images.length > 0) {
+                                              onSelectRowForImage(row.id);
+                                            }
+                                          }}
+                                          disabled={!row.images || row.images.length === 0}
+                                          data-testid={`button-image-lightbox-${row.id}`}
+                                          title={row.images && row.images.length > 0 ? `View ${row.images.length} image(s)` : "No images"}
+                                        >
+                                          {row.images && row.images.length > 0 ? (
+                                            <ImageIcon className="w-4 h-4" />
+                                          ) : (
+                                            <ImageOff className="w-4 h-4" />
+                                          )}
+                                        </Button>
+                                        {/* Info button - normal mode only */}
+                                        <InfoModal
+                                          info={row.info || ""}
+                                          rowId={row.id}
+                                          code={row.code}
+                                          route={row.route}
+                                          location={row.location}
+                                          latitude={row.latitude ? String(row.latitude) : undefined}
+                                          longitude={row.longitude ? String(row.longitude) : undefined}
+                                          qrCode={row.qrCode || undefined}
+                                          no={row.no}
+                                          markerColor={row.markerColor || undefined}
+                                          images={row.images || []}
+                                          onUpdateRow={(updates) =>
+                                            onUpdateRow.mutate({
+                                              id: row.id,
+                                              updates,
+                                            })
+                                          }
+                                          onOpenImageModal={() => onSelectRowForImage(row.id)}
+                                          editMode={editMode}
+                                          allRows={rows}
+                                          iconType="info"
+                                        />
+                                      </>
                                     )}
                                     <div
                                       {...provided.dragHandleProps}

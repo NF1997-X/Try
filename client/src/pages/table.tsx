@@ -3,6 +3,7 @@ import { useTableData } from "@/hooks/use-table-data";
 import { DataTable } from "@/components/data-table";
 import { SimpleImageModal } from "@/components/simple-image-modal";
 import { ImageListModal } from "@/components/image-list-modal";
+import { ImageLightbox } from "@/components/image-lightbox";
 import { ColumnCustomizationModal } from "@/components/column-customization-modal";
 import { PasswordPrompt } from "@/components/password-prompt";
 import { Navigation } from "@/components/navigation";
@@ -44,6 +45,7 @@ export default function TablePage() {
   const [editingImageIndex, setEditingImageIndex] = useState<number | null>(null);
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [imageListModalOpen, setImageListModalOpen] = useState(false);
+  const [imageLightboxOpen, setImageLightboxOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterValue, setFilterValue] = useState<string[]>([]);
   const [deliveryFilterValue, setDeliveryFilterValue] = useState<string[]>([]);
@@ -440,10 +442,10 @@ export default function TablePage() {
       .filter((col): col is TableColumn => col !== undefined)
       .filter(col => visibleColumns.includes(col.id));
 
-    // Hide latitude, longitude, and tollPrice columns unless in edit mode
+    // Hide latitude, longitude, tollPrice, and images columns unless in edit mode
     if (!editMode) {
       filteredColumns = filteredColumns.filter(col => 
-        col.dataKey !== 'latitude' && col.dataKey !== 'longitude' && col.dataKey !== 'tollPrice'
+        col.dataKey !== 'latitude' && col.dataKey !== 'longitude' && col.dataKey !== 'tollPrice' && col.dataKey !== 'images'
       );
     }
 
@@ -1511,8 +1513,30 @@ export default function TablePage() {
         </DialogContent>
       </Dialog>
 
-      {/* Image List Modal - shows list of images with edit/delete options */}
-      {selectedRowForImage && selectedRowForImage !== 'access-denied' && !exitingEditMode && (
+      {/* Image Lightbox - view only for non-edit mode */}
+      {selectedRowForImage && selectedRowForImage !== 'access-denied' && !exitingEditMode && !editMode && (
+        (() => {
+          const selectedRow = rows.find(row => row.id === selectedRowForImage);
+          if (!selectedRow || !selectedRow.images || selectedRow.images.length === 0) return null;
+          
+          return (
+            <ImageLightbox
+              open={imageLightboxOpen}
+              onOpenChange={(open) => {
+                setImageLightboxOpen(open);
+                if (!open) {
+                  setSelectedRowForImage(null);
+                }
+              }}
+              images={selectedRow.images}
+              location={selectedRow.location}
+            />
+          );
+        })()
+      )}
+
+      {/* Image List Modal - shows list of images with edit/delete options (edit mode only) */}
+      {selectedRowForImage && selectedRowForImage !== 'access-denied' && !exitingEditMode && editMode && (
         (() => {
           const selectedRow = rows.find(row => row.id === selectedRowForImage);
           if (!selectedRow) return null;
@@ -1625,7 +1649,12 @@ export default function TablePage() {
             });
           } else {
             setSelectedRowForImage(rowId);
-            setImageListModalOpen(true);
+            // Open lightbox in view mode, ImageListModal in edit mode
+            if (editMode) {
+              setImageListModalOpen(true);
+            } else {
+              setImageLightboxOpen(true);
+            }
           }
         }}
         onShowCustomization={() => setCustomizationModalOpen(true)}
@@ -1655,7 +1684,10 @@ export default function TablePage() {
         open={customizationModalOpen && !exitingEditMode}
         onOpenChange={setCustomizationModalOpen}
         columns={columns}
-        visibleColumns={visibleColumns}
+        visibleColumns={editMode ? visibleColumns : visibleColumns.filter(id => {
+          const col = columns.find(c => c.id === id);
+          return col?.dataKey !== 'images';
+        })}
         onApplyChanges={handleApplyColumnCustomization}
         editMode={editMode}
       />

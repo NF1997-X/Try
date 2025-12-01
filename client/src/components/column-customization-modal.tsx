@@ -41,6 +41,10 @@ export function ColumnCustomizationModal({
   useEffect(() => {
     if (columns.length > 0) {
       const columnsToHide = ['longitude', 'latitude', 'info', 'tollPrice', 'tngRoute'];
+      // Also hide 'images' column when NOT in edit mode
+      if (!editMode) {
+        columnsToHide.push('images');
+      }
       
       const columnItems: ColumnItem[] = columns
         .filter(column => !columnsToHide.includes(column.dataKey))
@@ -84,6 +88,10 @@ export function ColumnCustomizationModal({
 
   const handleReset = () => {
     const columnsToHide = ['longitude', 'latitude', 'info', 'tollPrice', 'tngRoute'];
+    // Also hide 'images' column when NOT in edit mode
+    if (!editMode) {
+      columnsToHide.push('images');
+    }
     
     const resetColumns = columns
       .filter(column => !columnsToHide.includes(column.dataKey))
