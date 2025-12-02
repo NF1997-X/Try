@@ -74,11 +74,16 @@ export default function SharedTablePage() {
     // Apply delivery alternate day-based filtering
     const now = new Date();
     const dayOfWeek = now.getDay(); // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
-    const dayOfMonth = now.getDate(); // 1-31
+    
+    // Base date: Dec 2, 2025 (Alt2 has delivery, Alt1 no delivery)
+    const baseDate = new Date('2025-12-02');
+    const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const daysSinceBase = Math.floor((currentDate.getTime() - baseDate.getTime()) / (1000 * 60 * 60 * 24));
     
     const isWeekend = dayOfWeek === 5 || dayOfWeek === 6; // Friday=5, Saturday=6
-    const isAlt1Day = dayOfMonth % 2 === 1 && !isWeekend; // Odd days (1,3,5,7...) excluding weekend
-    const isAlt2Day = dayOfMonth % 2 === 0 && !isWeekend; // Even days (2,4,6,8...) excluding weekend
+    // Alt2 delivers on even days from base (0, 2, 4...), Alt1 on odd days (1, 3, 5...)
+    const isAlt2Day = daysSinceBase % 2 === 0 && !isWeekend;
+    const isAlt1Day = daysSinceBase % 2 === 1 && !isWeekend;
     
     // Sort based on delivery alternate and current day
     filtered = filtered.sort((a, b) => {
@@ -468,9 +473,11 @@ export default function SharedTablePage() {
               {/* No Delivery */}
               {(() => {
                 const now = new Date();
-                const dayOfMonth = now.getDate();
-                const isAlt1Day = dayOfMonth % 2 === 1;
-                const altType = isAlt1Day ? "Alt 1" : "Alt 2";
+                const baseDate = new Date('2025-12-02');
+                const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const daysSinceBase = Math.floor((currentDate.getTime() - baseDate.getTime()) / (1000 * 60 * 60 * 24));
+                const isAlt2Day = daysSinceBase % 2 === 0;
+                const altType = isAlt2Day ? "Alt 1" : "Alt 2";
                 
                 return (
                   <div className="flex items-center gap-2">
