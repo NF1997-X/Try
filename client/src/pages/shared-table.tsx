@@ -453,21 +453,102 @@ export default function SharedTablePage() {
                   const isKL = routeUpper.includes('KL');
                   const isSL = routeUpper.includes('SL');
                   
+                  // Parse route format: "SL 1 - AM - 3AVS01" or "KL 3 - AM - 3AVK03"
+                  const parts = route.split('-').map(p => p.trim());
+                  const routeNumber = parts[0] || route; // "SL 1" or "KL 3"
+                  const shift = parts[1] || ''; // "AM" or "PM"
+                  const code = parts[2] || ''; // "3AVS01" or "3AVK03"
+                  
                   return (
-                    <div key={route} className="flex items-center gap-1 px-2 py-1 bg-white/50 dark:bg-black/30 rounded-md">
+                    <div key={route} className="flex items-center gap-1.5 px-2.5 py-1.5 bg-white/60 dark:bg-black/40 rounded-md border border-blue-200/50 dark:border-blue-700/50">
                       {isKL && (
                         <img src="/assets/kl-flag.png" alt="KL" className="w-4 h-4 object-cover rounded" />
                       )}
                       {isSL && (
                         <img src="/assets/selangor-flag.png" alt="Selangor" className="w-4 h-4 object-cover rounded" />
                       )}
-                      <span className="text-xs font-medium text-blue-900 dark:text-blue-100">{route}</span>
+                      <span className="text-xs font-semibold text-blue-900 dark:text-blue-100">{routeNumber}</span>
+                      {shift && (
+                        <>
+                          <span className="text-xs text-blue-700 dark:text-blue-300">-</span>
+                          <span className="text-xs font-medium text-blue-800 dark:text-blue-200">{shift}</span>
+                        </>
+                      )}
+                      {code && (
+                        <>
+                          <span className="text-xs text-blue-700 dark:text-blue-300">-</span>
+                          <span className="text-xs font-mono text-blue-700 dark:text-blue-300">{code}</span>
+                        </>
+                      )}
                     </div>
                   );
                 })}
               </div>
             </div>
           )}
+
+          {/* No Delivery Banner - Alt 1/Alt 2 based on day */}
+          {(() => {
+            const now = new Date();
+            const dayOfWeek = now.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+            const dayOfMonth = now.getDate();
+            const isWeekend = dayOfWeek === 5 || dayOfWeek === 6; // Friday or Saturday
+            const isAlt1Day = dayOfMonth % 2 === 1;
+            const isAlt2Day = dayOfMonth % 2 === 0;
+            
+            const altType = isAlt1Day ? "Alt 1" : "Alt 2";
+            const weekdayNote = isWeekend ? " & Weekend" : "";
+            
+            return (
+              <div className="mb-4 p-3 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-lg border border-orange-200/50 dark:border-orange-700/50">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold text-orange-900 dark:text-orange-100">
+                    🗓️ No Delivery:
+                  </span>
+                  <span className="text-xs font-medium text-orange-800 dark:text-orange-200">
+                    ({altType} follow the day{weekdayNote})
+                  </span>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* Status Color Indicators */}
+          {(() => {
+            const now = new Date();
+            const dayOfWeek = now.getDay(); // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+            
+            // Stock In Color rotation: Mon=Blue, Tue=Orange, Wed=Brown, Thu=Green, Fri=Purple, Sat=Pink, Sun=Yellow
+            const stockInColors = ['bg-yellow-500', 'bg-blue-500', 'bg-orange-500', 'bg-amber-700', 'bg-green-500', 'bg-purple-500', 'bg-pink-500'];
+            const stockInColor = stockInColors[dayOfWeek];
+            
+            // Move Front Color rotation: Mon=Yellow, Tue=Blue, Wed=Orange, Thu=Brown, Fri=Green, Sat=Purple, Sun=Pink
+            const moveFrontColors = ['bg-pink-500', 'bg-yellow-500', 'bg-blue-500', 'bg-orange-500', 'bg-amber-700', 'bg-green-500', 'bg-purple-500'];
+            const moveFrontColor = moveFrontColors[dayOfWeek];
+            
+            // Expired Color rotation: Mon=Pink, Tue=Yellow, Wed=Blue, Thu=Orange, Fri=Brown, Sat=Green, Sun=Purple
+            const expiredColors = ['bg-purple-500', 'bg-pink-500', 'bg-yellow-500', 'bg-blue-500', 'bg-orange-500', 'bg-amber-700', 'bg-green-500'];
+            const expiredColor = expiredColors[dayOfWeek];
+            
+            return (
+              <div className="mb-4 p-3 bg-gradient-to-r from-slate-50 to-gray-50 dark:from-slate-900/20 dark:to-gray-900/20 rounded-lg border border-slate-200/50 dark:border-slate-700/50">
+                <div className="flex flex-wrap gap-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-slate-900 dark:text-slate-100">✅ Stock In Color:</span>
+                    <div className={`w-5 h-5 rounded-full ${stockInColor} border-2 border-white dark:border-slate-800 shadow-md`}></div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-slate-900 dark:text-slate-100">🔄 Move Front Color:</span>
+                    <div className={`w-5 h-5 rounded-full ${moveFrontColor} border-2 border-white dark:border-slate-800 shadow-md`}></div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-slate-900 dark:text-slate-100">🚫 Expired Color:</span>
+                    <div className={`w-5 h-5 rounded-full ${expiredColor} border-2 border-white dark:border-slate-800 shadow-md`}></div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
           
           {/* Data Table with all interactive features enabled */}
           <DataTable

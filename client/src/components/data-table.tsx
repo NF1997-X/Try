@@ -1085,49 +1085,33 @@ export function DataTable({
               const isSL = routeUpper.includes('SL');
               
               return (
-                <TooltipProvider key={route}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <button 
-                        onClick={() => toggleRouteFilter(route)}
-                        className="flex items-center gap-1 px-2 py-1 bg-transparent hover:bg-blue-500/10 border border-transparent hover:border-blue-500/20 rounded-full transition-all cursor-pointer active:scale-95"
-                        aria-label={`Remove route filter: ${route}`}
-                      >
-                        {isKL ? (
-                          <img src="/assets/kl-flag.png" alt="KL" className="w-4 h-3 object-contain" />
-                        ) : isSL ? (
-                          <img src="/assets/selangor-flag.png" alt="Selangor" className="w-4 h-3 object-contain" />
-                        ) : (
-                          <Filter className="w-2.5 h-2.5" />
-                        )}
-                        <span className="text-[8px] font-semibold text-gray-400 dark:text-gray-500">{route}</span>
-                      </button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p className="text-xs">Click to remove filter: {route}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                <button 
+                  key={route}
+                  onClick={() => toggleRouteFilter(route)}
+                  className="flex items-center gap-1 px-2 py-1 bg-transparent hover:bg-blue-500/10 border border-transparent hover:border-blue-500/20 rounded-full transition-all cursor-pointer active:scale-95"
+                  aria-label={`Remove route filter: ${route}`}
+                >
+                  {isKL ? (
+                    <img src="/assets/kl-flag.png" alt="KL" className="w-4 h-3 object-contain" />
+                  ) : isSL ? (
+                    <img src="/assets/selangor-flag.png" alt="Selangor" className="w-4 h-3 object-contain" />
+                  ) : (
+                    <Filter className="w-2.5 h-2.5" />
+                  )}
+                  <span className="text-[8px] font-semibold text-gray-400 dark:text-gray-500">{route}</span>
+                </button>
               );
             })}
             {deliveryFilterValue.map(delivery => (
-              <TooltipProvider key={delivery}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button 
-                      onClick={() => toggleDeliveryFilter(delivery)}
-                      className="flex items-center gap-1 px-2 py-1 bg-transparent hover:bg-green-500/10 border border-transparent hover:border-green-500/20 rounded-full transition-all cursor-pointer active:scale-95"
-                      aria-label={`Remove delivery filter: ${delivery}`}
-                    >
-                      <Filter className="w-2.5 h-2.5" />
-                      <span className="text-[8px] font-semibold text-green-700 dark:text-green-300">{delivery}</span>
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p className="text-xs">Click to remove filter: {delivery}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+              <button 
+                key={delivery}
+                onClick={() => toggleDeliveryFilter(delivery)}
+                className="flex items-center gap-1 px-2 py-1 bg-transparent hover:bg-green-500/10 border border-transparent hover:border-green-500/20 rounded-full transition-all cursor-pointer active:scale-95"
+                aria-label={`Remove delivery filter: ${delivery}`}
+              >
+                <Filter className="w-2.5 h-2.5" />
+                <span className="text-[8px] font-semibold text-green-700 dark:text-green-300">{delivery}</span>
+              </button>
             ))}
             {/* Clear All button */}
             <button 
@@ -1532,11 +1516,7 @@ export function DataTable({
                                           {row.images && row.images.length > 0 ? (
                                             <ImageIcon className="w-4 h-4" />
                                           ) : (
-                                            <MobileTooltip content="No image" showBelow={true}>
-                                              <span className="inline-block">
-                                                <ImageOff className="w-4 h-4" />
-                                              </span>
-                                            </MobileTooltip>
+                                            <ImageOff className="w-4 h-4" />
                                           )}
                                         </Button>
                                         {/* Info button - normal mode only */}
@@ -1741,31 +1721,7 @@ export function DataTable({
                                         disabled={true}
                                         data-testid={`button-toggle-active-${row.id}`}
                                       >
-                                        <MobileTooltip
-                                          content={
-                                            (() => {
-                                              if (row.deliveryAlt === "inactive") {
-                                                return "Red - Terminated (No delivery)";
-                                              }
-                                              
-                                              const currentDate = new Date().getDate();
-                                              const isOddDate = currentDate % 2 === 1;
-                                              
-                                              if (row.deliveryAlt === "alt1") {
-                                                return isOddDate ? "Green - Delivery today (Alt 1: Odd dates)" : "Yellow - No delivery today (Alt 1: Odd dates)";
-                                              } else if (row.deliveryAlt === "alt2") {
-                                                return !isOddDate ? "Green - Delivery today (Alt 2: Even dates)" : "Yellow - No delivery today (Alt 2: Even dates)";
-                                              } else {
-                                                return "Green - Daily delivery";
-                                              }
-                                            })()
-                                          }
-                                          showBelow={true}
-                                        >
-                                          <span className="inline-block">
-                                            <Power className="w-4 h-4" />
-                                          </span>
-                                        </MobileTooltip>
+                                        <Power className="w-4 h-4" />
                                       </Button>
                                     )}
                                 </div>
