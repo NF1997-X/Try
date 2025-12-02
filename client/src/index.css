@@ -222,25 +222,25 @@ textarea {
 
 .light {
   /* Light Theme - Soft & Muted Colors */
-  --background: hsl(240, 10%, 92%);
-  --foreground: hsl(240, 8%, 20%);
-  --card: hsl(240, 5%, 96%);
-  --card-foreground: hsl(240, 8%, 20%);
-  --popover: hsl(240, 5%, 96%);
-  --popover-foreground: hsl(240, 8%, 20%);
-  --primary: hsl(221, 70%, 48%);
+  --background: hsl(240, 8%, 88%);
+  --foreground: hsl(240, 10%, 18%);
+  --card: hsl(240, 5%, 92%);
+  --card-foreground: hsl(240, 10%, 18%);
+  --popover: hsl(240, 5%, 92%);
+  --popover-foreground: hsl(240, 10%, 18%);
+  --primary: hsl(221, 65%, 45%);
   --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(240, 8%, 88%);
-  --secondary-foreground: hsl(240, 8%, 25%);
-  --muted: hsl(240, 8%, 85%);
-  --muted-foreground: hsl(240, 5%, 45%);
-  --accent: hsl(240, 8%, 90%);
-  --accent-foreground: hsl(240, 8%, 25%);
-  --destructive: hsl(0, 65%, 48%);
+  --secondary: hsl(240, 8%, 84%);
+  --secondary-foreground: hsl(240, 10%, 22%);
+  --muted: hsl(240, 8%, 80%);
+  --muted-foreground: hsl(240, 6%, 40%);
+  --accent: hsl(240, 8%, 86%);
+  --accent-foreground: hsl(240, 10%, 22%);
+  --destructive: hsl(0, 60%, 45%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 8%, 82%);
-  --input: hsl(240, 8%, 88%);
-  --ring: hsl(221, 70%, 48%);
+  --border: hsl(240, 8%, 78%);
+  --input: hsl(240, 8%, 84%);
+  --ring: hsl(221, 65%, 45%);
   --chart-1: hsl(221, 70%, 48%);
   --chart-2: hsl(199, 75%, 45%);
   --chart-3: hsl(173, 50%, 38%);
