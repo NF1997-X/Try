@@ -443,7 +443,7 @@ export default function SharedTablePage() {
         <div className="container mx-auto px-4 py-8">
           {/* Panel 1: Route Info & No Delivery */}
           <div className="mt-10 mb-4 p-4 bg-white/80 dark:bg-gray-900/50 rounded-lg border border-slate-200 dark:border-blue-700/30 shadow-md">
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-4">
               {/* Route Info */}
               {routeFilters.length > 0 && routeFilters.map(route => {
                 const routeUpper = route.toUpperCase();
@@ -494,19 +494,16 @@ export default function SharedTablePage() {
             
             return (
               <div className="mb-4 p-4 bg-white/80 dark:bg-gray-900/50 rounded-lg border border-slate-200 dark:border-blue-700/30 shadow-md">
-                <div className="flex flex-wrap gap-6">
+                <div className="flex flex-wrap justify-center gap-6">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm">✅</span>
                     <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">Stock In Color:</span>
                     <div className={`w-6 h-6 rounded-full ${stockInColors[dayOfWeek]} border-2 border-white dark:border-slate-800 shadow-md`}></div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm">🔄</span>
                     <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">Move Front Color:</span>
                     <div className={`w-6 h-6 rounded-full ${moveFrontColors[dayOfWeek]} border-2 border-white dark:border-slate-800 shadow-md`}></div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm">🚫</span>
                     <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">Expired Color:</span>
                     <div className={`w-6 h-6 rounded-full ${expiredColors[dayOfWeek]} border-2 border-white dark:border-slate-800 shadow-md`}></div>
                   </div>
