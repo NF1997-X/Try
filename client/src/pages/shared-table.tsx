@@ -540,25 +540,6 @@ export default function SharedTablePage() {
               </div>
             }
           />
-            onSelectRowForImage={(rowId) => {
-              setSelectedRowForImage(rowId);
-              setImageLightboxOpen(true);
-            }}
-            onShowCustomization={() => {}}
-            onOptimizeRoute={() => {}}
-            isAuthenticated={isAuthenticated}
-            searchTerm={searchTerm}
-            onSearchTermChange={setSearchTerm}
-            filterValue={[]}
-            onFilterValueChange={() => {}}
-            deliveryFilterValue={deliveryFilters}
-            onDeliveryFilterValueChange={setDeliveryFilters}
-            routeOptions={[]}
-            deliveryOptions={deliveryOptions}
-            onClearAllFilters={handleClearAllFilters}
-            filteredRowsCount={rowsWithDistances.length}
-            totalRowsCount={rows.length}
-          />
         </div>
       </main>
 
