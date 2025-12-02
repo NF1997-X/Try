@@ -142,9 +142,6 @@ export function Footer({ editMode = false }: FooterProps) {
               {/* Footer Text */}
               <div className="text-[10px] text-slate-600 dark:text-slate-400 text-center">
                 <div className="flex items-center gap-1.5">
-                  <span>Built with</span>
-                  <span className="text-red-500">❤️</span>
-                  <span>for</span>
                   {companyUrl ? (
                     <a
                       href={companyUrl}
